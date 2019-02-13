@@ -1,7 +1,20 @@
 # SKYRUS - UNO
 ___
-
-## Uno Rules :
+ ![alt homePage](https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/uno-1516103038.jpg?crop=1.00xw:0.893xh;0,0.0609xh&resize=480:*) 
+___
+## UNO cards :
+108 cards as follows:
+* 19 Blue cards- 0 to 9
+* 19 Green cards- 0 to 9
+* 19 Red cards- 0 to 9
+* 19 Yellow cards - 0 to 9
+* 8 Draw Two cards - 2 each in blue, green, red and yellow
+* 8 Reverse cards - 2 each in blue, green, red and yellow
+* 8 Skip cards - 2 each in blue, green, red and yellow
+* 4 Wild cards
+* 4 Wild Draw Four cards
+___
+## UNO Rules :
 * **Setup:** <br />
     The game is for 2-10 players, ages 7 and over. Every player starts with seven cards, and they are dealt face down. The rest of the cards are placed in a Draw Pile face down. Next to the pile a space should be designated for a Discard Pile. The top card should be placed in the Discard Pile, and the game begins!
 ___ 
@@ -33,19 +46,16 @@ ___
     ___
  * **Action Cards:** <br />
     Besides the number cards, there are several other cards that help mix up the game. These are called Action or Symbol cards.
-    * **Reverse** – If going clockwise, switch to counterclockwise or vice versa. 
-    * **Skip** – When a player places this card, the next player has to skip their turn. If turned up at the beginning, the first player loses his/her turn.
-    * **Draw Two** – When a person places this card, the next player will have to pick up two cards and forfeit his/her turn.
-    * **Wild** – This card represents all four colors, and can be placed on any card. The player has to state which color it will represent for the next player. It can be played regardless of whether another card is available.
-    * **Wild Draw Four** – This acts just like the wild card except that the next player also has to draw four cards as well as forfeit his/her turn. With this card, you must have no other alternative cards to play that matches the color of the card previously played. If you play this card illegally, you may be challenged by the other player to show your hand to him/her. If guilty, you need to draw 4 cards. If not, the challenger needs to draw 6 cards instead.
-___
-* **Swap Hands Card** – This is a powerful card that enables you to swap the cards in your hand with anyone of your choice. Being a Wild card, it has the same attributes, namely, you can choose to either play it or not, at any of your turns, and also choose the color of play. Ideally, you would probably want to swap your cards with the player who has the least number of cards! Being a powerful Action card, only one is provided per deck. If turned up at the beginning of the game, the first player to start gets to choose the color and also swap his hands with another person.
-___
-* **Wild Customizable Card** – There are 3 of them provided in any deck, and they are all blank. These are meant for you to write down your own “house rules”. Before the game starts, make sure everyone agrees to the rules and also on how many of the Wild Customizable cards will be used. You can use 1-3 of them per game. These are Wild Cards, so the same rules apply to them – The person who plays them gets to choose the color of play, and if turned up at the start, then the first player chooses the color of play.
-___
-* **What if your last card is a Wild Swap Hands?**
-
-  This scenario may happen from time to time. If your last card is a Wild Swap Hands card, you can treat it like a normal Wild card and play it to end the game right there and then – No further action is required. This is because you would obviously not win the game if you were required to swap your hand with another player.
+    * **Reverse** – If going clockwise, switch to counterclockwise or vice versa. <br />
+![reverse card](http://1.bp.blogspot.com/-9C9F1T490OA/UaxfQ9d-ViI/AAAAAAAATAw/OiTdrzLhx4k/s1600/2.png)
+    * **Skip** – When a player places this card, the next player has to skip their turn. If turned up at the beginning, the first player loses his/her turn.<br />
+    ![skip card](http://unoonline.net/wp-content/uploads/2017/09/2.png)
+    * **Draw Two** – When a person places this card, the next player will have to pick up two cards and forfeit his/her turn.<br />
+    ![draw two](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRl0Kmf_155L__3a24t53ApMrdQaJ80UbzGKqONqv-JsFkV4tt6)
+    * **Wild** – This card represents all four colors, and can be placed on any card. The player has to state which color it will represent for the next player. It can be played regardless of whether another card is available.<br />
+    ![wild card](http://nyislesblog.com/wp-content/uploads/2017/02/Card-Wild.png)
+    * **Wild Draw Four** – This acts just like the wild card except that the next player also has to draw four cards as well as forfeit his/her turn. With this card, you must have no other alternative cards to play that matches the color of the card previously played. If you play this card illegally, you may be challenged by the other player to show your hand to him/her. If guilty, you need to draw 4 cards. If not, the challenger needs to draw 6 cards instead.<br />
+    ![wild draw 4](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzDwZyi4WiVJCuqsD27vSBPEPIZKE-B-WUKW2dS1_5pJSblXaw)
 ___
 * **Scoring:**<br />
   When a player no longer has any cards and the game ends, he/she receives points. All opponents’ cards are given to the winner and points are counted. All number cards are the same value as the number on the card (e.g. a 9 is 9 points). “Draw Two" – 20 Points, “Reverse" – 20 Points, “Skip" – 20 Points, “Wild" – 50 Points, and “Wild Draw Four" – 50 Points. “Wild Swap Hands” – 40 Points, “Wild Customizable card” – 40 Points. The first player to attain 500 points wins the game.
