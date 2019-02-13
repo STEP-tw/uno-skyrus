@@ -1,2 +1,5 @@
-echo "starting npm test"
-npm test
+set -xe
+
+echo "running tests"
+npm test 
+echo "testing completed"

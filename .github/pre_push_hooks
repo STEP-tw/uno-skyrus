@@ -1,0 +1,29 @@
+#! /bin/sh
+
+npm run test
+if [ "$?" -ne 0 ]; then
+  echo "failing tests" 
+  exit 1
+fi
+
+npm run coverage 	# && nyc check-coverage
+if [ "$?" -ne 0 ]; then
+  echo "Coverage below 90"
+  exit 1
+fi
+
+npm run lint
+if [ "$?" -ne 0 ]; then
+  echo "Syntax errors"
+  exit 1
+fi
+
+UNSTAGED_CHANGES=$(git diff)
+STAGED_CHANGES=$(git diff --cached)
+
+if [ -n "$UNSTAGED_CHANGES" ] || [ -n "$STAGED_CHANGES" ]; then
+   echo "unstaged/uncommited changes"
+   exit 1;
+fi
+
+exit 0
