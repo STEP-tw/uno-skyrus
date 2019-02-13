@@ -1,0 +1,30 @@
+{
+  "name": "uno-skyrus",
+  "version": "0.0.1",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "mocha",
+    "coverage": "nyc mocha",
+    "lint": "eslint .",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/STEP-tw/uno-skyrus.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/STEP-tw/uno-skyrus/issues"
+  },
+  "homepage": "https://github.com/STEP-tw/uno-skyrus#readme",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "eslint": "^5.13.0",
+    "mocha": "^5.2.0",
+    "nodemon": "^1.18.10",
+    "nyc": "^13.2.0",
+    "prettier": "^1.16.4"
+  }
+}
