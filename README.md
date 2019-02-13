@@ -57,6 +57,3 @@ ___
     * **Wild Draw Four** – This acts just like the wild card except that the next player also has to draw four cards as well as forfeit his/her turn. With this card, you must have no other alternative cards to play that matches the color of the card previously played. If you play this card illegally, you may be challenged by the other player to show your hand to him/her. If guilty, you need to draw 4 cards. If not, the challenger needs to draw 6 cards instead.<br />
     ![wild draw 4](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzDwZyi4WiVJCuqsD27vSBPEPIZKE-B-WUKW2dS1_5pJSblXaw)
 ___
-* **Scoring:**<br />
-  When a player no longer has any cards and the game ends, he/she receives points. All opponents’ cards are given to the winner and points are counted. All number cards are the same value as the number on the card (e.g. a 9 is 9 points). “Draw Two" – 20 Points, “Reverse" – 20 Points, “Skip" – 20 Points, “Wild" – 50 Points, and “Wild Draw Four" – 50 Points. “Wild Swap Hands” – 40 Points, “Wild Customizable card” – 40 Points. The first player to attain 500 points wins the game.
-___
