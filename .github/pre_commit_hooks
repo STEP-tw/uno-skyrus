@@ -1,5 +1,8 @@
 set -xe
 
-echo "running tests"
+echo "Running tests"
 npm test 
 echo "testing completed"
+
+echo "Checking coverage threshold"
+nyc check-coverage --lines 70
