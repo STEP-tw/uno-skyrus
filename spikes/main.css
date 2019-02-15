@@ -1,0 +1,198 @@
+.uno-card {
+  min-height: 160px;
+  min-width: 100px;
+  max-width: 100px;
+  max-height: 100px;
+  border: 0.5px solid black;
+  border-radius: 7px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: margin-bottom 2s;
+}
+
+.others-uno-card {
+  min-height: 160px;
+  min-width: 100px;
+  max-width: 100px;
+  max-height: 100px;
+
+  background: white;
+
+  margin-left: -40px;
+  border: 0.5px solid black;
+  border-radius: 7px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: margin-bottom 2s;
+}
+
+.uno-card:hover {
+  display: block;
+}
+
+.uno-card-inner {
+  height: 88%;
+  width: 90%;
+  border-radius: 7px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 50px;
+}
+
+body,
+html {
+  width: 100%;
+  height: 100%;
+}
+
+header {
+  width: 100%;
+  height: 8%;
+  /* border: 1px solid black; */
+}
+main {
+  width: 100%;
+  height: 100%;
+}
+.play-table {
+  width: 100%;
+  height: 92%;
+  /* border: 1px solid black; */
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.upper-table {
+  width: 100%;
+  height: 30%;
+
+  /* border: 1px solid black; */
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.middle-table {
+  width: 100%;
+  height: 40%;
+  display: flex;
+  /* flex-direction:           column; */
+  align-items: center;
+  justify-content: center;
+  /* border: 1px solid black; */
+}
+
+.bottom-table {
+  width: 100%;
+  height: 30%;
+
+  /* border: 1px solid black; */
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/*--------------HANDS-------------*/
+
+.hand {
+  width: 30%;
+  height: 70%;
+  border: 1px solid black;
+
+  overflow: auto;
+
+  display: flex;
+}
+
+.other-hand {
+  width: 16%;
+  height: 70%;
+  /* border: 1px solid black; */
+
+  overflow: hidden;
+
+  display: flex;
+}
+
+.cards-on-table {
+  width: 60%;
+  height: 70%;
+  /* border: 1px solid black; */
+
+  overflow: auto;
+
+  display: flex;
+  align-content: center;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.running-color {
+  height: 80px;
+  width: 80px;
+  /* background: red; */
+  border-radius: 100%;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
+}
+
+.call-catch-container {
+  height: 10%;
+  width: 60%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+button {
+  font-size: 14px;
+}
+
+.center-table {
+  width: 50%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.left-hand {
+  width: 16%;
+  height: 70%;
+  /* border: 1px solid black; */
+
+  overflow: hidden;
+  transform: rotate(-90deg);
+
+  display: flex;
+}
+
+.right-hand {
+  width: 16%;
+  height: 70%;
+  /* border: 1px solid black; */
+
+  overflow: hidden;
+  transform: rotate(90deg);
+
+  display: flex;
+}

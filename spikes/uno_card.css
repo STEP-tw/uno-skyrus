@@ -1,0 +1,33 @@
+.uno-card {
+  height: 160px;
+  width: 100px;
+  border: 0.5px solid black;
+  border-radius: 7px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.uno-card-inner {
+  height: 94%;
+  width: 90%;
+  border-radius: 7px;
+  background: red;
+}
+.uno-design-inner {
+  width: 90%;
+  height: 80%;
+  font-size: 50px;
+  font-family: sans-serif;
+  border: 5px solid white;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-top-left-radius: 100%;
+  border-top-right-radius: 25%;
+  border-bottom-right-radius: 100%;
+  border-bottom-left-radius: 25%;
+}
