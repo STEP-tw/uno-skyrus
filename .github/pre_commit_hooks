@@ -1,8 +1,30 @@
-set -xe
+#! /bin/sh
 
-echo "Running tests"
-npm test 
-echo "testing completed"
+RED="\033[0;31m"
+RESET="\033[0m"
+
+echo "Running test"
+npm run test 
+if [ "$?" -ne 0 ]; then
+  echo "${RED} ***** FAILING TESTS ***** ${RESET}" 
+  exit 1
+fi
+
+echo "Running coverage"
+npm run coverage
 
 echo "Checking coverage threshold"
-nyc check-coverage --lines 70
+nyc check-coverage 
+if [ "$?" -ne 0 ]; then
+  echo "${RED} ***** COVERAGE BELOW 90% ***** ${RESET}"
+  exit 1
+fi
+
+echo "Running linter"
+npm run lint
+if [ "$?" -ne 0 ]; then
+  echo "${RED} ***** LINTING ERRORS ***** ${RESET}"
+  exit 1
+fi
+
+exit 0

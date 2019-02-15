@@ -19,5 +19,16 @@ do
 	fi
 done
 
+declare -a extensions
+extensions=(
+  2gua.rainbow-brackets
+  dbaeumer.vscode-eslint
+  esbenp.prettier-vscode
+  patbenatar.advanced-new-file
+  tootone.org-mode
+  )
+  for extension in ${extensions[@]} ; do
+    code --install-extension $extension
+    done
 
- 
+

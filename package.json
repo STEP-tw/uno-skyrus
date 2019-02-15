@@ -4,8 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "mocha",
-    "coverage": "nyc mocha",
+    "test": "mocha --recursive",
+    "coverage": "nyc mocha --recursive",
     "lint": "eslint .",
     "start": "nodemon server.js"
   },
