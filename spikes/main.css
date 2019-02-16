@@ -1,8 +1,8 @@
 .uno-card {
-  min-height: 160px;
+  min-height: 140px;
   min-width: 100px;
   max-width: 100px;
-  max-height: 100px;
+  max-height: 140px;
   border: 0.5px solid black;
   border-radius: 7px;
 
@@ -14,10 +14,10 @@
 }
 
 .others-uno-card {
-  min-height: 160px;
+  min-height: 140px;
   min-width: 100px;
   max-width: 100px;
-  max-height: 100px;
+  max-height: 140px;
 
   background: white;
 
@@ -75,7 +75,7 @@ main {
 
 .upper-table {
   width: 100%;
-  height: 30%;
+  height: 37%;
 
   /* border: 1px solid black; */
 
@@ -86,7 +86,7 @@ main {
 
 .middle-table {
   width: 100%;
-  height: 40%;
+  height: 33%;
   display: flex;
   /* flex-direction:           column; */
   align-items: center;
