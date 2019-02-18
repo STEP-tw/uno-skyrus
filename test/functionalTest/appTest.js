@@ -1,11 +1,44 @@
 const request = require('supertest');
 const app = require('../../src/app');
+const chai = require('chai');
 
 describe('homepage', function() {
-  it('should return 404 status code for homepage', function(done) {
+  it('should return 200 status code for homepage', function(done) {
     request(app)
       .get('/')
-      .expect(404)
+      .expect(200)
+      .end(done);
+  });
+});
+
+describe('game.html', function() {
+  it('should return 200 Status code for /game', function(done) {
+    request(app)
+      .get('/game.html')
+      .expect(200)
+      .end(done);
+  });
+});
+
+describe('pile', function() {
+  it('should return status 200', function(done) {
+    request(app)
+      .get('/pile')
+      .expect(200)
+      .end(done);
+  });
+  it('should return a card object as content', function(done) {
+    request(app)
+      .get('/pile')
+      .expect('Content-Type', /json/)
+      .end(done);
+  });
+  it('should return an Object of card with properties color and number', function(done) {
+    request(app)
+      .get('/pile')
+      .expect(res => {
+        chai.expect(res.body).to.have.all.keys('color', 'number');
+      })
       .end(done);
   });
 });
