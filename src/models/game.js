@@ -1,7 +1,7 @@
 class Game {
   constructor(deck = []) {
     this.players = [];
-    this.deck = deck;
+    this.deck = [...deck];
     this.stack = [];
     this.pile = [];
   }
