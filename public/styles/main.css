@@ -1,0 +1,70 @@
+body,
+html {
+  width: 100%;
+  height: 100%;
+}
+
+header {
+  width: 100%;
+  height: 8%;
+}
+
+
+main {
+  width: 100%;
+  height: 100%;
+}
+
+.play-table {
+  width: 100%;
+  height: 92%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.bottom-table {
+  width: 100%;
+  height: 30%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hand {
+  width: 30%;
+  height: 70%;
+  border: 1px solid black;
+
+  overflow: auto;
+
+  display: flex;
+}
+
+.uno-card {
+  min-height: 140px;
+  min-width: 100px;
+  max-width: 100px;
+  max-height: 140px;
+  border: 0.5px solid black;
+  border-radius: 7px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: margin-bottom 2s;
+}
+
+.uno-card-inner {
+  height: 88%;
+  width: 90%;
+  border-radius: 7px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 50px;
+}
