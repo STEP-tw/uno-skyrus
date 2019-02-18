@@ -7,7 +7,7 @@
     "test": "mocha --recursive",
     "coverage": "nyc mocha --recursive",
     "lint": "eslint .",
-    "start": "nodemon server.js"
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
