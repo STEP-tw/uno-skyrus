@@ -10,4 +10,24 @@ const initializePile = function(document) {
     });
 };
 
-window.onload = initializePile.bind(null, document);
+const createHtml = function(document, cards) {
+  const hand = document.getElementById('myHand');
+  cards.forEach(card => {
+    hand.append(createCard(document, card));
+  });
+};
+
+const fetchCards = function(document) {
+  fetch('/playerCards')
+    .then(response => response.json())
+    .then(cards => {
+      createHtml(document, cards);
+    });
+};
+
+const initialize = function(document) {
+  initializePile(document);
+  fetchCards(document);
+};
+
+window.onload = initialize.bind(null, document);

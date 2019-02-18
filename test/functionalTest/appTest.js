@@ -34,12 +34,23 @@ describe('pile', function() {
       .end(done);
   });
 });
+
 describe('gamepage', function() {
   it('should return 200 status code for gamepage', function(done) {
     request(app)
       .get('/game.html')
       .expect(200)
       .expect('content-type', 'text/html; charset=UTF-8')
+      .end(done);
+  });
+});
+
+describe('playerCards', function() {
+  it('should return 200 status code for playerCards request and json content-type', function(done) {
+    request(app)
+      .get('/playerCards')
+      .expect(200)
+      .expect('content-type', 'application/json; charset=utf-8')
       .end(done);
   });
 });

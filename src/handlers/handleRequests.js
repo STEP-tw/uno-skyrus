@@ -4,4 +4,9 @@ const initializePile = function(req, res) {
   res.send({ color, number });
 };
 
-module.exports = { initializePile };
+const servePlayerCards = function(game, req, res) {
+  const cards = game.getPlayerCards('Reshmi');
+  res.send(cards);
+};
+
+module.exports = { initializePile, servePlayerCards };
