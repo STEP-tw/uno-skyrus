@@ -1,0 +1,48 @@
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
+.main {
+  width: 80%;
+  height: 60%;
+  border: 1px solid black;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.uno-card {
+  height: 160px;
+  width: 100px;
+  border: 0.5px solid black;
+  border-radius: 7px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.uno-card-inner {
+  height: 94%;
+  width: 90%;
+  border-radius: 7px;
+}
+
+.uno-design-inner {
+  width: 90%;
+  height: 85%;
+  font-size: 14px;
+  font-family: sans-serif;
+  border: 1px solid black;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-top-left-radius: 100%;
+  border-top-right-radius: 30%;
+  border-bottom-right-radius: 100%;
+  border-bottom-left-radius: 30%;
+}
