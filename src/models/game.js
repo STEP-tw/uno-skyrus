@@ -3,6 +3,7 @@ class Game {
     this.players = [];
     this.deck = deck;
     this.stack = [];
+    this.pile = [];
   }
 
   addPlayer(player) {
@@ -20,14 +21,22 @@ class Game {
     return player[0].cards;
   }
 
-  dealCards(shuffler) {
-    this.deck = shuffler(this.deck);
-    this.stack = this.deck.slice();
+  dealCards() {
     this.players.forEach(player => {
       const hand = this.stack.splice(0, 7);
       player.addCards(hand);
     });
   }
+
+  startGame(shuffle) {
+    this.stack = shuffle(this.deck);
+    this.dealCards();
+    this.pile.push(this.stack.pop());
+  }
+
+  getTopDiscard() {
+    return this.pile[this.pile.length - 1];
+  }
 }
 
-module.exports = { Game };
+module.exports = Game;

@@ -1,5 +1,5 @@
 const request = require('supertest');
-const app = require('../../src/app');
+const { app } = require('../../src/app');
 const chai = require('chai');
 
 describe('homepage', function() {
@@ -8,6 +8,7 @@ describe('homepage', function() {
       .get('/')
       .expect(200)
       .expect('content-type', 'text/html; charset=UTF-8')
+      .expect(/Host Game/)
       .end(done);
   });
 });
@@ -51,6 +52,16 @@ describe('playerCards', function() {
       .get('/playerCards')
       .expect(200)
       .expect('content-type', 'application/json; charset=utf-8')
+      .end(done);
+  });
+});
+describe('hostGame', function() {
+  it('should return 200 status code for gamepage', function(done) {
+    request(app)
+      .post('/hostGame')
+      .expect(302)
+      .expect('content-type', 'text/plain; charset=utf-8')
+      .expect('Location', '/lobby.html')
       .end(done);
   });
 });

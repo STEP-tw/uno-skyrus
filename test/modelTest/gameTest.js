@@ -1,6 +1,44 @@
-const { Game } = require('../src/models/game');
-const { Player } = require('../src/models/player');
+const Game = require('../../src/models/game.js');
 const chai = require('chai');
+const { Player } = require('../../src/models/player');
+
+describe('class Game', function() {
+  const dummyDeck = [
+    { color: 'red', number: 5 },
+    { color: 'green', number: 7 }
+  ];
+
+  const dummyShuffler = function(deck) {
+    const newDeck = deck.slice();
+    const card = newDeck.shift();
+    newDeck.push(card);
+    return newDeck;
+  };
+
+  it('startGame method should create stack', function() {
+    const game = new Game(dummyDeck);
+    game.startGame(dummyShuffler);
+    const actual = game.stack;
+    const expected = [{ color: 'green', number: 7 }];
+    chai.assert.deepEqual(actual, expected);
+  });
+
+  it('startGame method should initialize pile', function() {
+    const game = new Game(dummyDeck);
+    game.startGame(dummyShuffler);
+    const actual = game.pile;
+    const expected = [{ color: 'red', number: 5 }];
+    chai.assert.deepEqual(actual, expected);
+  });
+
+  it('getTopDiscard should return topDicard from pile', function() {
+    const game = new Game(dummyDeck);
+    game.startGame(dummyShuffler);
+    const actual = game.getTopDiscard();
+    const expected = { color: 'red', number: 5 };
+    chai.assert.deepEqual(actual, expected);
+  });
+});
 
 describe('addPlayer', function() {
   it('should add the given player to the game', function() {
@@ -29,7 +67,7 @@ describe('getPlayerCards', function() {
   });
 });
 
-describe('dealCards', function() {
+describe('startGame', function() {
   it('should assign 7 cards to each player', function() {
     const deck = [
       { number: 1, color: 'red' },
@@ -45,7 +83,7 @@ describe('dealCards', function() {
     const player = new Player('Reshmi');
     game.addPlayer(player);
     const identity = deck => deck;
-    game.dealCards(identity);
+    game.startGame(identity);
     const expectedOutput = [
       { number: 1, color: 'red' },
       { number: 2, color: 'green' },

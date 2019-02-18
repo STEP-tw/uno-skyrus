@@ -1,4 +1,4 @@
-const { Player } = require('../src/models/player');
+const { Player } = require('../../src/models/player');
 const chai = require('chai');
 
 describe('addCards', function() {

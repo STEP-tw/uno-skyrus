@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>SKYRUS-UNO</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="styles/main.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      media="screen"
+      href="host-game.css"
+    />
+    <script src="host_game.js"></script>
+  </head>
+  <body>
+    <div class="header">UNO</div>
+    <div class="main">
+      <form method="POST" action="/hostGame">
+        <div class="theme-uno-card">
+          <div class="theme-uno-card-inner">
+            <div class="theme-uno-design-inner">
+              <input
+                type="text"
+                name="hostName"
+                placeholder="Host Name"
+                required
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="theme-uno-card">
+          <div class="theme-uno-card-inner">
+            <div class="theme-uno-design-inner">
+              <select
+                class="player-list-drop-down"
+                name="totalPlayers"
+                required
+              >
+                <option value="">select players</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="theme-uno-card">
+          <div class="theme-uno-card-inner">
+            <div class="theme-uno-design-inner">
+              <button>Host game</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

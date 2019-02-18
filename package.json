@@ -7,7 +7,7 @@
     "test": "mocha --recursive",
     "coverage": "nyc mocha --recursive",
     "lint": "eslint .",
-    "start": "nodemon server.js"
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -29,6 +29,7 @@
     "supertest": "^3.4.2"
   },
   "dependencies": {
+    "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "lodash": "^4.17.11"
   }

@@ -67,3 +67,54 @@ main {
   justify-content: center;
   font-size: 50px;
 }
+
+
+.theme-uno-card {
+  height: 160px;
+  width: 100px;
+  border: 0.5px solid black;
+  border-radius: 7px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.theme-uno-card-inner {
+  height: 94%;
+  width: 90%;
+  border-radius: 7px;
+}
+
+.theme-uno-design-inner {
+  width: 90%;
+  height: 85%;
+  font-size: 14px;
+  font-family: sans-serif;
+  border: 1px solid black;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-top-left-radius: 100%;
+  border-top-right-radius: 30%;
+  border-bottom-right-radius: 100%;
+  border-bottom-left-radius: 30%;
+}
+
+.link{
+  text-decoration: none;
+  color: black;
+}
+.main {
+  width: 80%;
+  height: 60%;
+  border: 1px solid black;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
