@@ -3,7 +3,7 @@ class Player {
     this.name = name;
     this.cards = [];
   }
-  getCards(){
+  getCards() {
     return this.cards;
   }
 
