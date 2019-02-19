@@ -11,7 +11,12 @@ header {
 
 main {
   width: 100%;
-  height: 100%;
+  height: 85%;
+}
+
+a {
+  text-decoration: none;
+  color: black;
 }
 
 .uno-card {
@@ -41,10 +46,11 @@ main {
 }
 
 .theme-uno-card {
-  height: 160px;
-  width: 100px;
+  height: 180px;
+  width: 120px;
   border: 0.5px solid black;
   border-radius: 7px;
+  box-shadow: 8px 8px 15px rgb(104, 99, 99);
 
   display: flex;
   align-items: center;
@@ -52,18 +58,25 @@ main {
 }
 
 .theme-uno-card-inner {
-  height: 94%;
-  width: 90%;
+  width: 96%;
+  height: 96%;
   border-radius: 7px;
+  border: 1px solid black;
+  /* background-color: rgb(58, 185, 0); */
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .theme-uno-design-inner {
-  width: 90%;
-  height: 85%;
-  font-size: 14px;
+  width: 85%;
+  height: 80%;
+  font-size: 16px;
   font-family: sans-serif;
   border: 1px solid black;
   background-color: white;
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -74,17 +87,41 @@ main {
   border-bottom-left-radius: 30%;
 }
 
-.link {
-  text-decoration: none;
-  color: black;
-}
-.main {
-  width: 80%;
-  height: 60%;
+.table {
+  width: 100%;
+  height: 92%;
   border: 1px solid black;
 
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
+}
+
+.hostRoom {
+  width: 50%;
+  height: 50%;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.host-input {
+  width: 80%;
+  border: none;
+  font-size: 15px;
+  text-align: center;
+  border-bottom: 1px solid black;
+}
+
+.host-btn {
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+
+.host-input:focus {
+  outline: none;
 }

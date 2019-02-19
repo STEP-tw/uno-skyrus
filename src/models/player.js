@@ -9,7 +9,6 @@ class Player {
 
   addCards(cards) {
     this.cards = cards;
-
   }
 }
 
