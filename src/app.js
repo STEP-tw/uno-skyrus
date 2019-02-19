@@ -2,9 +2,11 @@ const {
   initializePile,
   servePlayerCards,
   hostGame,
+  joinGame,
   serveLobby,
   handleGame
 } = require('./handlers/handleRequests');
+
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const app = express();
@@ -25,6 +27,7 @@ app.use(cookieParser());
 app.use(logRequest);
 app.get('/playerCards', servePlayerCards);
 app.post('/hostGame', hostGame);
+app.post('/joinGame', joinGame);
 app.get('/pile', initializePile);
 app.get('/playersStatus', handleGame);
 app.get('/lobby.html', serveLobby);

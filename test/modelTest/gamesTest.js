@@ -15,14 +15,29 @@ describe('games', function() {
 });
 
 describe('games', function() {
-  const games = new Games();
-  const game = {
-    getKey: () => 1234
-  };
-  games.addGame(game);
+  let games;
+  const game = { getKey: () => 1234 };
+
+  beforeEach(function() {
+    games = new Games();
+    games.addGame(game);
+  });
+
   it('should return game for given key', function() {
     const actual = games.getGame(1234);
     const expected = game;
+    chai.assert.deepEqual(actual, expected);
+  });
+
+  it('doesGameExist method should return true when a game exists with a given key', function() {
+    const actual = games.doesGameExist(1234);
+    const expected = true;
+    chai.assert.deepEqual(actual, expected);
+  });
+
+  it('doesGameExist method should return false when a game does not exist with a given key', function() {
+    const actual = games.doesGameExist(123);
+    const expected = false;
     chai.assert.deepEqual(actual, expected);
   });
 });

@@ -25,11 +25,27 @@ const hostGame = function(req, res) {
   const colors = ['red', 'blue', 'green', 'yellow'];
   const deck = createDeck(numbers, colors);
   const game = new Game(deck, 1, gameKey, players);
+  console.log(req.app.games);
 
   req.app.games.addGame(game, gameKey);
 
   res.cookie('gameKey', gameKey);
   res.redirect(302, '/lobby.html');
+  res.end();
+};
+
+const joinGame = function(req, res) {
+  const { playerName, gameKey } = req.body;
+  const games = req.app.games;
+  if (!games.doesGameExist(gameKey)) {
+    res.send('Invalid game key....');
+    return;
+  }
+  const game = games.getGame(gameKey);
+  const player = new Player(playerName);
+  game.addPlayer(player);
+  res.cookie('gameKey', gameKey);
+  res.redirect('/lobby.html');
   res.end();
 };
 
@@ -70,6 +86,7 @@ const serveLobby = function(req, res) {
 module.exports = {
   initializePile,
   hostGame,
+  joinGame,
   serveLobby,
   servePlayerCards,
   handleGame

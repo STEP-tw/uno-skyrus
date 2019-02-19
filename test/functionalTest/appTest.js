@@ -16,6 +16,10 @@ describe('homepage', function() {
 
 describe('hostGame', function() {
   it('should redirect to lobby.html', function(done) {
+    const games = {
+      addGame: () => {}
+    };
+    app.games = games;
     request(app)
       .post('/hostGame')
       .expect(302)
@@ -114,6 +118,43 @@ describe('playerCards', function() {
       .expect(200)
       .expect('content-type', 'application/json; charset=utf-8')
       .expect([{ color: 'red', number: 3 }])
+      .end(done);
+  });
+});
+
+describe('joinGame', function() {
+  const games = {};
+
+  beforeEach(function() {
+    const game = { addPlayer: () => {} };
+
+    games.doesGameExist = sinon.stub();
+    games.doesGameExist.withArgs(1234).returns(true);
+    games.doesGameExist.returns(false);
+
+    games.getGame = sinon.stub();
+    games.getGame.withArgs(1234).returns(game);
+  });
+
+  it('should redirect to lobby.html given the game key is valid', function(done) {
+    app.games = games;
+    request(app)
+      .post('/joinGame')
+      .send({ playerName: 'Rishab', gameKey: 1234 })
+      .expect(302)
+      .expect('content-type', 'text/plain; charset=utf-8')
+      .expect('Location', '/lobby.html')
+      .end(done);
+  });
+
+  it('should stay in joinGame if key is invalid return 200 status code', function(done) {
+    app.games = games;
+    request(app)
+      .post('/joinGame')
+      .send({ playerName: 'Rishab', gameKey: 0 })
+      .expect(200)
+      .expect('content-type', 'text/html; charset=utf-8')
+      .expect(/Invalid game key/)
       .end(done);
   });
 });
