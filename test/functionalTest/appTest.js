@@ -126,7 +126,11 @@ describe('joinGame', function() {
   const games = {};
 
   beforeEach(function() {
-    const game = { addPlayer: () => {} };
+    const game = {
+      getPlayers: () => {
+        return { addPlayer: () => {} };
+      }
+    };
 
     games.doesGameExist = sinon.stub();
     games.doesGameExist.withArgs(1234).returns(true);
