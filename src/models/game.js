@@ -6,6 +6,7 @@ class Game {
     this.pile = [];
     this.playersCount = playersCount;
     this.gameKey = gameKey;
+    this.status = false;
   }
 
   getPlayers() {
@@ -16,13 +17,15 @@ class Game {
     this.stack = shuffle(this.deck);
     this.dealCards();
     this.pile.push(this.stack.pop());
+    console.log(this.players, this.players.getPlayers());
+    this.status = true;
   }
 
-  getPlayerCards(playerName) {
-    const player = this.players.getPlayers().filter(player => {
-      return player.name === playerName;
+  getPlayerCards(playerId) {
+    const player = this.players.getPlayers().find(player => {
+      return player.id === playerId;
     });
-    return player[0].cards;
+    return player.cards;
   }
 
   dealCards() {
@@ -42,6 +45,10 @@ class Game {
 
   getKey() {
     return this.gameKey;
+  }
+
+  hasStarted() {
+    return this.status;
   }
 }
 

@@ -1,5 +1,5 @@
 const {
-  initializePile,
+  getTopDiscard,
   servePlayerCards,
   hostGame,
   joinGame,
@@ -28,7 +28,7 @@ app.use(logRequest);
 app.get('/playerCards', servePlayerCards);
 app.post('/hostGame', hostGame);
 app.post('/joinGame', joinGame);
-app.get('/pile', initializePile);
+app.get('/pile', getTopDiscard);
 app.get('/playersStatus', handleGame);
 app.get('/lobby.html', serveLobby);
 app.use(express.static('public'));

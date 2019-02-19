@@ -129,13 +129,13 @@ describe('joinGame', function() {
     const game = {
       getPlayers: () => {
         return { addPlayer: () => {} };
-      }
+      },
+      hasStarted: () => true
     };
 
     games.doesGameExist = sinon.stub();
     games.doesGameExist.withArgs(1234).returns(true);
     games.doesGameExist.returns(false);
-
     games.getGame = sinon.stub();
     games.getGame.withArgs(1234).returns(game);
   });
@@ -144,7 +144,7 @@ describe('joinGame', function() {
     app.games = games;
     request(app)
       .post('/joinGame')
-      .send({ playerName: 'Rishab', gameKey: 1234 })
+      .send({ id: '1234', gameKey: 1234 })
       .expect(302)
       .expect('content-type', 'text/plain; charset=utf-8')
       .expect('Location', '/lobby.html')
@@ -183,20 +183,30 @@ describe('player Status', function() {
           return { getNumberOfPlayers: sinon.stub().returns(1) };
         },
         getPlayersCount: sinon.stub().returns(1),
-        startGame: () => {}
+        startGame: () => {},
+        hasStarted: () => true
       },
       '5678': {
         getPlayers: () => {
           return { getNumberOfPlayers: sinon.stub().returns(2) };
         },
-        getPlayersCount: sinon.stub().returns(1)
+        getPlayersCount: sinon.stub().returns(1),
+        hasStarted: () => false
+      },
+      '2345': {
+        getPlayers: () => {
+          return { getNumberOfPlayers: sinon.stub().returns(2) };
+        },
+        getPlayersCount: sinon.stub().returns(2),
+        hasStarted: () => false,
+        startGame: () => {}
       },
       getGame: key => games[key]
     };
     app.games = games;
   });
 
-  it('should redirect to the /game.html url when all players will be joined', function(done) {
+  it('should redirect to the /game.html url when all players will be joined and game has started', function(done) {
     request(app)
       .get('/playersStatus')
       .set('Cookie', 'gameKey=1234')
@@ -209,6 +219,14 @@ describe('player Status', function() {
       .get('/playersStatus')
       .set('Cookie', 'gameKey=5678')
       .expect(200)
+      .end(done);
+  });
+
+  it('It should start the game if all players have been joined and should redirect', function(done) {
+    request(app)
+      .get('/playersStatus')
+      .set('Cookie', 'gameKey=2345')
+      .expect(302)
       .end(done);
   });
 });

@@ -34,6 +34,7 @@ describe('Game Class', () => {
     it('should assign 7 cards to each player', function() {
       const identity = deck => deck;
       const player = {
+        id: 1234,
         name: 'player',
         cards: [],
         addCards: function(cards) {
@@ -56,7 +57,7 @@ describe('Game Class', () => {
         { number: 6, color: 'green' },
         { number: 7, color: 'blue' }
       ];
-      const actualOutput = game.getPlayerCards('player');
+      const actualOutput = game.getPlayerCards(1234);
       chai.assert.deepEqual(actualOutput, expectedOutput);
     });
   });
@@ -101,6 +102,14 @@ describe('Game Class', () => {
       const game = new Game(twoCards, 0, 1234, {});
       const actual = game.getKey();
       const expected = 1234;
+      chai.assert.deepEqual(actual, expected);
+    });
+  });
+  describe('getKey', function() {
+    it('should return all players', function() {
+      const game = new Game(twoCards, 0, 1234, {});
+      const actual = game.hasStarted();
+      const expected = false;
       chai.assert.deepEqual(actual, expected);
     });
   });

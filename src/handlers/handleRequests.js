@@ -9,7 +9,7 @@ const ld = require('lodash');
 
 const LOBBY = fs.readFileSync('./public/lobby.html', 'utf8');
 
-const initializePile = function(req, res) {
+const getTopDiscard = function(req, res) {
   const { gameKey } = req.cookies;
   const game = req.app.games.getGame(gameKey);
   const topDiscard = game.getTopDiscard();
@@ -19,17 +19,18 @@ const initializePile = function(req, res) {
 const hostGame = function(req, res) {
   const gameKey = generateGameKey();
   const { hostName, totalPlayers } = req.body;
-  const host = new Player(hostName);
+  const id = generateGameKey();
+  const host = new Player(hostName, id);
   const players = new Players(host);
   const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
   const colors = ['red', 'blue', 'green', 'yellow'];
   const deck = createDeck(numbers, colors);
   const game = new Game(deck, totalPlayers, gameKey, players);
-  console.log(req.app.games);
 
   req.app.games.addGame(game, gameKey);
 
   res.cookie('gameKey', gameKey);
+  res.cookie('id', id);
   res.redirect(302, '/lobby.html');
   res.end();
 };
@@ -42,17 +43,19 @@ const joinGame = function(req, res) {
     return;
   }
   const game = games.getGame(gameKey);
-  const player = new Player(playerName);
+  const id = generateGameKey();
+  const player = new Player(playerName, id);
   game.getPlayers().addPlayer(player);
   res.cookie('gameKey', gameKey);
+  res.cookie('id', id);
   res.redirect('/lobby.html');
   res.end();
 };
 
 const servePlayerCards = function(req, res) {
-  const { gameKey } = req.cookies;
+  const { gameKey, id } = req.cookies;
   const game = req.app.games.getGame(gameKey);
-  const cards = game.getPlayerCards(game.getPlayers().getPlayers()[0].name);
+  const cards = game.getPlayerCards(+id);
   res.send(cards);
 };
 
@@ -68,7 +71,10 @@ const handleGame = function(req, res) {
   const game = req.app.games.getGame(gameKey);
 
   if (haveAllPlayersJoined(game)) {
-    game.startGame(ld.shuffle);
+    console.log('has invoked');
+    if (!game.hasStarted()) {
+      game.startGame(ld.shuffle);
+    }
     res.redirect('/game.html');
     res.end();
     return;
@@ -84,7 +90,7 @@ const serveLobby = function(req, res) {
 };
 
 module.exports = {
-  initializePile,
+  getTopDiscard,
   hostGame,
   joinGame,
   serveLobby,
