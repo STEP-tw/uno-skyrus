@@ -20,8 +20,8 @@ const initializePile = function(req, res) {
 
 const hostGame = function(req, res) {
   const gameKey = generateGameKey();
-  const { hostName } = req.body;
-  const game = new Game([], 1, gameKey);
+  const { hostName,totalPlayers } = req.body;
+  const game = new Game([], totalPlayers, gameKey);
   const player = new Player(hostName);
   game.addPlayer(player);
   req.app.games.addGame(game, gameKey);

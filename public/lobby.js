@@ -1,7 +1,9 @@
 const getPlayersStatus = function() {
   setInterval(() => {
     fetch('/playersStatus').then(response => {
-      window.location.replace(response.url);
+      if (response.redirected) {
+        window.location.replace(response.url);
+      }
     });
   }, 1000);
 };
