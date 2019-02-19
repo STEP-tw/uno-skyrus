@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>SKYRUS-UNO</title>
+    <link rel="stylesheet" type="text/css" href="styles/main.css" />
+  </head>
+  <body>
+    <header class="header">UNO</header>
+    <div class="main">
+      <form method="POST" action="/joinGame">
+        <div class="theme-uno-card">
+          <div class="theme-uno-card-inner">
+            <div class="theme-uno-design-inner">
+              <input
+                type="text"
+                name="playerName"
+                placeholder="Name"
+                required
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="theme-uno-card">
+          <div class="theme-uno-card-inner">
+            <div class="theme-uno-design-inner">
+              <input
+                type="text"
+                name="gameKey"
+                placeholder="gameKey"
+                required
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="theme-uno-card">
+          <div class="theme-uno-card-inner">
+            <div class="theme-uno-design-inner">
+              <button>Join game</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

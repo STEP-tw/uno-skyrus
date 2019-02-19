@@ -38,9 +38,11 @@ class Game {
   getTopDiscard() {
     return this.pile[this.pile.length - 1];
   }
+
   getTotalPlayers() {
     return this.totalPlayers;
   }
+  
   getKey() {
     return this.gameKey;
   }

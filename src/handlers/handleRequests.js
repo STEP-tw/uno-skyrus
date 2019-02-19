@@ -30,6 +30,21 @@ const hostGame = function(req, res) {
   res.end();
 };
 
+const joinGame = function(req, res) {
+  const { playerName, gameKey } = req.body;
+  const games = req.app.games;
+  if (!games.doesGameExist(gameKey)) {
+    res.send('Invalid game key....');
+    return;
+  }
+  const game = games.getGame(gameKey);
+  const player = new Player(playerName);
+  game.addPlayer(player);
+  res.cookie('gameKey', gameKey);
+  res.redirect('/lobby.html');
+  res.end();
+};
+
 const servePlayerCards = function(req, res) {
   const player = new Player('Reshmi');
   const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
@@ -70,6 +85,7 @@ const serveLobby = function(req, res) {
 module.exports = {
   initializePile,
   hostGame,
+  joinGame,
   serveLobby,
   servePlayerCards,
   handleGame
