@@ -10,7 +10,7 @@ const initializePile = function(document) {
     });
 };
 
-const createHtml = function(document, cards) {
+const initializeHand = function(document, cards) {
   const hand = document.getElementById('myHand');
   cards.forEach(card => {
     hand.append(createCard(document, card));
@@ -21,7 +21,7 @@ const fetchCards = function(document) {
   fetch('/playerCards')
     .then(response => response.json())
     .then(cards => {
-      createHtml(document, cards);
+      initializeHand(document, cards);
     });
 };
 
