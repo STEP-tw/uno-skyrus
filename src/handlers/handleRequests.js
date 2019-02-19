@@ -71,7 +71,6 @@ const handleGame = function(req, res) {
   const game = req.app.games.getGame(gameKey);
 
   if (haveAllPlayersJoined(game)) {
-    console.log('has invoked');
     if (!game.hasStarted()) {
       game.startGame(ld.shuffle);
     }

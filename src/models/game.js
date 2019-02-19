@@ -17,7 +17,6 @@ class Game {
     this.stack = shuffle(this.deck);
     this.dealCards();
     this.pile.push(this.stack.pop());
-    console.log(this.players, this.players.getPlayers());
     this.status = true;
   }
 
