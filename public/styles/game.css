@@ -1,0 +1,133 @@
+.play-table {
+  width: 100%;
+  height: 92%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.top-table {
+  width: 100%;
+  height: 25%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.middle-table {
+  width: 100%;
+  height: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.bottom-table {
+  width: 100%;
+  height: 25%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.center-left-table {
+  width: 30%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.center-right-table {
+  width: 30%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.cards-on-table {
+  width: 25%;
+
+  display: flex;
+  flex-direction: row;
+}
+
+/*Players and their hands */
+.player {
+  width: 50%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.player1 {
+  width: 80%;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.player3 {
+  width: 80%;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.player2 {
+  width: 30%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.otherPlayer {
+  width: 80%;
+  display: flex;
+}
+
+.hand {
+  width: 70%;
+  height: 100%;
+  border: 1px solid black;
+
+  overflow: auto;
+
+  display: flex;
+}
+
+.other-hand {
+  width: 80%;
+  height: 90%;
+
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+/*Uno card modifications*/
+.others-uno-card {
+  margin-left: -60px;
+  background: white;
+}
+.first-uno-card {
+  background: white;
+}
