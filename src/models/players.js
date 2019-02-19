@@ -13,6 +13,9 @@ class Players {
   addPlayer(player) {
     this.players.push(player);
   }
+  getPlayers() {
+    return this.players;
+  }
 }
 
 module.exports = { Players };

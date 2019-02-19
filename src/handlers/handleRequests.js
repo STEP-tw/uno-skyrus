@@ -4,16 +4,14 @@ const { generateGameKey } = require('../utils/util.js');
 const { Player } = require('../models/player');
 const { Game } = require('../models/game');
 const { createDeck } = require('../models/deck');
+const { Players } = require('../models/players.js');
 const ld = require('lodash');
 
 const LOBBY = fs.readFileSync('./public/lobby.html', 'utf8');
 
 const initializePile = function(req, res) {
-  const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-  const colors = ['red', 'blue', 'green', 'yellow'];
-  const deck = createDeck(numbers, colors);
-  const game = new Game(deck);
-  game.startGame(ld.shuffle);
+  const { gameKey } = req.cookies;
+  const game = req.app.games.getGame(gameKey);
   const topDiscard = game.getTopDiscard();
   res.send(topDiscard);
 };
@@ -21,38 +19,40 @@ const initializePile = function(req, res) {
 const hostGame = function(req, res) {
   const gameKey = generateGameKey();
   const { hostName } = req.body;
-  const game = new Game([], 1, gameKey);
-  const player = new Player(hostName);
-  game.addPlayer(player);
+  const host = new Player(hostName);
+  const players = new Players(host);
+  const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+  const colors = ['red', 'blue', 'green', 'yellow'];
+  const deck = createDeck(numbers, colors);
+  const game = new Game(deck, 1, gameKey, players);
+
   req.app.games.addGame(game, gameKey);
+
   res.cookie('gameKey', gameKey);
   res.redirect(302, '/lobby.html');
   res.end();
 };
 
 const servePlayerCards = function(req, res) {
-  const player = new Player('Reshmi');
-  const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-  const colors = ['red', 'green', 'blue', 'yellow'];
-  const deck = createDeck(numbers, colors);
-  const game = new Game(deck);
-  game.addPlayer(player);
-  game.startGame(ld.shuffle);
-  const cards = game.getPlayerCards('Reshmi');
+  const { gameKey } = req.cookies;
+  const game = req.app.games.getGame(gameKey);
+  const cards = game.getPlayerCards(game.getPlayers().getPlayers()[0].name);
   res.send(cards);
 };
 
 const haveAllPlayersJoined = function(game) {
-  const joinedPlayers = game.getPlayers().length;
-  const totalPlayers = game.getTotalPlayers();
+  const joinedPlayers = game.getPlayers().getNumberOfPlayers();
+  const playersCount = game.getPlayersCount();
 
-  return joinedPlayers == totalPlayers;
+  return joinedPlayers == playersCount;
 };
 
 const handleGame = function(req, res) {
   const { gameKey } = req.cookies;
   const game = req.app.games.getGame(gameKey);
+
   if (haveAllPlayersJoined(game)) {
+    game.startGame(ld.shuffle);
     res.redirect('/game.html');
     res.end();
     return;

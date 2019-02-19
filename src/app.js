@@ -20,7 +20,6 @@ const logRequest = function(req, res, next) {
   next();
 };
 app.use(bodyParser.urlencoded({ extended: false }));
-app.get('/pile', initializePile);
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(logRequest);

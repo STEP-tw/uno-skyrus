@@ -43,3 +43,13 @@ describe('getNumberOfPlayers', function() {
     chai.assert.deepEqual(expectedOutput, actualOutput);
   });
 });
+
+describe('getPlayers', function(){
+  it('should return array of players' ,function(){
+    const players = new Players({ name: 'hostName', cards: [] });
+    const actualOutput = players.getPlayers();
+    const expectedOutput = [{ name: 'hostName', cards: [] }];
+    
+    chai.assert.deepEqual(expectedOutput, actualOutput);
+  });
+});

@@ -1,19 +1,21 @@
 const { Game } = require('../../src/models/game.js');
 const chai = require('chai');
-const { Player } = require('../../src/models/player');
 
 const {
   twoCards,
   dummyShuffler,
   numberDeck
-} = require('../testHelpers/gameTestHelpers.js');
+} = require('../testHelpers/testHelpers.js');
 
 describe('Game Class', () => {
   describe('startGame', function() {
     let game;
 
     beforeEach(function() {
-      game = new Game(twoCards);
+      const players = {
+        getPlayers: () => []
+      };
+      game = new Game(twoCards, 1, 1234, players);
       game.startGame(dummyShuffler);
     });
 
@@ -30,10 +32,20 @@ describe('Game Class', () => {
     });
 
     it('should assign 7 cards to each player', function() {
-      const game = new Game(numberDeck);
-      const player = new Player('Reshmi');
-      game.addPlayer(player);
       const identity = deck => deck;
+      const player = {
+        name: 'player',
+        cards: [],
+        addCards: function(cards) {
+          player.cards = cards;
+        }
+      };
+      const players = {
+        getPlayers: () => {
+          return [player];
+        }
+      };
+      const game = new Game(numberDeck, 1, 1234, players);
       game.startGame(identity);
       const expectedOutput = [
         { number: 1, color: 'red' },
@@ -44,14 +56,17 @@ describe('Game Class', () => {
         { number: 6, color: 'green' },
         { number: 7, color: 'blue' }
       ];
-      const actualOutput = game.getPlayerCards('Reshmi');
+      const actualOutput = game.getPlayerCards('player');
       chai.assert.deepEqual(actualOutput, expectedOutput);
     });
   });
 
   describe('getTopDiscard', function() {
     it('getTopDiscard should return topDicard from pile', function() {
-      const game = new Game(twoCards);
+      const players = {
+        getPlayers: () => []
+      };
+      const game = new Game(twoCards, 0, 1234, players);
       game.startGame(dummyShuffler);
       const actual = game.getTopDiscard();
       const expected = { color: 'red', number: 5 };
@@ -59,30 +74,34 @@ describe('Game Class', () => {
     });
   });
 
-  describe('addPlayer', function() {
-    it('should add the given player to the game', function() {
-      const game = new Game();
-      const player = new Player('Reshmi');
-      game.addPlayer(player);
-      const expectedOutput = [{ name: 'Reshmi', cards: [] }];
-      const actualOutput = game.getPlayers();
-      chai.assert.deepEqual(actualOutput, expectedOutput);
+  describe('getPlayers', function() {
+    it('should return all players', function() {
+      const players = {
+        players: [{ name: 'player', cards: [] }]
+      };
+      const game = new Game(twoCards, 0, 1234, players);
+      // game.startGame(dummyShuffler);
+      const actual = game.getPlayers();
+      const expected = { players: [{ name: 'player', cards: [] }] };
+      chai.assert.deepEqual(actual, expected);
     });
   });
 
-  describe('getPlayerCards', function() {
-    it('should return the cards of the given player', function() {
-      const game = new Game();
-      const player = new Player('Reshmi');
-      game.addPlayer(player);
-      const cards = twoCards;
-      player.addCards(cards);
-      const expectedOutput = [
-        { number: 5, color: 'red' },
-        { number: 7, color: 'green' }
-      ];
-      const actualOutput = game.getPlayerCards('Reshmi');
-      chai.assert.deepEqual(actualOutput, expectedOutput);
+  describe('getPlayersCount', function() {
+    it('should return all players', function() {
+      const game = new Game(twoCards, 0, 1234, {});
+      const actual = game.getPlayersCount();
+      const expected = 0;
+      chai.assert.deepEqual(actual, expected);
+    });
+  });
+
+  describe('getKey', function() {
+    it('should return all players', function() {
+      const game = new Game(twoCards, 0, 1234, {});
+      const actual = game.getKey();
+      const expected = 1234;
+      chai.assert.deepEqual(actual, expected);
     });
   });
 });
