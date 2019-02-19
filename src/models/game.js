@@ -22,7 +22,7 @@ class Game {
 
   getPlayerCards(playerId) {
     const player = this.players.getPlayers().find(player => {
-      return player.id === playerId;
+      return player.id == playerId;
     });
     return player.cards;
   }

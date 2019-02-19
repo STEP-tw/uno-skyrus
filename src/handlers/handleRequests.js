@@ -53,6 +53,7 @@ const joinGame = function(req, res) {
   const player = new Player(playerName, id);
   game.getPlayers().addPlayer(player);
   res.cookie('gameKey', gameKey);
+  res.cookie('id', id);
   res.end();
 };
 

@@ -1,6 +1,7 @@
 const joinGame = function() {
   const playerName = document.getElementById('playerName').value;
-  const playerDetails = { playerName };
+  const gameKey = document.getElementById('gameKey').value;
+  const playerDetails = { playerName, gameKey };
 
   const req = new Request('/joinGame', {
     method: 'POST',
