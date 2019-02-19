@@ -56,12 +56,55 @@ describe('playerCards', function() {
   });
 });
 describe('hostGame', function() {
-  it('should return 200 status code for gamepage', function(done) {
+  it('should redirect to lobby.html', function(done) {
     request(app)
       .post('/hostGame')
       .expect(302)
       .expect('content-type', 'text/plain; charset=utf-8')
       .expect('Location', '/lobby.html')
+      .end(done);
+  });
+});
+
+describe('serveLobby', function() {
+  it('should return 200 status code for servelobby', function(done) {
+    request(app)
+      .get('/lobby.html')
+      .expect(200)
+      .expect('content-type', 'text/html; charset=utf-8')
+      .expect(/Your game key/)
+      .end(done);
+  });
+});
+
+describe('player Status', function() {
+  const games = {
+    '1234': {
+      getPlayers: () => ['reshmi'],
+      getTotalPlayers: () => 1
+    },
+    '5678': {
+      getPlayers: () => ['rahul','reshmi'],
+      getTotalPlayers: () => 3
+    },
+    getGame: key => games[key]
+  };
+
+  it('should redirect to the /game.html url when all players will be joined', function(done) {
+    app.games = games;
+    request(app)
+      .get('/playersStatus')
+      .set('Cookie', 'gameKey=1234')
+      .expect(302)
+      .end(done);
+  });
+
+  it('should wait for all players to join, if all players are not joined yet', function(done) {
+    app.games = games;
+    request(app)
+      .get('/playersStatus')
+      .set('Cookie', 'gameKey=5678')
+      .expect(200)
       .end(done);
   });
 });

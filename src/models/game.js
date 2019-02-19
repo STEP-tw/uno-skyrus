@@ -1,9 +1,11 @@
 class Game {
-  constructor(deck = []) {
+  constructor(deck = [], totalPlayers, gameKey) {
     this.players = [];
     this.deck = [...deck];
     this.stack = [];
     this.pile = [];
+    this.totalPlayers = totalPlayers;
+    this.gameKey = gameKey;
   }
 
   addPlayer(player) {
@@ -27,7 +29,6 @@ class Game {
       player.addCards(hand);
     });
   }
-
   startGame(shuffle) {
     this.stack = shuffle(this.deck);
     this.dealCards();
@@ -37,6 +38,12 @@ class Game {
   getTopDiscard() {
     return this.pile[this.pile.length - 1];
   }
+  getTotalPlayers() {
+    return this.totalPlayers;
+  }
+  getKey() {
+    return this.gameKey;
+  }
 }
 
-module.exports = Game;
+module.exports = { Game };

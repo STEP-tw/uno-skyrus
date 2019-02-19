@@ -1,4 +1,4 @@
-const Game = require('../../src/models/game.js');
+const { Game } = require('../../src/models/game.js');
 const chai = require('chai');
 const { Player } = require('../../src/models/player');
 
