@@ -6,8 +6,8 @@
   </head>
   <body>
     <header class="header">UNO</header>
-    <div class="main">
-      <form method="POST" action="/joinGame">
+    <form method="POST" action="/joinGame" class="table">
+      <div class="host-room">
         <div class="theme-uno-card">
           <div class="theme-uno-card-inner">
             <div class="theme-uno-design-inner">
@@ -15,6 +15,7 @@
                 type="text"
                 name="playerName"
                 placeholder="Name"
+                class="host-input"
                 required
               />
             </div>
@@ -28,20 +29,23 @@
                 type="text"
                 name="gameKey"
                 placeholder="gameKey"
+                class="host-input"
                 required
               />
             </div>
           </div>
         </div>
 
-        <div class="theme-uno-card">
-          <div class="theme-uno-card-inner">
-            <div class="theme-uno-design-inner">
-              <button>Join game</button>
+        <button class="host-btn">
+          <div class="theme-uno-card">
+            <div class="theme-uno-card-inner">
+              <div class="theme-uno-design-inner">
+                Join game
+              </div>
             </div>
           </div>
-        </div>
-      </form>
-    </div>
+        </button>
+      </div>
+    </form>
   </body>
 </html>
