@@ -35,20 +35,24 @@ const hostGame = function(req, res) {
   res.end();
 };
 
+const validateGameKey = function(req, res) {
+  const { gameKey } = req.body;
+  const games = req.app.games;
+  if (!games.doesGameExist(gameKey)) {
+    res.send({ doesGameExist: false });
+    return;
+  }
+  res.send({ doesGameExist: true });
+};
+
 const joinGame = function(req, res) {
   const { playerName, gameKey } = req.body;
   const games = req.app.games;
-  if (!games.doesGameExist(gameKey)) {
-    res.send('Invalid game key....');
-    return;
-  }
   const game = games.getGame(gameKey);
   const id = generateGameKey();
   const player = new Player(playerName, id);
   game.getPlayers().addPlayer(player);
   res.cookie('gameKey', gameKey);
-  res.cookie('id', id);
-  res.redirect('/lobby.html');
   res.end();
 };
 
@@ -71,7 +75,6 @@ const handleGame = function(req, res) {
   const game = req.app.games.getGame(gameKey);
 
   if (haveAllPlayersJoined(game)) {
-    console.log('has invoked');
     if (!game.hasStarted()) {
       game.startGame(ld.shuffle);
     }
@@ -92,6 +95,7 @@ const serveLobby = function(req, res) {
 module.exports = {
   getTopDiscard,
   hostGame,
+  validateGameKey,
   joinGame,
   serveLobby,
   servePlayerCards,

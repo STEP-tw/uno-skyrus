@@ -123,42 +123,66 @@ describe('playerCards', function() {
 });
 
 describe('joinGame', function() {
-  const games = {};
-
   beforeEach(function() {
-    const game = {
-      getPlayers: () => {
-        return { addPlayer: () => {} };
-      },
-      hasStarted: () => true
-    };
+    const games = {};
+
+    const players = {};
+    players.addPlayer = sinon.stub();
+
+    const game = {};
+    game.getPlayers = sinon.stub();
+    game.getPlayers.returns(players);
 
     games.doesGameExist = sinon.stub();
     games.doesGameExist.withArgs(1234).returns(true);
     games.doesGameExist.returns(false);
     games.getGame = sinon.stub();
     games.getGame.withArgs(1234).returns(game);
+
+    app.games = games;
   });
 
-  it('should redirect to lobby.html given the game key is valid', function(done) {
-    app.games = games;
+  it('should response with 200 status code', function(done) {
     request(app)
       .post('/joinGame')
-      .send({ id: '1234', gameKey: 1234 })
-      .expect(302)
-      .expect('content-type', 'text/plain; charset=utf-8')
-      .expect('Location', '/lobby.html')
+      .send({ playerName: 'Rishab', gameKey: 1234 })
+      .expect(200)
+      .end(done);
+  });
+});
+
+describe('validateGameKey', function() {
+  beforeEach(function() {
+    const games = {};
+    const game = { addPlayer: () => {} };
+
+    games.doesGameExist = sinon.stub();
+    games.doesGameExist.withArgs(1234).returns(true);
+    games.doesGameExist.returns(false);
+
+    games.getGame = sinon.stub();
+    games.getGame.withArgs(1234).returns(game);
+
+    app.games = games;
+  });
+
+  it('should respond with 200 status code and game does not exist if provided game key is invalid', function(done) {
+    request(app)
+      .post('/validateGameKey')
+      .send({ playerName: 'Rishab', gameKey: 0 })
+      .expect(200)
+      .expect({ doesGameExist: false })
+      .expect('content-type', 'application/json; charset=utf-8')
       .end(done);
   });
 
-  it('should stay in joinGame if key is invalid return 200 status code', function(done) {
-    app.games = games;
+  it('should respond with 200 status code and game exist if provided game key is valid', function(done) {
     request(app)
-      .post('/joinGame')
-      .send({ playerName: 'Rishab', gameKey: 0 })
+      .post('/validateGameKey')
+      .send({ playerName: 'Rishab', gameKey: 1234 })
       .expect(200)
-      .expect('content-type', 'text/html; charset=utf-8')
-      .expect(/Invalid game key/)
+      .expect({ doesGameExist: true })
+      .expect('content-type', 'application/json; charset=utf-8')
       .end(done);
   });
 });
