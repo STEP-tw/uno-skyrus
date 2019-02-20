@@ -18,6 +18,11 @@ class Player {
   getId() {
     return this.id;
   }
+  getPlayableCardsFor(otherCard) {
+    return this.cards.filter(card => {
+      return card.canPlayOnTopOf(otherCard);
+    });
+  }
 }
 
 module.exports = { Player };

@@ -93,13 +93,21 @@ describe('playerCards', function() {
   beforeEach(function() {
     const cards = [{ color: 'red', number: 3 }];
     const games = {};
+    const player = {
+      name: 'player',
+      id: 123,
+      getPlayableCardsFor: () => [{ color: 'red', number: 2 }]
+    };
     const game = {
       addPlayer: () => {},
       getTopDiscard: () => {
-        return { color: 'red', number: 5 };
+        return {
+          color: 'red',
+          number: 5
+        };
       },
       getPlayers: () => {
-        return { getPlayers: () => ['player'] };
+        return { getPlayers: () => [player], getPlayer: () => player };
       },
       getPlayerCards: sinon
         .stub()
@@ -118,7 +126,10 @@ describe('playerCards', function() {
       .set('Cookie', 'gameKey=1234')
       .expect(200)
       .expect('content-type', 'application/json; charset=utf-8')
-      .expect([{ color: 'red', number: 3 }])
+      .expect({
+        cards: [{ color: 'red', number: 3 }],
+        playableCards: [{ color: 'red', number: 2 }]
+      })
       .end(done);
   });
 });

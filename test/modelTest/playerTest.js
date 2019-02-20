@@ -45,4 +45,21 @@ describe('Player class', () => {
       chai.assert.deepEqual(actualOutput, expectedOutput);
     });
   });
+
+  describe('getPlayableCardsFor', function() {
+    it('should add the given cards to the player', function() {
+      const player = new Player('Player', 1234);
+      const cards = [
+        { number: 1, color: 'red', canPlayOnTopOf: () => true },
+        { number: 2, color: 'green', canPlayOnTopOf: () => false }
+      ];
+      player.addCards(cards);
+      const expectedOutput = [cards[0]];
+      const actualOutput = player.getPlayableCardsFor({
+        number: 8,
+        color: 'red'
+      });
+      chai.assert.deepEqual(actualOutput, expectedOutput);
+    });
+  });
 });

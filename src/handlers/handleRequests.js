@@ -61,7 +61,10 @@ const servePlayerCards = function(req, res) {
   const { gameKey, id } = req.cookies;
   const game = req.app.games.getGame(gameKey);
   const cards = game.getPlayerCards(+id);
-  res.send(cards);
+  const player = game.getPlayers().getPlayer(id);
+  const playableCards = player.getPlayableCardsFor(game.getTopDiscard());
+  console.log('this is the playable cards', playableCards);
+  res.send({ cards, playableCards });
 };
 
 const haveAllPlayersJoined = function(game) {
