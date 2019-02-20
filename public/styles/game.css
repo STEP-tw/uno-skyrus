@@ -10,7 +10,7 @@
 
 .top-table {
   width: 100%;
-  height: 25%;
+  height: 35%;
 
   display: flex;
   flex-direction: column;
@@ -20,7 +20,7 @@
 
 .center-table {
   width: 50%;
-  height: 100%;
+  height: 30%;
 
   display: flex;
   flex-direction: column;
@@ -62,9 +62,10 @@
 
 .bottom-table {
   width: 100%;
-  height: 25%;
+  height: 35%;
 
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
@@ -113,7 +114,7 @@
 
 .hand {
   width: 70%;
-  height: 100%;
+  height: 65%;
 
   overflow: auto;
 
