@@ -1,7 +1,16 @@
-const joinGame = function() {
+const getPlayerDetails = function(document) {
   const playerName = document.getElementById('playerName').value;
   const gameKey = document.getElementById('gameKey').value;
-  const playerDetails = { playerName, gameKey };
+  return { playerName, gameKey };
+};
+
+const isEmpty = function(playerDetails) {
+  const { playerName, gameKey } = playerDetails;
+  return playerName === '' || gameKey === '';
+};
+
+const joinGame = function() {
+  const playerDetails = getPlayerDetails(document);
 
   const req = new Request('/joinGame', {
     method: 'POST',
@@ -23,9 +32,13 @@ const handleJoinGame = function(document, doesGameExist) {
 };
 
 const validateGameKey = function(document) {
-  const gameKey = document.getElementById('gameKey').value;
-  const playerDetails = { gameKey };
+  const playerDetails = getPlayerDetails(document);
 
+  if (isEmpty(playerDetails)) {
+    document.getElementById('invalidGameKey').innerText =
+      'Name and game key can not be empty';
+    return;
+  }
   const req = new Request('/validateGameKey', {
     method: 'POST',
     body: JSON.stringify(playerDetails),
