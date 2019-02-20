@@ -17,26 +17,34 @@ main {
   justify-content: space-around;
 }
 
-.card {
-  width: 200px;
-  height: 300px;
-  background-color: #fd0000;
-  border: 15px solid whitesmoke;
-  border-radius: 5%;
-  display: flex;
-  flex-direction: row;
-  align-content: center;
-  justify-content: center;
-  overflow: hidden;
+.card-main {
+  width: 220px;
+  height: 320px;
+  background-color: whitesmoke;
+  border-radius: 10px;
+
   -webkit-box-shadow: 2px 2px 15px 5px rgba(0, 0, 0, 0.32);
   -moz-box-shadow: 2px 2px 15px 5px rgba(0, 0, 0, 0.32);
   box-shadow: 2px 2px 15px 5px rgba(0, 0, 0, 0.32);
 }
 
+.card-inner {
+  width: 200px;
+  height: 300px;
+  margin: -35px 10px 10px 10px;
+  background-color: #fd0000;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .ellipse {
   height: 100%;
   width: 78%;
-  background-color: #fafafc;
+  background-color: whitesmoke;
   border-radius: 50%;
   transform: rotate(30deg);
   display: flex;
@@ -50,4 +58,19 @@ main {
   font-size: 180px;
   color: #fd0000;
   text-shadow: 3px 3px 10px black;
+}
+
+.number-left {
+  margin-top: 10px;
+  margin-left: 15px;
+  font-size: 30px;
+  color: whitesmoke;
+}
+
+.number-right {
+  float: right;
+  margin-top: -45px;
+  margin-right: 15px;
+  font-size: 30px;
+  color: whitesmoke;
 }
