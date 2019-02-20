@@ -1,0 +1,53 @@
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+header {
+  height: 10%;
+}
+
+main {
+  width: 100%;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.card {
+  width: 200px;
+  height: 300px;
+  background-color: #fd0000;
+  border: 15px solid whitesmoke;
+  border-radius: 5%;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: center;
+  overflow: hidden;
+  -webkit-box-shadow: 2px 2px 15px 5px rgba(0, 0, 0, 0.32);
+  -moz-box-shadow: 2px 2px 15px 5px rgba(0, 0, 0, 0.32);
+  box-shadow: 2px 2px 15px 5px rgba(0, 0, 0, 0.32);
+}
+
+.ellipse {
+  height: 100%;
+  width: 78%;
+  background-color: #fafafc;
+  border-radius: 50%;
+  transform: rotate(30deg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.ellipse > span {
+  transform: rotate(-30deg);
+  font-size: 180px;
+  color: #fd0000;
+  text-shadow: 3px 3px 10px black;
+}
