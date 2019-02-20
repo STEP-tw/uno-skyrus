@@ -11,6 +11,13 @@ class Player {
   addCards(cards) {
     this.cards = cards;
   }
+
+  removeCard(cardId) {
+    this.cards.splice(cardId, 1);
+  }
+  getId() {
+    return this.id;
+  }
 }
 
 module.exports = { Player };
