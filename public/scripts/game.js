@@ -12,8 +12,10 @@ const initializePile = function(document) {
 
 const initializeHand = function(document, cards) {
   const hand = document.getElementById('myHand');
-  cards.forEach(card => {
-    hand.append(createCard(document, card));
+  cards.forEach((card, index) => {
+    const cardView = createCard(document, card);
+    cardView.onclick = throwCard.bind(null, document, index);
+    hand.append(cardView);
   });
 };
 
@@ -23,6 +25,16 @@ const fetchCards = function(document) {
     .then(cards => {
       initializeHand(document, cards);
     });
+};
+
+const throwCard = function(document, cardId) {
+  fetch('/throwCard', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ cardId })
+  });
 };
 
 const initialize = function(document) {

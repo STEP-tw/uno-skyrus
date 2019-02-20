@@ -11,9 +11,9 @@ const {
   validateGameKey,
   joinGame,
   serveLobby,
-  handleGame
+  handleGame,
+  handleThrowCard
 } = require('./handlers/handleRequests');
-
 
 const app = express();
 app.games = new Games();
@@ -23,6 +23,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(logRequest);
 app.get('/playerCards', servePlayerCards);
+app.post('/throwCard', handleThrowCard);
 app.post('/hostGame', hostGame);
 app.post('/validateGameKey', validateGameKey);
 app.post('/joinGame', joinGame);
