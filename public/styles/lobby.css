@@ -1,0 +1,42 @@
+body,
+html {
+  width: 100%;
+  height: 100%;
+}
+
+main {
+  width: 100%;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+
+  font-family: sans-serif;
+}
+
+.loader {
+  height: 120px;
+  width: 120px;
+  background-color: white;
+  border-radius: 50%;
+  border: 15px solid#48d1cc;
+  border-top: 15px solid white;
+  border-bottom: 15px solid white;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+h3,
+h4 {
+  font-size: 25px;
+}
