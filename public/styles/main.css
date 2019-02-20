@@ -18,7 +18,7 @@ main {
 }
 
 a {
-  text-decoration: none;
+  text-decoration: transparent;
   color: black;
 }
 
@@ -101,12 +101,12 @@ a {
 }
 
 .host-room {
-  width: 50%;
+  width: 100%;
   height: 50%;
 
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
 }
 
