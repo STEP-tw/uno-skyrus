@@ -9,6 +9,7 @@ header {
   height: 8%;
   text-align: center;
   line-height: 2.5;
+  border-bottom: 1px solid black;
 }
 
 main {
@@ -17,7 +18,7 @@ main {
 }
 
 a {
-  text-decoration: none;
+  text-decoration: transparent;
   color: black;
 }
 
@@ -48,8 +49,8 @@ a {
 }
 
 .theme-uno-card {
-  height: 180px;
-  width: 120px;
+  height: 350px;
+  width: 220px;
   border: 0.5px solid black;
   border-radius: 7px;
   box-shadow: 8px 8px 15px rgb(104, 99, 99);
@@ -74,7 +75,7 @@ a {
 .theme-uno-design-inner {
   width: 85%;
   height: 80%;
-  font-size: 16px;
+  font-size: 30px;
   font-family: sans-serif;
   border: 1px solid black;
   background-color: white;
@@ -92,7 +93,6 @@ a {
 .table {
   width: 100%;
   height: 92%;
-  border: 1px solid black;
 
   display: flex;
   flex-direction: row;
@@ -101,19 +101,19 @@ a {
 }
 
 .host-room {
-  width: 50%;
+  width: 100%;
   height: 50%;
 
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
 }
 
 .host-input {
   width: 80%;
   border: none;
-  font-size: 15px;
+  font-size: 30px;
   text-align: center;
   border-bottom: 1px solid black;
 }
@@ -126,4 +126,9 @@ a {
 
 .host-input:focus {
   outline: none;
+}
+
+.invalid-input{
+  color:red;
+  font-size:25px; 
 }
