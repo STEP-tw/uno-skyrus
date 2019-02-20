@@ -94,6 +94,15 @@ const serveLobby = function(req, res) {
   res.end();
 };
 
+const handleThrowCard = function(req, res) {
+  const { gameKey, id } = req.cookies;
+  const { cardId } = req.body;
+
+  const game = req.app.games.getGame(gameKey);
+  game.throwCard(id, cardId);
+  res.end();
+};
+
 module.exports = {
   getTopDiscard,
   hostGame,
@@ -101,5 +110,6 @@ module.exports = {
   joinGame,
   serveLobby,
   servePlayerCards,
-  handleGame
+  handleGame,
+  handleThrowCard
 };

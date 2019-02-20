@@ -255,3 +255,25 @@ describe('player Status', function() {
       .end(done);
   });
 });
+describe('Handle Throw Card', () => {
+  beforeEach(() => {
+    const games = {
+      '1234': {
+        throwCard: (playerId, cardId) => {
+          chai.assert.equal(playerId, '5678');
+          chai.assert.equal(cardId, '1');
+        }
+      },
+      getGame: () => games[1234]
+    };
+    app.games = games;
+  });
+  it('should remove card from hand and add it to top of pile', done => {
+    request(app)
+      .post('/throwCard')
+      .send({ cardId: '1' })
+      .set('Cookie', 'gameKey=1234; id=5678')
+      .expect(200)
+      .end(done);
+  });
+});
