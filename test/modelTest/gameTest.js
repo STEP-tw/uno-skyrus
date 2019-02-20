@@ -113,4 +113,59 @@ describe('Game Class', () => {
       chai.assert.deepEqual(actual, expected);
     });
   });
+  describe('throw card', () => {
+    let game;
+    beforeEach(() => {
+      const identity = deck => deck;
+      const player = {
+        id: 1234,
+        name: 'player',
+        cards: [],
+        addCards: function(cards) {
+          player.cards = cards;
+        },
+        getId() {
+          return player.id;
+        },
+        removeCard(cardId) {
+          player.cards.splice(cardId, 1);
+        },
+        getCards() {
+          return player.cards;
+        }
+      };
+      const players = {
+        getPlayers: () => {
+          return [player];
+        },
+        getCurrentPlayer: () => {
+          return player;
+        },
+        getPlayer() {
+          return player;
+        }
+      };
+      game = new Game(numberDeck, 1, 1234, players);
+      game.startGame(identity);
+    });
+    it('should remove card from player hand and put it on top of pile', () => {
+      game.throwCard(1234, 3);
+      const actual = game.getPlayerCards(1234);
+      const expected = [
+        { number: 1, color: 'red' },
+        { number: 2, color: 'green' },
+        { number: 3, color: 'blue' },
+        { number: 5, color: 'red' },
+        { number: 6, color: 'green' },
+        { number: 7, color: 'blue' }
+      ];
+      chai.assert.deepEqual(actual, expected);
+    });
+    it('should remove card from player hand and put it on top of pile', () => {
+      const expected = game.pile;
+      game.throwCard(124, 3);
+      const actual = game.pile;
+      chai.assert.deepEqual(actual, expected);
+    });
+  });
 });

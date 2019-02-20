@@ -13,6 +13,18 @@ class Game {
     return this.players;
   }
 
+  throwCard(playerId, cardId) {
+    console.log(this.players, 'this is the players');
+    const currentPlayer = this.players.getCurrentPlayer();
+    if (+playerId == currentPlayer.getId()) {
+      const player = this.players.getPlayer(playerId);
+      const playerCards = player.getCards();
+      const thrownCard = playerCards[cardId];
+      player.removeCard(cardId);
+      this.pile.push(thrownCard);
+    }
+  }
+
   startGame(shuffle) {
     this.stack = shuffle(this.deck);
     this.dealCards();
