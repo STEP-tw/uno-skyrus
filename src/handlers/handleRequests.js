@@ -79,7 +79,8 @@ const handleGame = function(req, res) {
     if (!game.hasStarted()) {
       game.startGame(ld.shuffle);
     }
-    res.redirect('/game.html');
+
+    res.redirect(`/game${game.playersCount}.html`);
     res.end();
     return;
   }

@@ -68,6 +68,7 @@ describe('gamepage', function() {
   beforeEach(function() {
     const games = {};
     const game = {
+      playersCount: 2,
       addPlayer: () => {},
       getTopDiscard: () => {
         return { color: 'red', number: 5 };
@@ -78,9 +79,9 @@ describe('gamepage', function() {
 
     app.games = games;
   });
-  it('should return 200 status code for gamepage', function(done) {
+  it('should return 200 status code for gamepage and give the template according to the number of players', function(done) {
     request(app)
-      .get('/game.html')
+      .get('/game2.html')
       .set('Cookie', 'gameKey=1234')
       .expect(200)
       .expect('content-type', 'text/html; charset=UTF-8')
