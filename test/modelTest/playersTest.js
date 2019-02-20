@@ -44,12 +44,22 @@ describe('getNumberOfPlayers', function() {
   });
 });
 
-describe('getPlayers', function(){
-  it('should return array of players' ,function(){
+describe('getPlayers', function() {
+  it('should return array of players', function() {
     const players = new Players({ name: 'hostName', cards: [] });
     const actualOutput = players.getPlayers();
     const expectedOutput = [{ name: 'hostName', cards: [] }];
-    
+
+    chai.assert.deepEqual(expectedOutput, actualOutput);
+  });
+});
+
+describe('getPlayers', function() {
+  it('should return array of players', function() {
+    const players = new Players({ name: 'hostName', cards: [], id: 1234 });
+    const actualOutput = players.getPlayer(1234);
+    const expectedOutput = { name: 'hostName', cards: [], id: 1234 };
+
     chai.assert.deepEqual(expectedOutput, actualOutput);
   });
 });

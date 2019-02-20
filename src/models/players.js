@@ -16,6 +16,11 @@ class Players {
   getPlayers() {
     return this.players;
   }
+  getPlayer(playerId) {
+    return this.players.find(player => {
+      return player.id == playerId;
+    });
+  }
 }
 
 module.exports = { Players };
