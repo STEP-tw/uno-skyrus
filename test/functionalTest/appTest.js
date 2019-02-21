@@ -15,7 +15,7 @@ describe('homepage', function() {
 });
 
 describe('hostGame', function() {
-  it('should redirect to lobby.html', function(done) {
+  it('should redirect to lobby', function(done) {
     const games = {
       addGame: () => {}
     };
@@ -24,7 +24,7 @@ describe('hostGame', function() {
       .post('/hostGame')
       .expect(302)
       .expect('content-type', 'text/plain; charset=utf-8')
-      .expect('Location', '/lobby.html')
+      .expect('Location', '/lobby')
       .end(done);
   });
 });
@@ -202,7 +202,7 @@ describe('validateGameKey', function() {
 describe('serveLobby', function() {
   it('should return 200 status code for serveLog', function(done) {
     request(app)
-      .get('/lobby.html')
+      .get('/lobby')
       .set('Cookie', 'gameKey=1234')
       .expect(200)
       .expect('content-type', 'text/html; charset=utf-8')
