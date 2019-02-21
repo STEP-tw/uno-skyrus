@@ -19,6 +19,17 @@ const hasCard = (playableCards, card) => {
   });
 };
 
+const displayLog = function(document, log) {
+  const status = document.getElementById('statusBar');
+  status.innerHTML = log;
+};
+
+const getLog = function(document) {
+  fetch('/serveLog')
+    .then(response => response.text())
+    .then(log => displayLog(document, log));
+};
+
 const initializeHand = function(document, { cards, playableCards }) {
   const hand = document.getElementById('myHand');
   hand.innerHTML = '';
@@ -78,11 +89,7 @@ const getNamesInOrder = function(playerNames, playerPosition) {
   return namesInOrder;
 };
 
-const assignNames = function(
-  document,
-  playerNames,
-  playerPosition,
-) {
+const assignNames = function(document, playerNames, playerPosition) {
   const namesInOrder = getNamesInOrder(playerNames, playerPosition);
   let id = 1;
   namesInOrder.forEach(name => {
@@ -104,6 +111,7 @@ const initialize = function(document) {
   setInterval(() => {
     initializePile(document);
     fetchCards(document);
+    getLog(document);
     const pile = document.getElementById('pile');
     pile.setAttribute('ondrop', 'drop(event)');
     pile.setAttribute('ondragover', 'allowDrop(event)');
@@ -111,5 +119,3 @@ const initialize = function(document) {
   getPlayerNames(document);
 };
 window.onload = initialize.bind(null, document);
-
-

@@ -119,6 +119,9 @@ describe('Game Class', () => {
         id: 1234,
         name: 'player',
         cards: [],
+        getName: () => {
+          return 'player';
+        },
         addCards: function(cards) {
           player.cards = cards;
         },
@@ -146,7 +149,7 @@ describe('Game Class', () => {
         setCurrentPlayer: () => {},
         updateCurrentPlayer: () => {}
       };
-      game = new Game(numberDeck, 1, 1234, players);
+      game = new Game(numberDeck, 1, 1234, players, { addLog: () => {} });
       game.startGame(identity);
     });
     it('should remove card from player hand and put it on top of pile', () => {

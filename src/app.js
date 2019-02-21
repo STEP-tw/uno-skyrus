@@ -13,11 +13,13 @@ const {
   serveLobby,
   handleGame,
   handleThrowCard,
-  getPlayerNames
+  getPlayerNames,
+  serveLog
 } = require('./handlers/handleRequests');
 
 const app = express();
 app.games = new Games();
+const options = { extensions: ['html'] };
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -31,7 +33,8 @@ app.post('/joinGame', joinGame);
 app.get('/pile', getTopDiscard);
 app.get('/getPlayerNames', getPlayerNames);
 app.get('/playersStatus', handleGame);
-app.get('/lobby.html', serveLobby);
-app.use(express.static('public'));
+app.get('/serveLog', serveLog);
+app.get('/lobby', serveLobby);
+app.use(express.static('public', options));
 
 module.exports = { app };

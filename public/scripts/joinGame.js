@@ -19,7 +19,7 @@ const joinGame = function() {
   });
 
   fetch(req).then(() => {
-    window.location.href = '/lobby.html';
+    window.location.href = '/lobby';
   });
 };
 

@@ -6,6 +6,7 @@ const { Game } = require('../models/game');
 const { createDeck } = require('../models/deck');
 const { Players } = require('../models/players.js');
 const ld = require('lodash');
+const { ActivityLog } = require('./../models/activityLog');
 
 const LOBBY = fs.readFileSync('./public/lobby.html', 'utf8');
 
@@ -25,13 +26,14 @@ const hostGame = function(req, res) {
   const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
   const colors = ['red', 'blue', 'green', 'yellow'];
   const deck = createDeck(numbers, colors);
-  const game = new Game(deck, totalPlayers, gameKey, players);
+  const activityLog = new ActivityLog(gameKey, hostName);
+  const game = new Game(deck, totalPlayers, gameKey, players, activityLog);
 
   req.app.games.addGame(game, gameKey);
 
   res.cookie('gameKey', gameKey);
   res.cookie('id', id);
-  res.redirect(302, '/lobby.html');
+  res.redirect(302, '/lobby');
   res.end();
 };
 
@@ -66,6 +68,14 @@ const servePlayerCards = function(req, res) {
   res.send({ cards, playableCards });
 };
 
+const serveLog = function(req, res) {
+  const { gameKey } = req.cookies;
+  const game = res.app.games.getGame(gameKey);
+  const latestLog = game.activityLog.getLatestLog();
+  res.set('Content-Type', 'text/plain');
+  res.send(latestLog);
+};
+
 const haveAllPlayersJoined = function(game) {
   const joinedPlayers = game.getPlayers().getNumberOfPlayers();
   const playersCount = game.getPlayersCount();
@@ -83,7 +93,7 @@ const handleGame = function(req, res) {
       game.startGame(ld.shuffle);
     }
 
-    res.redirect(`/game${playersCount}.html`);
+    res.redirect(`/game${playersCount}`);
     res.end();
     return;
   }
@@ -131,5 +141,6 @@ module.exports = {
   servePlayerCards,
   handleGame,
   handleThrowCard,
-  getPlayerNames
+  getPlayerNames,
+  serveLog
 };
