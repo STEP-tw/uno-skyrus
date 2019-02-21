@@ -71,4 +71,14 @@ describe('Player class', () => {
       chai.assert.deepEqual(actualOutput, expectedOutput);
     });
   });
+
+  describe('addCard', function() {
+    it('should add the given card to the player', function() {
+      const player = new Player('Player', 1234);
+      player.addCard({ number: 4, color: 'red' });
+      const expectedOutput = [{ number: 4, color: 'red' }];
+      const actualOutput = player.getCards();
+      chai.assert.deepEqual(actualOutput, expectedOutput);
+    });
+  });
 });

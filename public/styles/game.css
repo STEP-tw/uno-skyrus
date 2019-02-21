@@ -177,7 +177,7 @@
 }
 
 .non-playable-card > div {
-  opacity: 0.4;
+  opacity: 0.1;
 }
 
 .uno-card {
@@ -250,14 +250,17 @@
   color: #d33e32;
   background: #d33e32;
 }
+
 .blue {
   color: #5bc0eb;
   background: #5bc0eb;
 }
+
 .green {
   color: #9bc53d;
   background: #9bc53d;
 }
+
 .yellow {
   color: #f6db18;
   background: #f6db18;
@@ -267,4 +270,13 @@
 }
 .non-current-player {
   color: black;
+}
+.stack {
+  display: flex;
+  flex-direction: row;
+}
+
+.pile-stack-card {
+  margin-left: -95px;
+  background: white;
 }

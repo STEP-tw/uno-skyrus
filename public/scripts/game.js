@@ -1,6 +1,10 @@
 /* globals createCard */
 /*eslint no-unused-vars: "off"*/
 
+const drawCard = function() {
+  fetch('/drawCard');
+};
+
 const initializePile = function(document) {
   const pile = document.getElementById('pile');
   fetch('/pile')
@@ -52,16 +56,22 @@ const allowDrop = function(event) {
 };
 
 const drag = function(event) {
-  console.log(event.target.id, 'ondrag');
   event.dataTransfer.setData('text', event.target.id);
 };
 
 const drop = function(event) {
   event.preventDefault();
-
   const cardId = event.dataTransfer.getData('text');
+
   throwCard(document, cardId);
-  console.log(onclick, ondrop);
+};
+
+const drawDrop = function(event) {
+  event.preventDefault();
+  const cardId = event.dataTransfer.getData('text');
+  if (cardId == 'stack') {
+    drawCard();
+  }
 };
 
 const fetchCards = function(document) {
@@ -119,6 +129,16 @@ const initialize = function(document) {
     fetchCards(document);
     getLog(document);
     const pile = document.getElementById('pile');
+    pile.setAttribute('ondrop', 'drop(event)');
+
+    const stack = document.getElementById('stack');
+    stack.setAttribute('draggable', 'true');
+    stack.setAttribute('ondragstart', 'drag(event)');
+
+    const hand = document.getElementById('myHand');
+    hand.setAttribute('ondragover', 'allowDrop(event)');
+    hand.setAttribute('ondrop', 'drawDrop(event)');
+
     pile.setAttribute('ondrop', 'drop(event)');
     pile.setAttribute('ondragover', 'allowDrop(event)');
     getPlayerNames(document);

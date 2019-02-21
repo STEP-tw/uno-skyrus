@@ -39,6 +39,13 @@ class Game {
     this.players.setCurrentPlayer();
   }
 
+  drawCard(playerId) {
+    const currentPlayer = this.players.getCurrentPlayer();
+    if (currentPlayer.id == playerId) {
+      currentPlayer.addCard(this.stack.pop());
+    }
+  }
+
   getPlayerCards(playerId) {
     const player = this.players.getPlayers().find(player => {
       return player.id == playerId;
@@ -48,7 +55,7 @@ class Game {
 
   dealCards() {
     this.players.getPlayers().forEach(player => {
-      const hand = this.stack.splice(0, 7);
+      const hand = this.stack.splice(this.stack.length - 7);
       player.addCards(hand);
     });
   }

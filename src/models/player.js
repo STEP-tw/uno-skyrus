@@ -12,6 +12,10 @@ class Player {
     this.cards = cards;
   }
 
+  addCard(card) {
+    this.cards.push(card);
+  }
+
   removeCard(cardId) {
     this.cards.splice(cardId, 1);
   }
