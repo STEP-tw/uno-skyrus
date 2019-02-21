@@ -19,9 +19,10 @@ describe('addPlayer', function() {
 describe('getCurrentPlayer', function() {
   it('should return current player', function() {
     const players = new Players({ name: 'hostName', cards: [] });
-    const expectedOutput = { name: 'hostName', cards: [] };
+    players.addPlayer({name:'Aftab', cards: []});
+    players.setCurrentPlayer();
+    const expectedOutput = { name: 'Aftab', cards: [] };
     const actualOutput = players.getCurrentPlayer();
-
     chai.assert.deepEqual(expectedOutput, actualOutput);
   });
 });
@@ -65,7 +66,6 @@ describe('getPlayers', function() {
 });
 
 describe('setCurrentPlayer', function() {
-  
   it('should set the current player as first joined player', function() {
     const player = {
       name: 'Rahul',
@@ -104,5 +104,20 @@ describe('setCurrentPlayer', function() {
     const actualOutput = players.getCurrentPlayer();
     const expectedOutput = hostPlayer;
     chai.assert.deepEqual(expectedOutput, actualOutput);
+  });
+});
+
+describe('isCurrent', function() {
+  it('should return true for current player', function() {
+    const players = new Players({ name: 'Rahul', cards: [], id: '1234' });
+    players.addPlayer({ name: 'Affi', cards: [], id: '2345' });
+    players.setCurrentPlayer();
+    const expectedOutput = true;
+    const actualOutput = players.isCurrent({
+      name: 'Affi',
+      cards: [],
+      id: '2345'
+    });
+    chai.assert.equal(actualOutput, expectedOutput);
   });
 });

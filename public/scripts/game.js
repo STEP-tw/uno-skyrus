@@ -85,15 +85,21 @@ const throwCard = function(document, cardId) {
 const getNamesInOrder = function(playerNames, playerPosition) {
   const namesBeforeMe = playerNames.slice(0, playerPosition);
   const namesAfterMe = playerNames.slice(playerPosition);
-  const namesInOrder = namesAfterMe.concat(namesBeforeMe);
-  return namesInOrder;
+  const detailsInOrder = namesAfterMe.concat(namesBeforeMe);
+  return detailsInOrder;
 };
 
-const assignNames = function(document, playerNames, playerPosition) {
-  const namesInOrder = getNamesInOrder(playerNames, playerPosition);
+const assignNames = function(document, playerDetails, playerPosition) {
+  const detailsInOrder = getNamesInOrder(playerDetails, playerPosition);
   let id = 1;
-  namesInOrder.forEach(name => {
+  console.log('this is the data', playerDetails);
+  detailsInOrder.forEach(({ name, isCurrent }) => {
     document.getElementById(`player${id}`).innerText = name;
+    let className = 'non-current-player';
+    if (isCurrent) {
+      className = 'current-player';
+    }
+    document.getElementById(`player${id}`).className = className;
     id++;
   });
 };
@@ -102,8 +108,8 @@ const getPlayerNames = document => {
   fetch('/getPlayerNames')
     .then(response => response.json())
     .then(players => {
-      const { playerNames, playerPosition } = players;
-      assignNames(document, playerNames, playerPosition);
+      const { playerDetails, playerPosition } = players;
+      assignNames(document, playerDetails, playerPosition);
     });
 };
 
@@ -115,7 +121,7 @@ const initialize = function(document) {
     const pile = document.getElementById('pile');
     pile.setAttribute('ondrop', 'drop(event)');
     pile.setAttribute('ondragover', 'allowDrop(event)');
+    getPlayerNames(document);
   }, 1000);
-  getPlayerNames(document);
 };
 window.onload = initialize.bind(null, document);

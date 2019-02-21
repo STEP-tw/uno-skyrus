@@ -301,7 +301,8 @@ describe('get players', () => {
       getPlayers: () => [
         { name: 'Aftab', id: '5678' },
         { name: 'Rahul', id: '2678' }
-      ]
+      ],
+      isCurrent: () => {}
     };
 
     const game = {

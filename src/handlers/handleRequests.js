@@ -128,8 +128,15 @@ const getPlayerNames = (req, res) => {
   const game = games.getGame(gameKey);
   const players = game.getPlayers().getPlayers();
   const playerPosition = players.findIndex(player => player.id == id);
-  const playerNames = players.map(player => player.name);
-  res.send({ playerNames, playerPosition });
+
+  const playerDetails = players.map(player => {
+    return {
+      name: player.name,
+      isCurrent: game.getPlayers().isCurrent(player)
+    };
+  });
+  
+  res.send({ playerDetails, playerPosition });
 };
 
 module.exports = {

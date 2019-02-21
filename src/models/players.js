@@ -2,7 +2,7 @@ class Players {
   constructor(hostPlayer) {
     this.host = hostPlayer;
     this.players = [hostPlayer];
-    this.currentPlayer = hostPlayer;
+    this.currentPlayer = {};
     this.currentPlayerIndex = 1;
   }
   getCurrentPlayer() {
@@ -17,11 +17,17 @@ class Players {
   getPlayers() {
     return this.players;
   }
+
   getPlayer(playerId) {
     return this.players.find(player => {
       return player.id == playerId;
     });
   }
+
+  isCurrent(player) {
+    return this.currentPlayer.id == player.id;
+  }
+
   setCurrentPlayer() {
     this.currentPlayer = this.players[this.currentPlayerIndex];
   }

@@ -262,3 +262,9 @@
   color: #f6db18;
   background: #f6db18;
 }
+.current-player {
+  color: #d33e32;
+}
+.non-current-player {
+  color: black;
+}
