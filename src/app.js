@@ -13,8 +13,9 @@ const {
   serveLobby,
   handleGame,
   handleThrowCard,
-  getPlayerNames,
-  serveLog
+  serveLog,
+  drawCard,
+  getPlayerNames
 } = require('./handlers/handleRequests');
 
 const app = express();
@@ -35,6 +36,7 @@ app.get('/getPlayerNames', getPlayerNames);
 app.get('/playersStatus', handleGame);
 app.get('/serveLog', serveLog);
 app.get('/lobby', serveLobby);
+app.get('/drawCard', drawCard);
 app.use(express.static('public', options));
 
 module.exports = { app };

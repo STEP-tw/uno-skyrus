@@ -122,6 +122,13 @@ const handleThrowCard = function(req, res) {
   res.end();
 };
 
+const drawCard = function(req, res) {
+  const { gameKey, id } = req.cookies;
+  const game = res.app.games.getGame(gameKey);
+  game.drawCard(id);
+  res.end();
+};
+
 const getPlayerNames = (req, res) => {
   const { gameKey, id } = req.cookies;
   const games = req.app.games;
@@ -142,5 +149,6 @@ module.exports = {
   handleGame,
   handleThrowCard,
   getPlayerNames,
+  drawCard,
   serveLog
 };

@@ -18,5 +18,17 @@ const numberDeck = [
   { number: 8, color: 'blue' },
   { number: 9, color: 'green' }
 ];
+const tenCards = [
+  { number: 1, color: 'red' },
+  { number: 2, color: 'green' },
+  { number: 3, color: 'blue' },
+  { number: 4, color: 'yellow' },
+  { number: 5, color: 'red' },
+  { number: 6, color: 'green' },
+  { number: 7, color: 'blue' },
+  { number: 8, color: 'blue' },
+  { number: 9, color: 'green' },
+  { number: 9, color: 'yellow' }
+];
 
-module.exports = { twoCards, dummyShuffler, numberDeck };
+module.exports = { twoCards, dummyShuffler, numberDeck, tenCards };
