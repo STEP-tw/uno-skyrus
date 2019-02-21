@@ -294,6 +294,27 @@ describe('Handle Throw Card', () => {
   });
 });
 
+describe('Handle Draw Card', () => {
+  beforeEach(() => {
+    const games = {
+      '1234': {
+        drawCard: playerId => {
+          chai.assert.equal(playerId, '5678');
+        }
+      },
+      getGame: () => games[1234]
+    };
+    app.games = games;
+  });
+  it('should remove card from hand and add it to top of pile', done => {
+    request(app)
+      .get('/drawCard')
+      .set('Cookie', 'gameKey=1234; id=5678')
+      .expect(200)
+      .end(done);
+  });
+});
+
 describe('serveLog', function() {
   it('should return 200 status code for serveLog', function(done) {
     const games = {
