@@ -24,7 +24,7 @@ class Game {
       this.pile.push(thrownCard);
       this.activityLog.addLog(
         player.getName(),
-        ' thrown ',
+        ' has thrown ',
         thrownCard.number + ' ' + thrownCard.color
       );
       this.players.updateCurrentPlayer(thrownCard);
