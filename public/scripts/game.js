@@ -71,12 +71,45 @@ const throwCard = function(document, cardId) {
   });
 };
 
-const initialize = function(document) {
-  initializePile(document);
-  fetchCards(document);
-  const pile = document.getElementById('pile');
-  pile.setAttribute('ondrop', 'drop(event)');
-  pile.setAttribute('ondragover', 'allowDrop(event)');
+const getNamesInOrder = function(playerNames, playerPosition) {
+  const namesBeforeMe = playerNames.slice(0, playerPosition);
+  const namesAfterMe = playerNames.slice(playerPosition);
+  const namesInOrder = namesAfterMe.concat(namesBeforeMe);
+  return namesInOrder;
 };
 
-window.onload = setInterval(initialize.bind(null, document), 1000);
+const assignNames = function(
+  document,
+  playerNames,
+  playerPosition,
+) {
+  const namesInOrder = getNamesInOrder(playerNames, playerPosition);
+  let id = 1;
+  namesInOrder.forEach(name => {
+    document.getElementById(`player${id}`).innerText = name;
+    id++;
+  });
+};
+
+const getPlayerNames = document => {
+  fetch('/getPlayerNames')
+    .then(response => response.json())
+    .then(players => {
+      const { playerNames, playerPosition } = players;
+      assignNames(document, playerNames, playerPosition);
+    });
+};
+
+const initialize = function(document) {
+  setInterval(() => {
+    initializePile(document);
+    fetchCards(document);
+    const pile = document.getElementById('pile');
+    pile.setAttribute('ondrop', 'drop(event)');
+    pile.setAttribute('ondragover', 'allowDrop(event)');
+  }, 1000);
+  getPlayerNames(document);
+};
+window.onload = initialize.bind(null, document);
+
+
