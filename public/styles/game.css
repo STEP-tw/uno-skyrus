@@ -271,7 +271,8 @@
 .non-current-player {
   color: black;
 }
-.stack {
+
+.pile-stack {
   display: flex;
   flex-direction: row;
 }
