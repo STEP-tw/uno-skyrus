@@ -27,7 +27,7 @@ a {
   min-width: 100px;
   max-width: 100px;
   max-height: 140px;
-  border: 1px solid black;
+  border: 0px solid rgb(100, 100, 100);
   border-radius: 7px;
 
   display: flex;
@@ -132,4 +132,3 @@ a {
   color: red;
   font-size: 25px;
 }
-

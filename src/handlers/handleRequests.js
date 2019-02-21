@@ -76,17 +76,24 @@ const haveAllPlayersJoined = function(game) {
 const handleGame = function(req, res) {
   const { gameKey } = req.cookies;
   const game = req.app.games.getGame(gameKey);
+  const playersCount = game.playersCount;
 
   if (haveAllPlayersJoined(game)) {
     if (!game.hasStarted()) {
       game.startGame(ld.shuffle);
     }
 
-    res.redirect(`/game${game.playersCount}.html`);
+    res.redirect(`/game${playersCount}.html`);
     res.end();
     return;
   }
-  res.end();
+  const extractPlayersNames = function(game) {
+    const players = game.getPlayers().getPlayers();
+    return players.map(player => player.getName());
+  };
+  const playersNames = extractPlayersNames(game);
+  const playersDetails = { playersCount, playersNames };
+  res.send(playersDetails);
 };
 
 const serveLobby = function(req, res) {

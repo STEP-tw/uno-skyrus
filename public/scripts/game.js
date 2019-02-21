@@ -1,4 +1,5 @@
 /* globals createCard */
+/*eslint no-unused-vars: "off"*/
 
 const initializePile = function(document) {
   const pile = document.getElementById('pile');
@@ -21,16 +22,36 @@ const hasCard = (playableCards, card) => {
 const initializeHand = function(document, { cards, playableCards }) {
   console.log(cards, playableCards);
   const hand = document.getElementById('myHand');
+  hand.innerHTML = '';
   cards.forEach((card, index) => {
     const cardView = createCard(document, card);
     let className = 'non-playable-card';
     if (hasCard(playableCards, card)) {
-      cardView.onclick = throwCard.bind(null, document, index);
+      cardView.setAttribute('draggable', 'true');
+      cardView.setAttribute('ondragstart', 'drag(event)');
+      cardView.id = index;
       className = 'highlight-playable-card';
     }
     cardView.classList.add(className);
     hand.append(cardView);
   });
+};
+
+const allowDrop = function(event) {
+  event.preventDefault();
+};
+
+const drag = function(event) {
+  console.log(event.target.id, 'ondrag');
+  event.dataTransfer.setData('text', event.target.id);
+};
+
+const drop = function(event) {
+  event.preventDefault();
+
+  const cardId = event.dataTransfer.getData('text');
+  throwCard(document, cardId);
+  console.log(onclick, ondrop);
 };
 
 const fetchCards = function(document) {
@@ -54,6 +75,9 @@ const throwCard = function(document, cardId) {
 const initialize = function(document) {
   initializePile(document);
   fetchCards(document);
+  const pile = document.getElementById('pile');
+  pile.setAttribute('ondrop', 'drop(event)');
+  pile.setAttribute('ondragover', 'allowDrop(event)');
 };
 
-window.onload = initialize.bind(null, document);
+window.onload = setInterval(initialize.bind(null, document), 1000);
