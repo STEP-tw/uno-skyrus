@@ -93,7 +93,7 @@ const handleGame = function(req, res) {
       game.startGame(ld.shuffle);
     }
 
-    res.redirect(`/game${playersCount}`);
+    res.redirect(`/${playersCount}player_game`);
     res.end();
     return;
   }

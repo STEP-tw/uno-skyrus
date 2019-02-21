@@ -81,7 +81,7 @@ describe('gamepage', function() {
   });
   it('should return 200 status code for gamepage and give the template according to the number of players', function(done) {
     request(app)
-      .get('/game2.html')
+      .get('/2player_game')
       .set('Cookie', 'gameKey=1234')
       .expect(200)
       .expect('content-type', 'text/html; charset=UTF-8')
@@ -271,6 +271,7 @@ describe('player Status', function() {
       .end(done);
   });
 });
+
 describe('Handle Throw Card', () => {
   beforeEach(() => {
     const games = {
