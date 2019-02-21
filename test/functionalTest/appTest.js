@@ -200,7 +200,7 @@ describe('validateGameKey', function() {
 });
 
 describe('serveLobby', function() {
-  it('should return 200 status code for servelobby', function(done) {
+  it('should return 200 status code for serveLog', function(done) {
     request(app)
       .get('/lobby.html')
       .set('Cookie', 'gameKey=1234')
@@ -290,6 +290,31 @@ describe('Handle Throw Card', () => {
       .send({ cardId: '1' })
       .set('Cookie', 'gameKey=1234; id=5678')
       .expect(200)
+      .end(done);
+  });
+});
+
+describe('serveLog', function() {
+  it('should return 200 status code for serveLog', function(done) {
+    const games = {
+      1234: {
+        activityLog: {
+          getLatestLog: () => {
+            return 'latest log';
+          }
+        }
+      },
+      getGame: () => {
+        return games['1234'];
+      }
+    };
+
+    app.games = games;
+    request(app)
+      .get('/serveLog')
+      .set('Cookie', 'gameKey=1234')
+      .expect(200)
+      .expect('content-type', 'text/plain; charset=utf-8')
       .end(done);
   });
 });

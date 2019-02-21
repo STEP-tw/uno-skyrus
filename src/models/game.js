@@ -1,6 +1,7 @@
 class Game {
-  constructor(deck, playersCount, gameKey, players) {
+  constructor(deck, playersCount, gameKey, players, activityLog) {
     this.players = players;
+    this.activityLog = activityLog;
     this.deck = [...deck];
     this.stack = [];
     this.pile = [];
@@ -21,6 +22,11 @@ class Game {
       const thrownCard = playerCards[cardId];
       player.removeCard(cardId);
       this.pile.push(thrownCard);
+      this.activityLog.addLog(
+        player.getName(),
+        ' thrown ',
+        thrownCard.number + ' ' + thrownCard.color
+      );
       this.players.updateCurrentPlayer(thrownCard);
     }
   }

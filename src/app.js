@@ -12,7 +12,8 @@ const {
   joinGame,
   serveLobby,
   handleGame,
-  handleThrowCard
+  handleThrowCard,
+  serveLog
 } = require('./handlers/handleRequests');
 
 const app = express();
@@ -30,6 +31,7 @@ app.post('/joinGame', joinGame);
 app.get('/pile', getTopDiscard);
 app.get('/playersStatus', handleGame);
 app.get('/lobby.html', serveLobby);
+app.get('/serveLog', serveLog);
 app.use(express.static('public'));
 
 module.exports = { app };

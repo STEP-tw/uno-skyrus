@@ -6,6 +6,7 @@ const { Game } = require('../models/game');
 const { createDeck } = require('../models/deck');
 const { Players } = require('../models/players.js');
 const ld = require('lodash');
+const { ActivityLog } = require('./../models/activityLog');
 
 const LOBBY = fs.readFileSync('./public/lobby.html', 'utf8');
 
@@ -25,7 +26,8 @@ const hostGame = function(req, res) {
   const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
   const colors = ['red', 'blue', 'green', 'yellow'];
   const deck = createDeck(numbers, colors);
-  const game = new Game(deck, totalPlayers, gameKey, players);
+  const activityLog = new ActivityLog(gameKey, hostName);
+  const game = new Game(deck, totalPlayers, gameKey, players, activityLog);
 
   req.app.games.addGame(game, gameKey);
 
@@ -64,6 +66,14 @@ const servePlayerCards = function(req, res) {
   const player = game.getPlayers().getPlayer(id);
   const playableCards = player.getPlayableCardsFor(game.getTopDiscard());
   res.send({ cards, playableCards });
+};
+
+const serveLog = function(req, res) {
+  const { gameKey } = req.cookies;
+  const game = res.app.games.getGame(gameKey);
+  const latestLog = game.activityLog.getLatestLog();
+  res.set('Content-Type', 'text/plain');
+  res.send(latestLog);
 };
 
 const haveAllPlayersJoined = function(game) {
@@ -120,5 +130,6 @@ module.exports = {
   serveLobby,
   servePlayerCards,
   handleGame,
-  handleThrowCard
+  handleThrowCard,
+  serveLog
 };

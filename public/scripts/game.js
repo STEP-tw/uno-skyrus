@@ -19,6 +19,17 @@ const hasCard = (playableCards, card) => {
   });
 };
 
+const displayLog = function(document, log) {
+  const status = document.getElementById('statusBar');
+  status.innerHTML = log;
+};
+
+const getLog = function(document) {
+  fetch('/serveLog')
+    .then(response => response.text())
+    .then(log => displayLog(document, log));
+};
+
 const initializeHand = function(document, { cards, playableCards }) {
   const hand = document.getElementById('myHand');
   hand.innerHTML = '';
@@ -74,6 +85,7 @@ const throwCard = function(document, cardId) {
 const initialize = function(document) {
   initializePile(document);
   fetchCards(document);
+  getLog(document);
   const pile = document.getElementById('pile');
   pile.setAttribute('ondrop', 'drop(event)');
   pile.setAttribute('ondragover', 'allowDrop(event)');
