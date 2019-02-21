@@ -13,6 +13,7 @@ const {
   serveLobby,
   handleGame,
   handleThrowCard,
+  getPlayerNames,
   serveLog
 } = require('./handlers/handleRequests');
 
@@ -30,6 +31,7 @@ app.post('/hostGame', hostGame);
 app.post('/validateGameKey', validateGameKey);
 app.post('/joinGame', joinGame);
 app.get('/pile', getTopDiscard);
+app.get('/getPlayerNames', getPlayerNames);
 app.get('/playersStatus', handleGame);
 app.get('/serveLog', serveLog);
 app.get('/lobby', serveLobby);

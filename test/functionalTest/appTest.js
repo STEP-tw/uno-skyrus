@@ -228,7 +228,7 @@ describe('player Status', function() {
         getPlayers: () => {
           return {
             getNumberOfPlayers: sinon.stub().returns(2),
-            getPlayers: () => []
+            getPlayers: () => [{ getName: () => 'name' }]
           };
         },
         getPlayersCount: sinon.stub().returns(1),
@@ -289,6 +289,33 @@ describe('Handle Throw Card', () => {
     request(app)
       .post('/throwCard')
       .send({ cardId: '1' })
+      .set('Cookie', 'gameKey=1234; id=5678')
+      .expect(200)
+      .end(done);
+  });
+});
+
+describe('get players', () => {
+  beforeEach(() => {
+    const players = {
+      getPlayers: () => [
+        { name: 'Aftab', id: '5678' },
+        { name: 'Rahul', id: '2678' }
+      ]
+    };
+
+    const game = {
+      getPlayers: () => players
+    };
+
+    const games = { getGame: () => game };
+
+    app.games = games;
+  });
+
+  it('should return players list with names and my position', done => {
+    request(app)
+      .get('/getPlayerNames')
       .set('Cookie', 'gameKey=1234; id=5678')
       .expect(200)
       .end(done);
