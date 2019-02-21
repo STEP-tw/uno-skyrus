@@ -16,13 +16,14 @@ main {
 }
 
 .loader {
-  height: 120px;
-  width: 120px;
-  background-color: white;
+  height: 30%;
+  width: 40%;
+
+  border: 5px solid#48d1cc;
+  border-top: 5px solid white;
+  border-bottom: 5px solid white;
   border-radius: 50%;
-  border: 15px solid#48d1cc;
-  border-top: 15px solid white;
-  border-bottom: 15px solid white;
+
   -webkit-animation: spin 2s linear infinite;
   animation: spin 2s linear infinite;
 }
@@ -41,12 +42,55 @@ h4 {
   font-size: 25px;
 }
 
-#players {
-  height: 60%;
-  width: 80%;
-  border: 2px solid black;
+.players-container {
+  height: 80%;
+  width: 60%;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  flex-flow: row wrap;
+  justify-content: space-around;
   align-items: center;
+}
+
+.lobby-uno-card {
+  margin: 0% 5%;
+  height: 200px;
+  width: 150px;
+  border: 0.5px solid black;
+  border-radius: 7px;
+  box-shadow: 5px 5px 5px rgb(222, 215, 215);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lobby-uno-card-inner {
+  width: 96%;
+  height: 96%;
+  border-radius: 7px;
+  border: 1px solid black;
+  /* background-color: rgb(58, 185, 0); */
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lobby-uno-design-inner {
+  width: 85%;
+  height: 80%;
+  font-size: 30px;
+  font-family: sans-serif;
+  border: 1px solid black;
+  background-color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-top-left-radius: 100%;
+  border-top-right-radius: 30%;
+  border-bottom-right-radius: 100%;
+  border-bottom-left-radius: 30%;
 }

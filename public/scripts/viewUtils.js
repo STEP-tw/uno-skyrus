@@ -35,18 +35,24 @@ const createCard = function(document, card) {
 
 const createPlayerCard = function(document, playerName) {
   const unoCard = document.createElement('div');
-  unoCard.className = 'theme-uno-card';
+  unoCard.className = 'lobby-uno-card';
 
   const cardInner = document.createElement('div');
-  cardInner.className = 'theme-uno-card-inner';
+  cardInner.className = 'lobby-uno-card-inner';
 
   const designInner = document.createElement('div');
-  designInner.className = 'theme-uno-design-inner';
+  designInner.className = 'lobby-uno-design-inner';
 
-  const numberSpan = document.createElement('span');
-  numberSpan.innerText = playerName;
-  numberSpan.classList.add('num');
-  designInner.appendChild(numberSpan);
+  const nameSpan = document.createElement('span');
+  nameSpan.innerText = playerName;
+  nameSpan.className = 'num';
+
+  if (!playerName) {
+    nameSpan.innerText = '';
+    nameSpan.className = 'loader';
+  }
+
+  designInner.appendChild(nameSpan);
 
   cardInner.appendChild(designInner);
   unoCard.appendChild(cardInner);
