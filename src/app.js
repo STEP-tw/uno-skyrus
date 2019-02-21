@@ -18,6 +18,7 @@ const {
 
 const app = express();
 app.games = new Games();
+const options = { extensions: ['html'] };
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -30,8 +31,8 @@ app.post('/validateGameKey', validateGameKey);
 app.post('/joinGame', joinGame);
 app.get('/pile', getTopDiscard);
 app.get('/playersStatus', handleGame);
-app.get('/lobby.html', serveLobby);
 app.get('/serveLog', serveLog);
-app.use(express.static('public'));
+app.get('/lobby', serveLobby);
+app.use(express.static('public', options));
 
 module.exports = { app };

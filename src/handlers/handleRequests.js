@@ -33,7 +33,7 @@ const hostGame = function(req, res) {
 
   res.cookie('gameKey', gameKey);
   res.cookie('id', id);
-  res.redirect(302, '/lobby.html');
+  res.redirect(302, '/lobby');
   res.end();
 };
 
@@ -93,7 +93,7 @@ const handleGame = function(req, res) {
       game.startGame(ld.shuffle);
     }
 
-    res.redirect(`/game${playersCount}.html`);
+    res.redirect(`/game${playersCount}`);
     res.end();
     return;
   }
