@@ -81,7 +81,7 @@ describe('gamepage', function() {
   });
   it('should return 200 status code for gamepage and give the template according to the number of players', function(done) {
     request(app)
-      .get('/game2.html')
+      .get('/2player_game')
       .set('Cookie', 'gameKey=1234')
       .expect(200)
       .expect('content-type', 'text/html; charset=UTF-8')
@@ -228,7 +228,7 @@ describe('player Status', function() {
         getPlayers: () => {
           return {
             getNumberOfPlayers: sinon.stub().returns(2),
-            getPlayers: () => []
+            getPlayers: () => [{ getName: () => 'name' }]
           };
         },
         getPlayersCount: sinon.stub().returns(1),
@@ -271,6 +271,7 @@ describe('player Status', function() {
       .end(done);
   });
 });
+
 describe('Handle Throw Card', () => {
   beforeEach(() => {
     const games = {
@@ -309,6 +310,33 @@ describe('Handle Draw Card', () => {
   it('should remove card from hand and add it to top of pile', done => {
     request(app)
       .get('/drawCard')
+      .set('Cookie', 'gameKey=1234; id=5678')
+      .expect(200)
+      .end(done);
+  });
+});
+
+describe('get players', () => {
+  beforeEach(() => {
+    const players = {
+      getPlayers: () => [
+        { name: 'Aftab', id: '5678' },
+        { name: 'Rahul', id: '2678' }
+      ]
+    };
+
+    const game = {
+      getPlayers: () => players
+    };
+
+    const games = { getGame: () => game };
+
+    app.games = games;
+  });
+
+  it('should return players list with names and my position', done => {
+    request(app)
+      .get('/getPlayerNames')
       .set('Cookie', 'gameKey=1234; id=5678')
       .expect(200)
       .end(done);

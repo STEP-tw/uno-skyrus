@@ -65,6 +65,7 @@ describe('getPlayers', function() {
 });
 
 describe('setCurrentPlayer', function() {
+  
   it('should set the current player as first joined player', function() {
     const player = {
       name: 'Rahul',

@@ -93,7 +93,7 @@ const handleGame = function(req, res) {
       game.startGame(ld.shuffle);
     }
 
-    res.redirect(`/game${playersCount}`);
+    res.redirect(`/${playersCount}player_game`);
     res.end();
     return;
   }
@@ -129,6 +129,16 @@ const drawCard = function(req, res) {
   res.end();
 };
 
+const getPlayerNames = (req, res) => {
+  const { gameKey, id } = req.cookies;
+  const games = req.app.games;
+  const game = games.getGame(gameKey);
+  const players = game.getPlayers().getPlayers();
+  const playerPosition = players.findIndex(player => player.id == id);
+  const playerNames = players.map(player => player.name);
+  res.send({ playerNames, playerPosition });
+};
+
 module.exports = {
   getTopDiscard,
   hostGame,
@@ -138,6 +148,7 @@ module.exports = {
   servePlayerCards,
   handleGame,
   handleThrowCard,
-  serveLog,
-  drawCard
+  getPlayerNames,
+  drawCard,
+  serveLog
 };
