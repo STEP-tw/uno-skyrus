@@ -15,4 +15,11 @@ describe('canPlayOnTopOf', function() {
     const expectedOutput = false;
     chai.assert.deepEqual(actualOutput, expectedOutput);
   });
+  it('should update current player index by 1', function() {
+    const card = new NumberedCard(4, 'red');
+    const currentPlayerIndex = 0;
+    const actualOutput = card.action(currentPlayerIndex);
+    const expectedOutput = 1;
+    chai.assert.deepEqual(actualOutput, expectedOutput);
+  });
 });

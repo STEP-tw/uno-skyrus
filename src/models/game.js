@@ -21,6 +21,7 @@ class Game {
       const thrownCard = playerCards[cardId];
       player.removeCard(cardId);
       this.pile.push(thrownCard);
+      this.players.updateCurrentPlayer(thrownCard);
     }
   }
 
@@ -29,7 +30,7 @@ class Game {
     this.dealCards();
     this.pile.push(this.stack.pop());
     this.status = true;
-    this.players.setFirstTurn();
+    this.players.setCurrentPlayer();
   }
 
   getPlayerCards(playerId) {

@@ -64,7 +64,7 @@ describe('getPlayers', function() {
   });
 });
 
-describe('setFirstTurn', function() {
+describe('setCurrentPlayer', function() {
   it('should set the current player as first joined player', function() {
     const player = {
       name: 'Rahul',
@@ -74,13 +74,34 @@ describe('setFirstTurn', function() {
     const hostPlayer = { name: 'Aftab', cards: [], id: 1234 };
     const players = new Players(hostPlayer);
     players.addPlayer(player);
-    players.setFirstTurn();
+    players.setCurrentPlayer();
     const actualOutput = players.getCurrentPlayer();
     const expectedOutput = {
       name: 'Rahul',
       id: 1212,
       cards: []
     };
+    chai.assert.deepEqual(expectedOutput, actualOutput);
+  });
+
+  it('should update current player', function() {
+    const player = {
+      name: 'Rahul',
+      id: 1212,
+      cards: []
+    };
+    const thrownCard = {
+      action: currentPlayerIndex => {
+        return ++currentPlayerIndex;
+      }
+    };
+    const hostPlayer = { name: 'Aftab', cards: [], id: 1234 };
+    const players = new Players(hostPlayer);
+    players.addPlayer(player);
+    players.setCurrentPlayer();
+    players.updateCurrentPlayer(thrownCard);
+    const actualOutput = players.getCurrentPlayer();
+    const expectedOutput = hostPlayer;
     chai.assert.deepEqual(expectedOutput, actualOutput);
   });
 });

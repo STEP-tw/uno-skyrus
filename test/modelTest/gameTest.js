@@ -12,27 +12,6 @@ describe('Game Class', () => {
     let game;
 
     beforeEach(function() {
-      const players = {
-        getPlayers: () => [],
-        setFirstTurn: () => {}
-      };
-      game = new Game(twoCards, 1, 1234, players);
-      game.startGame(dummyShuffler);
-    });
-
-    it('startGame method should create stack', function() {
-      const actual = game.stack;
-      const expected = [{ color: 'green', number: 7 }];
-      chai.assert.deepEqual(actual, expected);
-    });
-
-    it('startGame method should initialize pile', function() {
-      const actual = game.pile;
-      const expected = [{ color: 'red', number: 5 }];
-      chai.assert.deepEqual(actual, expected);
-    });
-
-    it('should assign 7 cards to each player', function() {
       const identity = deck => deck;
       const player = {
         id: 1234,
@@ -46,10 +25,26 @@ describe('Game Class', () => {
         getPlayers: () => {
           return [player];
         },
-        setFirstTurn: () => {}
+        setFirstTurn: () => {},
+        setCurrentPlayer: () => {}
       };
-      const game = new Game(numberDeck, 1, 1234, players);
+      game = new Game(numberDeck, 1, 1234, players);
       game.startGame(identity);
+    });
+
+    it('startGame method should create stack', function() {
+      const actual = game.stack;
+      const expected = [{ color: 'blue', number: 8 }];
+      chai.assert.deepEqual(actual, expected);
+    });
+
+    it('startGame method should initialize pile', function() {
+      const actual = game.pile;
+      const expected = [{ color: 'green', number: 9 }];
+      chai.assert.deepEqual(actual, expected);
+    });
+
+    it('should assign 7 cards to each player', function() {
       const expectedOutput = [
         { number: 1, color: 'red' },
         { number: 2, color: 'green' },
@@ -68,7 +63,8 @@ describe('Game Class', () => {
     it('getTopDiscard should return topDicard from pile', function() {
       const players = {
         getPlayers: () => [],
-        setFirstTurn: () => {}
+        setFirstTurn: () => {},
+        setCurrentPlayer: () => {}
       };
       const game = new Game(twoCards, 0, 1234, players);
       game.startGame(dummyShuffler);
@@ -84,7 +80,6 @@ describe('Game Class', () => {
         players: [{ name: 'player', cards: [] }]
       };
       const game = new Game(twoCards, 0, 1234, players);
-      // game.startGame(dummyShuffler);
       const actual = game.getPlayers();
       const expected = { players: [{ name: 'player', cards: [] }] };
       chai.assert.deepEqual(actual, expected);
@@ -147,7 +142,9 @@ describe('Game Class', () => {
         getPlayer() {
           return player;
         },
-        setFirstTurn: () => {}
+        setFirstTurn: () => {},
+        setCurrentPlayer: () => {},
+        updateCurrentPlayer: () => {}
       };
       game = new Game(numberDeck, 1, 1234, players);
       game.startGame(identity);

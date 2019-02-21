@@ -3,6 +3,7 @@ class Players {
     this.host = hostPlayer;
     this.players = [hostPlayer];
     this.currentPlayer = hostPlayer;
+    this.currentPlayerIndex = 1;
   }
   getCurrentPlayer() {
     return this.currentPlayer;
@@ -21,9 +22,13 @@ class Players {
       return player.id == playerId;
     });
   }
-
-  setFirstTurn() {
-    this.currentPlayer = this.players[1];
+  setCurrentPlayer() {
+    this.currentPlayer = this.players[this.currentPlayerIndex];
+  }
+  updateCurrentPlayer(thrownCard) {
+    const updatedIndex = thrownCard.action(this.currentPlayerIndex);
+    this.currentPlayerIndex = updatedIndex % this.getNumberOfPlayers();
+    this.setCurrentPlayer();
   }
 }
 

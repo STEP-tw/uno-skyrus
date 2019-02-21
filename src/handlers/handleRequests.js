@@ -63,7 +63,6 @@ const servePlayerCards = function(req, res) {
   const cards = game.getPlayerCards(+id);
   const player = game.getPlayers().getPlayer(id);
   const playableCards = player.getPlayableCardsFor(game.getTopDiscard());
-  console.log('this is the playable cards', playableCards);
   res.send({ cards, playableCards });
 };
 
