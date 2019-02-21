@@ -32,3 +32,24 @@ const createCard = function(document, card) {
 
   return unoCard;
 };
+
+const createPlayerCard = function(document, playerName) {
+  const unoCard = document.createElement('div');
+  unoCard.className = 'theme-uno-card';
+
+  const cardInner = document.createElement('div');
+  cardInner.className = 'theme-uno-card-inner';
+
+  const designInner = document.createElement('div');
+  designInner.className = 'theme-uno-design-inner';
+
+  const numberSpan = document.createElement('span');
+  numberSpan.innerText = playerName;
+  numberSpan.classList.add('num');
+  designInner.appendChild(numberSpan);
+
+  cardInner.appendChild(designInner);
+  unoCard.appendChild(cardInner);
+
+  return unoCard;
+};

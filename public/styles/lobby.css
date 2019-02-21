@@ -40,3 +40,13 @@ h3,
 h4 {
   font-size: 25px;
 }
+
+#players {
+  height: 60%;
+  width: 80%;
+  border: 2px solid black;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}

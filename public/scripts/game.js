@@ -20,7 +20,6 @@ const hasCard = (playableCards, card) => {
 };
 
 const initializeHand = function(document, { cards, playableCards }) {
-  console.log(cards, playableCards);
   const hand = document.getElementById('myHand');
   hand.innerHTML = '';
   cards.forEach((card, index) => {
