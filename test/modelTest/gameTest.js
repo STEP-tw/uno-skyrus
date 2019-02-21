@@ -13,7 +13,8 @@ describe('Game Class', () => {
 
     beforeEach(function() {
       const players = {
-        getPlayers: () => []
+        getPlayers: () => [],
+        setFirstTurn: () => {}
       };
       game = new Game(twoCards, 1, 1234, players);
       game.startGame(dummyShuffler);
@@ -44,7 +45,8 @@ describe('Game Class', () => {
       const players = {
         getPlayers: () => {
           return [player];
-        }
+        },
+        setFirstTurn: () => {}
       };
       const game = new Game(numberDeck, 1, 1234, players);
       game.startGame(identity);
@@ -65,7 +67,8 @@ describe('Game Class', () => {
   describe('getTopDiscard', function() {
     it('getTopDiscard should return topDicard from pile', function() {
       const players = {
-        getPlayers: () => []
+        getPlayers: () => [],
+        setFirstTurn: () => {}
       };
       const game = new Game(twoCards, 0, 1234, players);
       game.startGame(dummyShuffler);
@@ -143,7 +146,8 @@ describe('Game Class', () => {
         },
         getPlayer() {
           return player;
-        }
+        },
+        setFirstTurn: () => {}
       };
       game = new Game(numberDeck, 1, 1234, players);
       game.startGame(identity);

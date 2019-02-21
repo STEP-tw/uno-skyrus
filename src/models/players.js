@@ -21,6 +21,10 @@ class Players {
       return player.id == playerId;
     });
   }
+
+  setFirstTurn() {
+    this.currentPlayer = this.players[1];
+  }
 }
 
 module.exports = { Players };
