@@ -218,13 +218,18 @@ describe('player Status', function() {
         getPlayers: () => {
           return { getNumberOfPlayers: sinon.stub().returns(1) };
         },
+
         getPlayersCount: sinon.stub().returns(1),
         startGame: () => {},
         hasStarted: () => true
       },
+
       '5678': {
         getPlayers: () => {
-          return { getNumberOfPlayers: sinon.stub().returns(2) };
+          return {
+            getNumberOfPlayers: sinon.stub().returns(2),
+            getPlayers: () => []
+          };
         },
         getPlayersCount: sinon.stub().returns(1),
         hasStarted: () => false

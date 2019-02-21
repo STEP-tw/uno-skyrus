@@ -31,6 +31,15 @@ describe('Player class', () => {
     });
   });
 
+  describe('getName', function() {
+    it('should return the name of the player', function() {
+      const player = new Player('player', 1234);
+      const expectedOutput = 'player';
+      const actualOutput = player.getName();
+      chai.assert.deepEqual(actualOutput, expectedOutput);
+    });
+  });
+
   describe('removeCards', function() {
     it('should add the given cards to the player', function() {
       const player = new Player('Player', 1234);

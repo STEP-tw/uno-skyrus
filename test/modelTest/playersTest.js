@@ -63,3 +63,24 @@ describe('getPlayers', function() {
     chai.assert.deepEqual(expectedOutput, actualOutput);
   });
 });
+
+describe('setFirstTurn', function() {
+  it('should set the current player as first joined player', function() {
+    const player = {
+      name: 'Rahul',
+      id: 1212,
+      cards: []
+    };
+    const hostPlayer = { name: 'Aftab', cards: [], id: 1234 };
+    const players = new Players(hostPlayer);
+    players.addPlayer(player);
+    players.setFirstTurn();
+    const actualOutput = players.getCurrentPlayer();
+    const expectedOutput = {
+      name: 'Rahul',
+      id: 1212,
+      cards: []
+    };
+    chai.assert.deepEqual(expectedOutput, actualOutput);
+  });
+});

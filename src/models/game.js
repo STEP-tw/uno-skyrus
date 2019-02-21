@@ -14,7 +14,6 @@ class Game {
   }
 
   throwCard(playerId, cardId) {
-    console.log(this.players, 'this is the players');
     const currentPlayer = this.players.getCurrentPlayer();
     if (+playerId == currentPlayer.getId()) {
       const player = this.players.getPlayer(playerId);
@@ -30,6 +29,7 @@ class Game {
     this.dealCards();
     this.pile.push(this.stack.pop());
     this.status = true;
+    this.players.setFirstTurn();
   }
 
   getPlayerCards(playerId) {
