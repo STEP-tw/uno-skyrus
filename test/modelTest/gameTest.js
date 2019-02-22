@@ -5,7 +5,8 @@ const {
   twoCards,
   dummyShuffler,
   numberDeck,
-  tenCards
+  tenCards,
+  sevenCards
 } = require('../testHelpers/testHelpers.js');
 
 describe('Game Class', () => {
@@ -105,14 +106,16 @@ describe('Game Class', () => {
       chai.assert.deepEqual(actual, expected);
     });
   });
-  describe('getKey', function() {
-    it('should return all players', function() {
+
+  describe('hasStarted', function() {
+    it('should return false when game has not started', function() {
       const game = new Game(twoCards, 0, 1234, {});
       const actual = game.hasStarted();
       const expected = false;
       chai.assert.deepEqual(actual, expected);
     });
   });
+
   describe('throw card', () => {
     let game;
     beforeEach(() => {
@@ -179,32 +182,74 @@ describe('Game Class', () => {
   describe('drawCard', function() {
     it('should remove a card from stack', function() {
       const player = {
-        addCard: card => {
-          console.log('here', card);
-        },
+        addCard: () => {},
         calculatePlayableCards: () => {},
         addCards: () => {},
         getId: () => 234,
+        getDrawCardStatus: () => true,
+        setDrawCardStatus: () => {},
+        setPlayableCards: () => {},
         id: 234
       };
       const players = {
         getCurrentPlayer: () => player,
         getPlayers: () => [player],
-        setCurrentPlayer: () => player
+        setCurrentPlayer: () => player,
+        changeTurn: () => {}
       };
-      const game = new Game(tenCards, 0, 1234, players);
+      const card = {
+        number: 4,
+        color: 'red',
+        canPlayOnTopOf: () => true
+      };
+      const nineCards = sevenCards.slice();
+      nineCards.unshift(card);
+      nineCards.unshift(card);
+      nineCards.unshift(card);
+      const game = new Game(nineCards, 0, 1234, players);
       game.startGame(dummyShuffler);
       game.drawCard(234);
       const actual = game.stack;
-      const expected = [{ number: 2, color: 'green' }];
+      const expected = [card];
+      chai.assert.deepEqual(actual, expected);
+    });
+    it('should remove a card from stack', function() {
+      const player = {
+        addCard: () => {},
+        calculatePlayableCards: () => {},
+        addCards: () => {},
+        getId: () => 234,
+        getDrawCardStatus: () => true,
+        setDrawCardStatus: () => {},
+        setPlayableCards: () => {},
+        id: 234
+      };
+      const players = {
+        getCurrentPlayer: () => player,
+        getPlayers: () => [player],
+        setCurrentPlayer: () => player,
+        changeTurn: () => {}
+      };
+      const card = {
+        number: 4,
+        color: 'red',
+        canPlayOnTopOf: () => false
+      };
+      const nineCards = sevenCards.slice();
+      nineCards.unshift(card);
+      nineCards.unshift(card);
+      nineCards.unshift(card);
+      const game = new Game(nineCards, 0, 1234, players);
+      game.startGame(dummyShuffler);
+      game.drawCard(234);
+      const actual = game.stack;
+      const expected = [card];
       chai.assert.deepEqual(actual, expected);
     });
 
     it('should not remove a card from stack if not current player', function() {
       const player = {
-        addCard: card => {
-          console.log('here', card);
-        },
+        addCard: () => {},
         calculatePlayableCards: () => {},
         addCards: () => {},
         getId: () => 234,
@@ -223,6 +268,27 @@ describe('Game Class', () => {
         { number: 2, color: 'green' },
         { number: 3, color: 'blue' }
       ];
+      chai.assert.deepEqual(actual, expected);
+    });
+  });
+
+  describe('getStack', function() {
+    it('should return stack', function() {
+      const game = new Game(numberDeck, 0, 1234, {});
+      const actual = game.getStack();
+      const expected = [];
+      chai.assert.deepEqual(actual, expected);
+    });
+  });
+
+  describe('refillStack', function() {
+    it('should refill the stack from pile except topDiscard', function() {
+      const game = new Game(numberDeck, 0, 1234, {}, { addLog: () => {} });
+      game.pile = twoCards;
+      game.stack = [];
+      game.refillStack();
+      const actual = game.getStack();
+      const expected = [{ color: 'red', number: 5 }];
       chai.assert.deepEqual(actual, expected);
     });
   });

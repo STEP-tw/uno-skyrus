@@ -108,4 +108,14 @@ describe('Player class', () => {
       chai.assert.deepEqual(actualOutput, expectedOutput);
     });
   });
+  describe('getCardsCount', function() {
+    it('should return the count of cards of player', function() {
+      const player = new Player('Player', 1234);
+      player.addCard({ number: 4, color: 'red' });
+      player.addCard({ number: 9, color: 'green' });
+      const expectedOutput = 2;
+      const actualOutput = player.getCardsCount();
+      chai.assert.deepEqual(actualOutput, expectedOutput);
+    });
+  });
 });

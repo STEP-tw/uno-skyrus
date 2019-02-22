@@ -102,7 +102,7 @@ const handleGame = function(req, res) {
       game.startGame(ld.shuffle);
     }
 
-    res.redirect(`/${playersCount}player_game`);
+    res.redirect('/game');
     res.end();
     return;
   }
@@ -135,18 +135,12 @@ const drawCard = function(req, res) {
   const { gameKey, id } = req.cookies;
   const game = res.app.games.getGame(gameKey);
   const player = game.getPlayers().getPlayer(id);
-  if (player.getDrawCardStatus()) {
-    game.drawCard(id);
-    player.setDrawCardStatus(false);
+  game.drawCard(id);
+  const stackLength = game.getStack().length;
+  if (!stackLength) {
+    game.refillStack();
   }
   const cards = game.getPlayerCards(+id);
-  const card = cards[cards.length - 1];
-  player.setPlayableCards([]);
-  if (card.canPlayOnTopOf(game.getTopDiscard())) {
-    player.setPlayableCards([card]);
-  } else {
-    game.getPlayers().changeTurn();
-  }
   const playableCards = player.getPlayableCards();
   res.send({ cards, playableCards });
 };
@@ -161,11 +155,25 @@ const getPlayerNames = (req, res) => {
   const playerDetails = players.map(player => {
     return {
       name: player.name,
-      isCurrent: game.getPlayers().isCurrent(player)
+      isCurrent: game.getPlayers().isCurrent(player),
+      cardsCount: player.getCardsCount()
     };
   });
 
   res.send({ playerDetails, playerPosition });
+};
+
+const renderGamePage = function(req, res) {
+  const { gameKey } = req.cookies;
+  const game = req.app.games.getGame(gameKey);
+  const playersCount = game.playersCount;
+
+  const gamePage = fs.readFileSync(
+    `./public/${playersCount}player_game.html`,
+    'utf8'
+  );
+
+  res.send(gamePage);
 };
 
 module.exports = {
@@ -179,5 +187,6 @@ module.exports = {
   handleThrowCard,
   getPlayerNames,
   drawCard,
-  serveLog
+  serveLog,
+  renderGamePage
 };

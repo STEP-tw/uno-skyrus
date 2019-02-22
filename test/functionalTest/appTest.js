@@ -68,11 +68,7 @@ describe('gamepage', function() {
   beforeEach(function() {
     const games = {};
     const game = {
-      playersCount: 2,
-      addPlayer: () => {},
-      getTopDiscard: () => {
-        return { color: 'red', number: 5 };
-      }
+      playersCount: 2
     };
     games.getGame = sinon.stub();
     games.getGame.withArgs('1234').returns(game);
@@ -81,10 +77,10 @@ describe('gamepage', function() {
   });
   it('should return 200 status code for gamepage and give the template according to the number of players', function(done) {
     request(app)
-      .get('/2player_game')
+      .get('/game')
       .set('Cookie', 'gameKey=1234')
       .expect(200)
-      .expect('content-type', 'text/html; charset=UTF-8')
+      .expect('content-type', 'text/html; charset=utf-8')
       .end(done);
   });
 });
@@ -317,7 +313,7 @@ describe('Handle Throw Card', () => {
 
 describe('Handle Draw Card', () => {
   const card = {};
-  let player;
+  let player, game;
   beforeEach(() => {
     player = {
       id: 123,
@@ -333,11 +329,17 @@ describe('Handle Draw Card', () => {
 
     card.canPlayOnTopOf = sinon.stub().returns(true);
 
-    const game = {
+    game = {
+      stack: [],
+      pile: [1, 2, 3, 4],
       getPlayers: () => players,
       getTopDiscard: () => card,
       drawCard: () => {},
-      getPlayerCards: () => [card]
+      getPlayerCards: () => [card],
+      refillStack: () => {},
+      getStack: () => {
+        return [1, 2];
+      }
     };
 
     const games = {
@@ -345,8 +347,24 @@ describe('Handle Draw Card', () => {
 
       getGame: () => game
     };
-
     app.games = games;
+  });
+  it('should remove top card of stack and refill the stack from pile if stack gets empty', done => {
+    game.stack = [];
+    game.pile = [1, 2, 3, 4];
+    game.drawCard = playerId => {
+      chai.assert.equal(playerId, '5678');
+    };
+    game.getStack = () => [];
+    game.refillStack = () => {
+      this.stack = [1, 2, 3];
+      this.pile = [4];
+    };
+    request(app)
+      .get('/drawCard')
+      .set('Cookie', 'gameKey=1234; id=5678')
+      .expect(200)
+      .end(done);
   });
   it('should remove card from stack and add it to the hand', done => {
     request(app)
@@ -355,7 +373,7 @@ describe('Handle Draw Card', () => {
       .expect(200)
       .end(done);
   });
-  it('should remove card from stack and add it to the hand', done => {
+  it('should remove card from stack and add it to the hand but not able to play', done => {
     card.canPlayOnTopOf = sinon.stub().returns(false);
     request(app)
       .get('/drawCard')
@@ -371,14 +389,22 @@ describe('Handle Draw Card', () => {
       .expect(200)
       .end(done);
   });
+
+  it('should remove top card of stack', done => {
+    request(app)
+      .get('/drawCard')
+      .set('Cookie', 'gameKey=1234; id=5678')
+      .expect(200)
+      .end(done);
+  });
 });
 
 describe('get players', () => {
   beforeEach(() => {
     const players = {
       getPlayers: () => [
-        { name: 'Aftab', id: '5678' },
-        { name: 'Rahul', id: '2678' }
+        { name: 'Aftab', id: '5678', getCardsCount: () => {} },
+        { name: 'Rahul', id: '2678', getCardsCount: () => {} }
       ],
       isCurrent: () => {}
     };

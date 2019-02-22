@@ -49,8 +49,17 @@ class Game {
 
   drawCard(playerId) {
     const currentPlayer = this.players.getCurrentPlayer();
-    if (currentPlayer.id == playerId) {
-      currentPlayer.addCard(this.stack.pop());
+    if (currentPlayer.id == playerId && currentPlayer.getDrawCardStatus()) {
+      const drawnCard = this.stack.pop();
+      currentPlayer.addCard(drawnCard);
+      currentPlayer.setDrawCardStatus(false);
+
+      currentPlayer.setPlayableCards([]);
+      if (drawnCard.canPlayOnTopOf(this.getTopDiscard())) {
+        currentPlayer.setPlayableCards([drawnCard]);
+      } else {
+        this.getPlayers().changeTurn();
+      }
     }
   }
 
@@ -78,6 +87,16 @@ class Game {
 
   getKey() {
     return this.gameKey;
+  }
+
+  getStack() {
+    return this.stack;
+  }
+
+  refillStack() {
+    this.stack = this.pile.slice(0, -1);
+    this.pile = this.pile.slice(-1);
+    this.activityLog.addLog('stack', ' has been refilled', '');
   }
 
   hasStarted() {

@@ -45,7 +45,7 @@ const createPlayerCard = function(document, playerName) {
 
   const nameSpan = document.createElement('span');
   nameSpan.innerText = playerName;
-  nameSpan.className = 'num';
+  nameSpan.className = 'name-of-player';
 
   if (!playerName) {
     nameSpan.innerText = '';

@@ -31,4 +31,14 @@ const tenCards = [
   { number: 9, color: 'yellow' }
 ];
 
-module.exports = { twoCards, dummyShuffler, numberDeck, tenCards };
+const sevenCards = [
+  { number: 1, color: 'red' },
+  { number: 2, color: 'green' },
+  { number: 3, color: 'blue' },
+  { number: 4, color: 'yellow' },
+  { number: 5, color: 'red' },
+  { number: 6, color: 'green' },
+  { number: 7, color: 'blue' }
+];
+
+module.exports = { sevenCards, twoCards, dummyShuffler, numberDeck, tenCards };

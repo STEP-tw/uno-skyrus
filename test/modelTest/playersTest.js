@@ -130,5 +130,14 @@ describe('isCurrent', function() {
 
       chai.assert.deepEqual(2, actualOutput);
     });
+    it('should change current player even after a compleate turn', function() {
+      const players = new Players({ name: 'hostName', cards: [], id: 1234 });
+      players.currentPlayer = { setDrawCardStatus: () => {} };
+      players.players = [{ name: 'player' }, { name: 'player' }];
+      players.changeTurn();
+      const actualOutput = players.currentPlayerIndex;
+
+      chai.assert.deepEqual(0, actualOutput);
+    });
   });
 });
