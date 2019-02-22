@@ -33,18 +33,18 @@ class Players {
   }
 
   changeTurn() {
-    this.currentPlayer.setDrawCardStatus(true);
     this.currentPlayerIndex += 1;
-    if (this.players.length == this.currentPlayerIndex) {
-      this.currentPlayerIndex = 0;
-    }
+    this.currentPlayerIndex =
+      this.currentPlayerIndex % this.getNumberOfPlayers();
     this.setCurrentPlayer();
+    this.currentPlayer.setDrawCardStatus(true);
   }
 
   updateCurrentPlayer(thrownCard) {
     const updatedIndex = thrownCard.action(this.currentPlayerIndex);
     this.currentPlayerIndex = updatedIndex % this.getNumberOfPlayers();
     this.setCurrentPlayer();
+    this.currentPlayer.setDrawCardStatus(true);
   }
 }
 

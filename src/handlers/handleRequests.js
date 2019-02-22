@@ -136,8 +136,10 @@ const drawCard = function(req, res) {
   const game = res.app.games.getGame(gameKey);
   const player = game.getPlayers().getPlayer(id);
   game.drawCard(id);
+  console.log(game.getStack());
   const stackLength = game.getStack().length;
   if (!stackLength) {
+    console.log('refilling stack...................');
     game.refillStack();
   }
   const cards = game.getPlayerCards(+id);
