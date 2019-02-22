@@ -1,5 +1,6 @@
 /* globals createCard */
 /*eslint no-unused-vars: "off"*/
+const OTHERS_CARDS_LIMIT = 3;
 
 const drawCard = function() {
   fetch('/drawCard');
@@ -93,23 +94,22 @@ const throwCard = function(document, cardId) {
 };
 
 const hideCards = function(hand, cardsCount) {
-  let visibility;
-  for (let count = 2; count >= 0; count--) {
-    visibility = 'visible';
-    if (cardsCount > 0) {
+  let cardsToHide = cardsCount;
+  for (let count = OTHERS_CARDS_LIMIT - 1; count >= 0; count--) {
+    let visibility = 'visible';
+    if (cardsToHide > 0) {
       visibility = 'hidden';
-      console.log('inside if condition with count value', count);
     }
     hand[count].style.visibility = visibility;
-    cardsCount = cardsCount - 1;
+    cardsToHide--;
   }
 };
 
-const updateOthersCards = function(playerId, cardsCount) {
-  const cardLimit = 3;
-  const hand = document.getElementById(`player${playerId}Hand`).children;
-  if (cardsCount <= cardLimit) {
-    hideCards(hand, cardLimit - cardsCount);
+const updateOthersCards = function(document, id, cardsCount) {
+  const hand = document.getElementById(`player${id}Hand`).children;
+  if (cardsCount <= OTHERS_CARDS_LIMIT) {
+    const cardsToHide = OTHERS_CARDS_LIMIT - cardsCount;
+    hideCards(hand, cardsToHide);
   }
 };
 
@@ -120,29 +120,34 @@ const getNamesInOrder = function(playerNames, playerPosition) {
   return detailsInOrder;
 };
 
-const assignNames = function(document, playerDetails, playerPosition) {
+const updateNamesAndClasses = function(document, id, name, isCurrent) {
+  document.getElementById(`player${id}`).innerText = name;
+  let className = 'non-current-player';
+  if (isCurrent) {
+    className = 'current-player';
+  }
+  document.getElementById(`player${id}-arrow`).className = className;
+};
+
+const updatePlayersDetails = function(document, playerDetails, playerPosition) {
   const detailsInOrder = getNamesInOrder(playerDetails, playerPosition);
   let id = 1;
   detailsInOrder.forEach(({ name, isCurrent, cardsCount }) => {
-    document.getElementById(`player${id}`).innerText = name;
-    let className = 'non-current-player';
-    if (isCurrent) {
-      className = 'current-player';
-    }
-    document.getElementById(`player${id}-arrow`).className = className;
+    updateNamesAndClasses(document, id, name, isCurrent);
+
     if (id !== 1) {
-      updateOthersCards(id, cardsCount);
+      updateOthersCards(document, id, cardsCount);
     }
     id++;
   });
 };
 
-const getPlayerNames = document => {
+const getPlayerDetails = document => {
   fetch('/getPlayerNames')
     .then(response => response.json())
     .then(players => {
       const { playerDetails, playerPosition } = players;
-      assignNames(document, playerDetails, playerPosition);
+      updatePlayersDetails(document, playerDetails, playerPosition);
     });
 };
 
@@ -164,7 +169,7 @@ const initialize = function(document) {
 
     pile.setAttribute('ondrop', 'drop(event)');
     pile.setAttribute('ondragover', 'allowDrop(event)');
-    getPlayerNames(document);
+    getPlayerDetails(document);
   }, 1000);
 };
 window.onload = initialize.bind(null, document);
