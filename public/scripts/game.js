@@ -93,19 +93,22 @@ const throwCard = function(document, cardId) {
 };
 
 const hideCards = function(hand, cardsCount) {
-  let cardsToHide = cardsCount;
-  let cardIndex = 2;
-  while (cardsToHide > 0) {    
-    hand[cardIndex].style.visibility = 'hidden';
-    cardIndex--;
-    cardsToHide--;
+  let visibility;
+  for (let count = 2; count >= 0; count--) {
+    visibility = 'visible';
+    if (cardsCount > 0) {
+      visibility = 'hidden';
+      console.log('inside if condition with count value', count);
+    }
+    hand[count].style.visibility = visibility;
+    cardsCount = cardsCount - 1;
   }
 };
 
 const updateOthersCards = function(playerId, cardsCount) {
   const cardLimit = 3;
   const hand = document.getElementById(`player${playerId}Hand`).children;
-  if (cardsCount < cardLimit) {
+  if (cardsCount <= cardLimit) {
     hideCards(hand, cardLimit - cardsCount);
   }
 };
