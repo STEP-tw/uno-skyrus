@@ -232,7 +232,7 @@ describe('Game Class', () => {
 
   describe('refillStack', function() {
     it('should refill the stack from pile except topDiscard', function() {
-      const game = new Game(numberDeck, 0, 1234, {});
+      const game = new Game(numberDeck, 0, 1234, {}, { addLog: () => {} });
       game.pile = twoCards;
       game.stack = [];
       game.refillStack();

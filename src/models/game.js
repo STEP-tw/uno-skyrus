@@ -79,6 +79,7 @@ class Game {
   refillStack() {
     this.stack = this.pile.slice(0, -1);
     this.pile = this.pile.slice(-1);
+    this.activityLog.addLog('stack', ' has been refilled', '');
   }
 
   hasStarted() {
