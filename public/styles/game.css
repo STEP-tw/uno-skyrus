@@ -103,9 +103,9 @@ body {
 
 .player1 {
   width: 80%;
-
+  height: 65%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
@@ -121,9 +121,9 @@ body {
 
 .player3 {
   width: 95%;
-
+  height: 65%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
@@ -147,7 +147,7 @@ body {
 
 .other-hand {
   margin-left: 10%;
-  width: 100%;
+  width: 95%;
   height: 95%;
 
   overflow: hidden;
@@ -270,34 +270,45 @@ body {
   color: #f6db18;
   background: #f6db18;
 }
-.current-player {
-  color: #9bc53d;
-  animation: blink 1.5s linear infinite;
-}
 
 @keyframes blink {
   0% {
     opacity: 0;
-  }
-  50% {
-    opacity: 0.5;
   }
   100% {
     opacity: 1;
   }
 }
 
-.non-current-player {
-  color: black;
-}
-
 .pile-stack {
   display: flex;
   flex-direction: row;
 }
+
 .player-name {
-  width: 15%;
-  word-break: break-all;
+  background-color: black;
+  color: white;
+  width: 80%;
+  text-align: center;
+  margin-top: 2px;
+}
+
+.non-current-player {
+  display: none;
+  margin-right: 10%;
+}
+
+.current-player {
+  display: visible;
+  margin-right: 10%;
+  animation: blink 0.9s linear infinite;
+}
+
+.player-name-div {
+  width: 110px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .pile-stack-card {

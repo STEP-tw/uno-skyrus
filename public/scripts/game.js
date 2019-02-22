@@ -108,8 +108,7 @@ const assignNames = function(document, playerDetails, playerPosition) {
     if (isCurrent) {
       className = 'current-player';
     }
-    // document.getElementById(`player${id}`).className = className;
-    document.getElementById(`player${id}`).classList.add(className);
+    document.getElementById(`player${id}-arrow`).className = className;
     id++;
   });
 };
