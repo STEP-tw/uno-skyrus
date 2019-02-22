@@ -15,7 +15,8 @@ const {
   handleThrowCard,
   serveLog,
   drawCard,
-  getPlayerNames
+  getPlayerNames,
+  renderGamePage
 } = require('./handlers/handleRequests');
 
 const app = express();
@@ -26,6 +27,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(logRequest);
+app.get('/game', renderGamePage);
 app.get('/playerCards', servePlayerCards);
 app.post('/throwCard', handleThrowCard);
 app.post('/hostGame', hostGame);

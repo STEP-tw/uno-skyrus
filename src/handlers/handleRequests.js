@@ -93,7 +93,7 @@ const handleGame = function(req, res) {
       game.startGame(ld.shuffle);
     }
 
-    res.redirect(`/${playersCount}player_game`);
+    res.redirect('/game');
     res.end();
     return;
   }
@@ -142,8 +142,21 @@ const getPlayerNames = (req, res) => {
       isCurrent: game.getPlayers().isCurrent(player)
     };
   });
-  
+
   res.send({ playerDetails, playerPosition });
+};
+
+const renderGamePage = function(req, res) {
+  const { gameKey } = req.cookies;
+  const game = req.app.games.getGame(gameKey);
+  const playersCount = game.playersCount;
+
+  const gamePage = fs.readFileSync(
+    `./public/${playersCount}player_game.html`,
+    'utf8'
+  );
+
+  res.send(gamePage);
 };
 
 module.exports = {
@@ -157,5 +170,6 @@ module.exports = {
   handleThrowCard,
   getPlayerNames,
   drawCard,
-  serveLog
+  serveLog,
+  renderGamePage
 };

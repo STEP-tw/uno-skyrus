@@ -68,11 +68,7 @@ describe('gamepage', function() {
   beforeEach(function() {
     const games = {};
     const game = {
-      playersCount: 2,
-      addPlayer: () => {},
-      getTopDiscard: () => {
-        return { color: 'red', number: 5 };
-      }
+      playersCount: 2
     };
     games.getGame = sinon.stub();
     games.getGame.withArgs('1234').returns(game);
@@ -81,10 +77,10 @@ describe('gamepage', function() {
   });
   it('should return 200 status code for gamepage and give the template according to the number of players', function(done) {
     request(app)
-      .get('/2player_game')
+      .get('/game')
       .set('Cookie', 'gameKey=1234')
       .expect(200)
-      .expect('content-type', 'text/html; charset=UTF-8')
+      .expect('content-type', 'text/html; charset=utf-8')
       .end(done);
   });
 });
