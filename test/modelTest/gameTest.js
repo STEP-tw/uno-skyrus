@@ -20,7 +20,8 @@ describe('Game Class', () => {
         cards: [],
         addCards: function(cards) {
           player.cards = cards;
-        }
+        },
+        calculatePlayableCards: () => {}
       };
       const players = {
         getPlayers: () => {
@@ -123,6 +124,7 @@ describe('Game Class', () => {
         getName: () => {
           return 'player';
         },
+        calculatePlayableCards: () => {},
         addCards: function(cards) {
           player.cards = cards;
         },
@@ -180,6 +182,7 @@ describe('Game Class', () => {
         addCard: card => {
           console.log('here', card);
         },
+        calculatePlayableCards: () => {},
         addCards: () => {},
         getId: () => 234,
         id: 234
@@ -202,6 +205,7 @@ describe('Game Class', () => {
         addCard: card => {
           console.log('here', card);
         },
+        calculatePlayableCards: () => {},
         addCards: () => {},
         getId: () => 234,
         id: 234

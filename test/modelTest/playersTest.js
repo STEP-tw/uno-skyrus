@@ -19,7 +19,7 @@ describe('addPlayer', function() {
 describe('getCurrentPlayer', function() {
   it('should return current player', function() {
     const players = new Players({ name: 'hostName', cards: [] });
-    players.addPlayer({name:'Aftab', cards: []});
+    players.addPlayer({ name: 'Aftab', cards: [] });
     players.setCurrentPlayer();
     const expectedOutput = { name: 'Aftab', cards: [] };
     const actualOutput = players.getCurrentPlayer();
@@ -119,5 +119,16 @@ describe('isCurrent', function() {
       id: '2345'
     });
     chai.assert.equal(actualOutput, expectedOutput);
+  });
+
+  describe('changeTurn', function() {
+    it('should change current player', function() {
+      const players = new Players({ name: 'hostName', cards: [], id: 1234 });
+      players.currentPlayer = { setDrawCardStatus: () => {} };
+      players.changeTurn();
+      const actualOutput = players.currentPlayerIndex;
+
+      chai.assert.deepEqual(2, actualOutput);
+    });
   });
 });

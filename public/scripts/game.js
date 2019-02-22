@@ -1,25 +1,36 @@
 /* globals createCard */
 /*eslint no-unused-vars: "off"*/
 
-const drawCard = function() {
-  fetch('/drawCard');
+const drawCard = function(document) {
+  fetch('/drawCard')
+    .then(response => {
+      return response.json();
+    })
+    .then(cardDetails => {
+      initializeHand(document, cardDetails);
+    });
 };
 
 const initializePile = function(document) {
   const pile = document.getElementById('pile');
   fetch('/pile')
-    .then(response => response.json())
+    .then(response => {
+      console.log(typeof response.status, response.status);
+      return response.json();
+    })
     .then(card => {
       pile.innerHTML = '';
       pile.append(createCard(document, card));
     });
 };
 
+const isSimilarCards = function(card1, card2) {
+  return card1.number == card2.number && card1.color == card2.color;
+};
+
 const hasCard = (playableCards, card) => {
   return playableCards.some(playableCard => {
-    return (
-      playableCard.number == card.number && playableCard.color == card.color
-    );
+    return isSimilarCards(playableCard, card);
   });
 };
 
@@ -70,7 +81,7 @@ const drawDrop = function(event) {
   event.preventDefault();
   const cardId = event.dataTransfer.getData('text');
   if (cardId == 'stack') {
-    drawCard();
+    drawCard(document);
   }
 };
 
@@ -89,6 +100,9 @@ const throwCard = function(document, cardId) {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({ cardId })
+  }).then(() => {
+    console.log('in throwcard');
+    fetchCards(document);
   });
 };
 
@@ -102,7 +116,6 @@ const getNamesInOrder = function(playerNames, playerPosition) {
 const assignNames = function(document, playerDetails, playerPosition) {
   const detailsInOrder = getNamesInOrder(playerDetails, playerPosition);
   let id = 1;
-  console.log('this is the data', playerDetails);
   detailsInOrder.forEach(({ name, isCurrent }) => {
     document.getElementById(`player${id}`).innerText = name;
     let className = 'non-current-player';
@@ -126,8 +139,9 @@ const getPlayerNames = document => {
 const initialize = function(document) {
   setInterval(() => {
     initializePile(document);
-    fetchCards(document);
     getLog(document);
+    fetchCards(document);
+
     const pile = document.getElementById('pile');
     pile.setAttribute('ondrop', 'drop(event)');
 

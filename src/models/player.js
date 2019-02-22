@@ -3,9 +3,19 @@ class Player {
     this.name = name;
     this.cards = [];
     this.id = id;
+    this.playableCards = [];
+    this.canDrawCard = true;
   }
   getCards() {
     return this.cards;
+  }
+
+  setDrawCardStatus(status) {
+    this.canDrawCard = status;
+  }
+
+  getDrawCardStatus() {
+    return this.canDrawCard;
   }
 
   addCards(cards) {
@@ -27,10 +37,18 @@ class Player {
     return this.name;
   }
 
-  getPlayableCardsFor(otherCard) {
-    return this.cards.filter(card => {
+  calculatePlayableCards(otherCard) {
+    this.playableCards = this.cards.filter(card => {
       return card.canPlayOnTopOf(otherCard);
     });
+  }
+
+  setPlayableCards(cards) {
+    this.playableCards = cards;
+  }
+
+  getPlayableCards() {
+    return this.playableCards;
   }
 }
 

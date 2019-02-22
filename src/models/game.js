@@ -28,7 +28,14 @@ class Game {
         thrownCard.number + ' ' + thrownCard.color
       );
       this.players.updateCurrentPlayer(thrownCard);
+      this.updatePlayableCards();
     }
+  }
+
+  updatePlayableCards() {
+    this.players
+      .getPlayers()
+      .forEach(player => player.calculatePlayableCards(this.getTopDiscard()));
   }
 
   startGame(shuffle) {
@@ -37,6 +44,7 @@ class Game {
     this.pile.push(this.stack.pop());
     this.status = true;
     this.players.setCurrentPlayer();
+    this.updatePlayableCards();
   }
 
   drawCard(playerId) {

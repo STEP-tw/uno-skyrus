@@ -64,7 +64,16 @@ const servePlayerCards = function(req, res) {
   const game = req.app.games.getGame(gameKey);
   const cards = game.getPlayerCards(+id);
   const player = game.getPlayers().getPlayer(id);
-  const playableCards = player.getPlayableCardsFor(game.getTopDiscard());
+  let playableCards = [];
+
+  if (
+    game
+      .getPlayers()
+      .getCurrentPlayer()
+      .getId() == id
+  ) {
+    playableCards = player.getPlayableCards();
+  }
   res.send({ cards, playableCards });
 };
 
@@ -125,8 +134,21 @@ const handleThrowCard = function(req, res) {
 const drawCard = function(req, res) {
   const { gameKey, id } = req.cookies;
   const game = res.app.games.getGame(gameKey);
-  game.drawCard(id);
-  res.end();
+  const player = game.getPlayers().getPlayer(id);
+  if (player.getDrawCardStatus()) {
+    game.drawCard(id);
+    player.setDrawCardStatus(false);
+  }
+  const cards = game.getPlayerCards(+id);
+  const card = cards[cards.length - 1];
+  player.setPlayableCards([]);
+  if (card.canPlayOnTopOf(game.getTopDiscard())) {
+    player.setPlayableCards([card]);
+  } else {
+    game.getPlayers().changeTurn();
+  }
+  const playableCards = player.getPlayableCards();
+  res.send({ cards, playableCards });
 };
 
 const getPlayerNames = (req, res) => {
@@ -142,7 +164,7 @@ const getPlayerNames = (req, res) => {
       isCurrent: game.getPlayers().isCurrent(player)
     };
   });
-  
+
   res.send({ playerDetails, playerPosition });
 };
 
