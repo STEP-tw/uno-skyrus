@@ -126,6 +126,10 @@ const drawCard = function(req, res) {
   const { gameKey, id } = req.cookies;
   const game = res.app.games.getGame(gameKey);
   game.drawCard(id);
+  const stackLength = game.getStack().length;
+  if (!stackLength) {
+    game.refillStack();
+  }
   res.end();
 };
 

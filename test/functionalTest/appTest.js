@@ -292,18 +292,42 @@ describe('Handle Throw Card', () => {
 });
 
 describe('Handle Draw Card', () => {
-  beforeEach(() => {
+  it('should remove top card of stack and refill the stack from pile if stack gets empty', done => {
     const games = {
       '1234': {
+        stack: [],
+        pile: [1, 2, 3, 4],
         drawCard: playerId => {
           chai.assert.equal(playerId, '5678');
+        },
+        getStack: () => [],
+        refillStack: () => {
+          this.stack = [1, 2, 3];
+          this.pile = [4];
         }
       },
       getGame: () => games[1234]
     };
     app.games = games;
+    request(app)
+      .get('/drawCard')
+      .set('Cookie', 'gameKey=1234; id=5678')
+      .expect(200)
+      .end(done);
   });
-  it('should remove card from hand and add it to top of pile', done => {
+
+  it('should remove top card of stack', done => {
+    const games = {
+      '1234': {
+        drawCard: playerId => {
+          chai.assert.equal(playerId, '5678');
+        },
+        getStack: () => [1, 2, 3],
+        refillStack: () => {}
+      },
+      getGame: () => games[1234]
+    };
+    app.games = games;
     request(app)
       .get('/drawCard')
       .set('Cookie', 'gameKey=1234; id=5678')
