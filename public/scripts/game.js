@@ -102,14 +102,14 @@ const getNamesInOrder = function(playerNames, playerPosition) {
 const assignNames = function(document, playerDetails, playerPosition) {
   const detailsInOrder = getNamesInOrder(playerDetails, playerPosition);
   let id = 1;
-  console.log('this is the data', playerDetails);
   detailsInOrder.forEach(({ name, isCurrent }) => {
     document.getElementById(`player${id}`).innerText = name;
     let className = 'non-current-player';
     if (isCurrent) {
       className = 'current-player';
     }
-    document.getElementById(`player${id}`).className = className;
+    // document.getElementById(`player${id}`).className = className;
+    document.getElementById(`player${id}`).classList.add(className);
     id++;
   });
 };
