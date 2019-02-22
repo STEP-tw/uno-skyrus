@@ -5,7 +5,8 @@ const {
   twoCards,
   dummyShuffler,
   numberDeck,
-  tenCards
+  tenCards,
+  sevenCards
 } = require('../testHelpers/testHelpers.js');
 
 describe('Game Class', () => {
@@ -20,7 +21,8 @@ describe('Game Class', () => {
         cards: [],
         addCards: function(cards) {
           player.cards = cards;
-        }
+        },
+        calculatePlayableCards: () => {}
       };
       const players = {
         getPlayers: () => {
@@ -125,6 +127,7 @@ describe('Game Class', () => {
         getName: () => {
           return 'player';
         },
+        calculatePlayableCards: () => {},
         addCards: function(cards) {
           player.cards = cards;
         },
@@ -180,26 +183,74 @@ describe('Game Class', () => {
     it('should remove a card from stack', function() {
       const player = {
         addCard: () => {},
+        calculatePlayableCards: () => {},
         addCards: () => {},
         getId: () => 234,
+        getDrawCardStatus: () => true,
+        setDrawCardStatus: () => {},
+        setPlayableCards: () => {},
         id: 234
       };
       const players = {
         getCurrentPlayer: () => player,
         getPlayers: () => [player],
-        setCurrentPlayer: () => player
+        setCurrentPlayer: () => player,
+        changeTurn: () => {}
       };
-      const game = new Game(tenCards, 0, 1234, players);
+      const card = {
+        number: 4,
+        color: 'red',
+        canPlayOnTopOf: () => true
+      };
+      const nineCards = sevenCards.slice();
+      nineCards.unshift(card);
+      nineCards.unshift(card);
+      nineCards.unshift(card);
+      const game = new Game(nineCards, 0, 1234, players);
       game.startGame(dummyShuffler);
       game.drawCard(234);
       const actual = game.stack;
-      const expected = [{ number: 2, color: 'green' }];
+      const expected = [card];
+      chai.assert.deepEqual(actual, expected);
+    });
+    it('should remove a card from stack', function() {
+      const player = {
+        addCard: () => {},
+        calculatePlayableCards: () => {},
+        addCards: () => {},
+        getId: () => 234,
+        getDrawCardStatus: () => true,
+        setDrawCardStatus: () => {},
+        setPlayableCards: () => {},
+        id: 234
+      };
+      const players = {
+        getCurrentPlayer: () => player,
+        getPlayers: () => [player],
+        setCurrentPlayer: () => player,
+        changeTurn: () => {}
+      };
+      const card = {
+        number: 4,
+        color: 'red',
+        canPlayOnTopOf: () => false
+      };
+      const nineCards = sevenCards.slice();
+      nineCards.unshift(card);
+      nineCards.unshift(card);
+      nineCards.unshift(card);
+      const game = new Game(nineCards, 0, 1234, players);
+      game.startGame(dummyShuffler);
+      game.drawCard(234);
+      const actual = game.stack;
+      const expected = [card];
       chai.assert.deepEqual(actual, expected);
     });
 
     it('should not remove a card from stack if not current player', function() {
       const player = {
         addCard: () => {},
+        calculatePlayableCards: () => {},
         addCards: () => {},
         getId: () => 234,
         id: 234

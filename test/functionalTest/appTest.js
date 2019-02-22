@@ -92,7 +92,8 @@ describe('playerCards', function() {
     const player = {
       name: 'player',
       id: 123,
-      getPlayableCardsFor: () => [{ color: 'red', number: 2 }]
+      getId: sinon.stub().returns(123),
+      getPlayableCards: () => [{ color: 'red', number: 2 }]
     };
     const game = {
       addPlayer: () => {},
@@ -103,14 +104,18 @@ describe('playerCards', function() {
         };
       },
       getPlayers: () => {
-        return { getPlayers: () => [player], getPlayer: () => player };
+        return {
+          getPlayers: () => [player],
+          getPlayer: () => player,
+          getCurrentPlayer: sinon.stub().returns(player)
+        };
       },
       getPlayerCards: sinon
         .stub()
         .withArgs('player')
         .returns(cards)
     };
-    games.getGame = sinon.stub();
+    games.getGame = sinon.stub().returns(game);
     games.getGame.withArgs('1234').returns(game);
 
     app.games = games;
@@ -120,11 +125,26 @@ describe('playerCards', function() {
     request(app)
       .get('/playerCards')
       .set('Cookie', 'gameKey=1234')
+      .set('Cookie', 'id=123')
       .expect(200)
       .expect('content-type', 'application/json; charset=utf-8')
       .expect({
         cards: [{ color: 'red', number: 3 }],
         playableCards: [{ color: 'red', number: 2 }]
+      })
+      .end(done);
+  });
+
+  it('should return 200 status code for playerCards request and json content-type', function(done) {
+    request(app)
+      .get('/playerCards')
+      .set('Cookie', 'gameKey=1234')
+      .set('Cookie', 'id=12')
+      .expect(200)
+      .expect('content-type', 'application/json; charset=utf-8')
+      .expect({
+        cards: [{ color: 'red', number: 3 }],
+        playableCards: []
       })
       .end(done);
   });
@@ -292,23 +312,77 @@ describe('Handle Throw Card', () => {
 });
 
 describe('Handle Draw Card', () => {
-  it('should remove top card of stack and refill the stack from pile if stack gets empty', done => {
+  const card = {};
+  let player, game;
+  beforeEach(() => {
+    player = {
+      id: 123,
+      getDrawCardStatus: () => true,
+      setDrawCardStatus: () => {},
+      setPlayableCards: () => {},
+      getPlayableCards: () => []
+    };
+    const players = {
+      getPlayer: () => player,
+      changeTurn: () => {}
+    };
+
+    card.canPlayOnTopOf = sinon.stub().returns(true);
+
+    game = {
+      stack: [],
+      pile: [1, 2, 3, 4],
+      getPlayers: () => players,
+      getTopDiscard: () => card,
+      drawCard: () => {},
+      getPlayerCards: () => [card],
+      refillStack: () => {},
+      getStack: () => {
+        return [1, 2];
+      }
+    };
+
     const games = {
-      '1234': {
-        stack: [],
-        pile: [1, 2, 3, 4],
-        drawCard: playerId => {
-          chai.assert.equal(playerId, '5678');
-        },
-        getStack: () => [],
-        refillStack: () => {
-          this.stack = [1, 2, 3];
-          this.pile = [4];
-        }
-      },
-      getGame: () => games[1234]
+      1234: game,
+
+      getGame: () => game
     };
     app.games = games;
+  });
+  it('should remove top card of stack and refill the stack from pile if stack gets empty', done => {
+    game.stack = [];
+    game.pile = [1, 2, 3, 4];
+    game.drawCard = playerId => {
+      chai.assert.equal(playerId, '5678');
+    };
+    game.getStack = () => [];
+    game.refillStack = () => {
+      this.stack = [1, 2, 3];
+      this.pile = [4];
+    };
+    request(app)
+      .get('/drawCard')
+      .set('Cookie', 'gameKey=1234; id=5678')
+      .expect(200)
+      .end(done);
+  });
+  it('should remove card from stack and add it to the hand', done => {
+    request(app)
+      .get('/drawCard')
+      .set('Cookie', 'gameKey=1234; id=5678')
+      .expect(200)
+      .end(done);
+  });
+  it('should remove card from stack and add it to the hand but not able to play', done => {
+    card.canPlayOnTopOf = sinon.stub().returns(false);
+    request(app)
+      .get('/drawCard')
+      .set('Cookie', 'gameKey=1234; id=5678')
+      .expect(200)
+      .end(done);
+  });
+  it('should not remove card from stack', done => {
+    player.getDrawCardStatus = () => false;
     request(app)
       .get('/drawCard')
       .set('Cookie', 'gameKey=1234; id=5678')
@@ -317,17 +391,6 @@ describe('Handle Draw Card', () => {
   });
 
   it('should remove top card of stack', done => {
-    const games = {
-      '1234': {
-        drawCard: playerId => {
-          chai.assert.equal(playerId, '5678');
-        },
-        getStack: () => [1, 2, 3],
-        refillStack: () => {}
-      },
-      getGame: () => games[1234]
-    };
-    app.games = games;
     request(app)
       .get('/drawCard')
       .set('Cookie', 'gameKey=1234; id=5678')
@@ -381,7 +444,7 @@ describe('serveLog', function() {
 
     app.games = games;
     request(app)
-      .get('/serveLog')
+      .get('/gameLog')
       .set('Cookie', 'gameKey=1234')
       .expect(200)
       .expect('content-type', 'text/plain; charset=utf-8')

@@ -63,11 +63,9 @@ describe('Player class', () => {
         { number: 2, color: 'green', canPlayOnTopOf: () => false }
       ];
       player.addCards(cards);
-      const expectedOutput = [cards[0]];
-      const actualOutput = player.getPlayableCardsFor({
-        number: 8,
-        color: 'red'
-      });
+      player.setPlayableCards(cards);
+      const expectedOutput = cards;
+      const actualOutput = player.getPlayableCards();
       chai.assert.deepEqual(actualOutput, expectedOutput);
     });
   });
@@ -78,6 +76,35 @@ describe('Player class', () => {
       player.addCard({ number: 4, color: 'red' });
       const expectedOutput = [{ number: 4, color: 'red' }];
       const actualOutput = player.getCards();
+      chai.assert.deepEqual(actualOutput, expectedOutput);
+    });
+  });
+
+  describe('setDrawCardStatus', function() {
+    it('should add the given card to the player', function() {
+      const player = new Player('Player', 1234);
+      player.setDrawCardStatus(true);
+      const expectedOutput = true;
+      const actualOutput = player.getDrawCardStatus();
+      chai.assert.deepEqual(actualOutput, expectedOutput);
+    });
+  });
+
+  describe('calculatePlayableCards', function() {
+    it('should add the given card to the player', function() {
+      const player = new Player('Player', 1234);
+      const dummyCard = {
+        color: 'red',
+        number: 9,
+        canPlayOnTopOf: () => true
+      };
+      player.addCards([dummyCard]);
+      player.calculatePlayableCards({
+        color: 'red',
+        number: 7
+      });
+      const expectedOutput = [dummyCard];
+      const actualOutput = player.getPlayableCards();
       chai.assert.deepEqual(actualOutput, expectedOutput);
     });
   });

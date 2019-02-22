@@ -28,7 +28,14 @@ class Game {
         thrownCard.number + ' ' + thrownCard.color
       );
       this.players.updateCurrentPlayer(thrownCard);
+      this.updatePlayableCards();
     }
+  }
+
+  updatePlayableCards() {
+    this.players
+      .getPlayers()
+      .forEach(player => player.calculatePlayableCards(this.getTopDiscard()));
   }
 
   startGame(shuffle) {
@@ -37,12 +44,22 @@ class Game {
     this.pile.push(this.stack.pop());
     this.status = true;
     this.players.setCurrentPlayer();
+    this.updatePlayableCards();
   }
 
   drawCard(playerId) {
     const currentPlayer = this.players.getCurrentPlayer();
-    if (currentPlayer.id == playerId) {
-      currentPlayer.addCard(this.stack.pop());
+    if (currentPlayer.id == playerId && currentPlayer.getDrawCardStatus()) {
+      const drawnCard = this.stack.pop();
+      currentPlayer.addCard(drawnCard);
+      currentPlayer.setDrawCardStatus(false);
+
+      currentPlayer.setPlayableCards([]);
+      if (drawnCard.canPlayOnTopOf(this.getTopDiscard())) {
+        currentPlayer.setPlayableCards([drawnCard]);
+      } else {
+        this.getPlayers().changeTurn();
+      }
     }
   }
 

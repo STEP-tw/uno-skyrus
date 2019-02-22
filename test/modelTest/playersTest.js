@@ -19,7 +19,7 @@ describe('addPlayer', function() {
 describe('getCurrentPlayer', function() {
   it('should return current player', function() {
     const players = new Players({ name: 'hostName', cards: [] });
-    players.addPlayer({name:'Aftab', cards: []});
+    players.addPlayer({ name: 'Aftab', cards: [] });
     players.setCurrentPlayer();
     const expectedOutput = { name: 'Aftab', cards: [] };
     const actualOutput = players.getCurrentPlayer();
@@ -89,15 +89,23 @@ describe('setCurrentPlayer', function() {
     const player = {
       name: 'Rahul',
       id: 1212,
-      cards: []
+      cards: [],
+      setDrawCardStatus: () => {}
     };
     const thrownCard = {
       action: currentPlayerIndex => {
         return ++currentPlayerIndex;
       }
     };
-    const hostPlayer = { name: 'Aftab', cards: [], id: 1234 };
+
+    const hostPlayer = {
+      name: 'Aftab',
+      cards: [],
+      id: 1234,
+      setDrawCardStatus: () => {}
+    };
     const players = new Players(hostPlayer);
+    players.currentPlayer = player;
     players.addPlayer(player);
     players.setCurrentPlayer();
     players.updateCurrentPlayer(thrownCard);
@@ -109,7 +117,12 @@ describe('setCurrentPlayer', function() {
 
 describe('isCurrent', function() {
   it('should return true for current player', function() {
-    const players = new Players({ name: 'Rahul', cards: [], id: '1234' });
+    const players = new Players({
+      name: 'Rahul',
+      cards: [],
+      id: '1234'
+    });
+    players.addPlayer({ name: 'Affi', cards: [], id: '2345' });
     players.addPlayer({ name: 'Affi', cards: [], id: '2345' });
     players.setCurrentPlayer();
     const expectedOutput = true;
@@ -119,5 +132,37 @@ describe('isCurrent', function() {
       id: '2345'
     });
     chai.assert.equal(actualOutput, expectedOutput);
+  });
+});
+
+describe('changeTurn', function() {
+  it('should change current player', function() {
+    const players = new Players({
+      name: 'hostName',
+      cards: [],
+      id: 1234,
+      setDrawCardStatus: () => {}
+    });
+    players.currentPlayer = { setDrawCardStatus: () => {} };
+    players.changeTurn();
+    const actualOutput = players.currentPlayerIndex;
+
+    chai.assert.deepEqual(0, actualOutput);
+  });
+  it('should change current player even after a compleate turn', function() {
+    const players = new Players({
+      name: 'hostName',
+      cards: [],
+      id: 1234
+    });
+    players.currentPlayer = { setDrawCardStatus: () => {} };
+    players.players = [
+      { name: 'player', setDrawCardStatus: () => {} },
+      { name: 'player', setDrawCardStatus: () => {} }
+    ];
+    players.changeTurn();
+    const actualOutput = players.currentPlayerIndex;
+
+    chai.assert.deepEqual(0, actualOutput);
   });
 });

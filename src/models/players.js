@@ -31,10 +31,20 @@ class Players {
   setCurrentPlayer() {
     this.currentPlayer = this.players[this.currentPlayerIndex];
   }
+
+  changeTurn() {
+    this.currentPlayerIndex += 1;
+    this.currentPlayerIndex =
+      this.currentPlayerIndex % this.getNumberOfPlayers();
+    this.setCurrentPlayer();
+    this.currentPlayer.setDrawCardStatus(true);
+  }
+
   updateCurrentPlayer(thrownCard) {
     const updatedIndex = thrownCard.action(this.currentPlayerIndex);
     this.currentPlayerIndex = updatedIndex % this.getNumberOfPlayers();
     this.setCurrentPlayer();
+    this.currentPlayer.setDrawCardStatus(true);
   }
 }
 

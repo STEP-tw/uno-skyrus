@@ -64,11 +64,20 @@ const servePlayerCards = function(req, res) {
   const game = req.app.games.getGame(gameKey);
   const cards = game.getPlayerCards(+id);
   const player = game.getPlayers().getPlayer(id);
-  const playableCards = player.getPlayableCardsFor(game.getTopDiscard());
+  let playableCards = [];
+
+  if (
+    game
+      .getPlayers()
+      .getCurrentPlayer()
+      .getId() == id
+  ) {
+    playableCards = player.getPlayableCards();
+  }
   res.send({ cards, playableCards });
 };
 
-const serveLog = function(req, res) {
+const serveGameLog = function(req, res) {
   const { gameKey } = req.cookies;
   const game = res.app.games.getGame(gameKey);
   const latestLog = game.activityLog.getLatestLog();
@@ -125,12 +134,17 @@ const handleThrowCard = function(req, res) {
 const drawCard = function(req, res) {
   const { gameKey, id } = req.cookies;
   const game = res.app.games.getGame(gameKey);
+  const player = game.getPlayers().getPlayer(id);
   game.drawCard(id);
+  console.log(game.getStack());
   const stackLength = game.getStack().length;
   if (!stackLength) {
+    console.log('refilling stack...................');
     game.refillStack();
   }
-  res.end();
+  const cards = game.getPlayerCards(+id);
+  const playableCards = player.getPlayableCards();
+  res.send({ cards, playableCards });
 };
 
 const getPlayerNames = (req, res) => {
@@ -175,6 +189,6 @@ module.exports = {
   handleThrowCard,
   getPlayerNames,
   drawCard,
-  serveLog,
+  serveGameLog,
   renderGamePage
 };
