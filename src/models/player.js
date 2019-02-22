@@ -15,7 +15,9 @@ class Player {
   addCard(card) {
     this.cards.push(card);
   }
-
+  getCardsCount() {
+    return this.cards.length;
+  }
   removeCard(cardId) {
     this.cards.splice(cardId, 1);
   }

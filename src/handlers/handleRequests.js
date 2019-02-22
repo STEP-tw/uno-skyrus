@@ -139,7 +139,8 @@ const getPlayerNames = (req, res) => {
   const playerDetails = players.map(player => {
     return {
       name: player.name,
-      isCurrent: game.getPlayers().isCurrent(player)
+      isCurrent: game.getPlayers().isCurrent(player),
+      cardsCount: player.getCardsCount()
     };
   });
 

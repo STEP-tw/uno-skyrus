@@ -316,8 +316,8 @@ describe('get players', () => {
   beforeEach(() => {
     const players = {
       getPlayers: () => [
-        { name: 'Aftab', id: '5678' },
-        { name: 'Rahul', id: '2678' }
+        { name: 'Aftab', id: '5678', getCardsCount: () => {} },
+        { name: 'Rahul', id: '2678', getCardsCount: () => {} }
       ],
       isCurrent: () => {}
     };

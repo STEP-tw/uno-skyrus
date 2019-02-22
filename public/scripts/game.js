@@ -92,6 +92,24 @@ const throwCard = function(document, cardId) {
   });
 };
 
+const hideCards = function(hand, cardsCount) {
+  let cardsToHide = cardsCount;
+  let cardIndex = 2;
+  while (cardsToHide > 0) {    
+    hand[cardIndex].style.visibility = 'hidden';
+    cardIndex--;
+    cardsToHide--;
+  }
+};
+
+const updateOthersCards = function(playerId, cardsCount) {
+  const cardLimit = 3;
+  const hand = document.getElementById(`player${playerId}Hand`).children;
+  if (cardsCount < cardLimit) {
+    hideCards(hand, cardLimit - cardsCount);
+  }
+};
+
 const getNamesInOrder = function(playerNames, playerPosition) {
   const namesBeforeMe = playerNames.slice(0, playerPosition);
   const namesAfterMe = playerNames.slice(playerPosition);
@@ -102,13 +120,16 @@ const getNamesInOrder = function(playerNames, playerPosition) {
 const assignNames = function(document, playerDetails, playerPosition) {
   const detailsInOrder = getNamesInOrder(playerDetails, playerPosition);
   let id = 1;
-  detailsInOrder.forEach(({ name, isCurrent }) => {
+  detailsInOrder.forEach(({ name, isCurrent, cardsCount }) => {
     document.getElementById(`player${id}`).innerText = name;
     let className = 'non-current-player';
     if (isCurrent) {
       className = 'current-player';
     }
     document.getElementById(`player${id}-arrow`).className = className;
+    if (id !== 1) {
+      updateOthersCards(id, cardsCount);
+    }
     id++;
   });
 };
