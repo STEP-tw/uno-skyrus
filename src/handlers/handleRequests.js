@@ -68,7 +68,7 @@ const servePlayerCards = function(req, res) {
   res.send({ cards, playableCards });
 };
 
-const serveLog = function(req, res) {
+const serveGameLog = function(req, res) {
   const { gameKey } = req.cookies;
   const game = res.app.games.getGame(gameKey);
   const latestLog = game.activityLog.getLatestLog();
@@ -175,6 +175,6 @@ module.exports = {
   handleThrowCard,
   getPlayerNames,
   drawCard,
-  serveLog,
+  serveGameLog,
   renderGamePage
 };

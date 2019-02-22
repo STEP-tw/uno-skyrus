@@ -29,7 +29,7 @@ const displayLog = function(document, log) {
 };
 
 const getLog = function(document) {
-  fetch('/serveLog')
+  fetch('/gameLog')
     .then(response => response.text())
     .then(log => displayLog(document, log));
 };
