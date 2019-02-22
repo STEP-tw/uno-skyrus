@@ -104,14 +104,16 @@ describe('Game Class', () => {
       chai.assert.deepEqual(actual, expected);
     });
   });
-  describe('getKey', function() {
-    it('should return all players', function() {
+
+  describe('hasStarted', function() {
+    it('should return false when game has not started', function() {
       const game = new Game(twoCards, 0, 1234, {});
       const actual = game.hasStarted();
       const expected = false;
       chai.assert.deepEqual(actual, expected);
     });
   });
+
   describe('throw card', () => {
     let game;
     beforeEach(() => {
@@ -177,9 +179,7 @@ describe('Game Class', () => {
   describe('drawCard', function() {
     it('should remove a card from stack', function() {
       const player = {
-        addCard: card => {
-          console.log('here', card);
-        },
+        addCard: () => {},
         addCards: () => {},
         getId: () => 234,
         id: 234
@@ -199,9 +199,7 @@ describe('Game Class', () => {
 
     it('should not remove a card from stack if not current player', function() {
       const player = {
-        addCard: card => {
-          console.log('here', card);
-        },
+        addCard: () => {},
         addCards: () => {},
         getId: () => 234,
         id: 234
@@ -219,6 +217,27 @@ describe('Game Class', () => {
         { number: 2, color: 'green' },
         { number: 3, color: 'blue' }
       ];
+      chai.assert.deepEqual(actual, expected);
+    });
+  });
+
+  describe('getStack', function() {
+    it('should return stack', function() {
+      const game = new Game(numberDeck, 0, 1234, {});
+      const actual = game.getStack();
+      const expected = [];
+      chai.assert.deepEqual(actual, expected);
+    });
+  });
+
+  describe('refillStack', function() {
+    it('should refill the stack from pile except topDiscard', function() {
+      const game = new Game(numberDeck, 0, 1234, {}, { addLog: () => {} });
+      game.pile = twoCards;
+      game.stack = [];
+      game.refillStack();
+      const actual = game.getStack();
+      const expected = [{ color: 'red', number: 5 }];
       chai.assert.deepEqual(actual, expected);
     });
   });
