@@ -13,7 +13,7 @@ const {
   serveLobby,
   handleGame,
   handleThrowCard,
-  serveLog,
+  serveGameLog,
   drawCard,
   getPlayerNames,
   renderGamePage
@@ -36,7 +36,7 @@ app.post('/joinGame', joinGame);
 app.get('/pile', getTopDiscard);
 app.get('/getPlayerNames', getPlayerNames);
 app.get('/playersStatus', handleGame);
-app.get('/serveLog', serveLog);
+app.get('/gameLog', serveGameLog);
 app.get('/lobby', serveLobby);
 app.get('/drawCard', drawCard);
 app.use(express.static('public', options));

@@ -444,7 +444,7 @@ describe('serveLog', function() {
 
     app.games = games;
     request(app)
-      .get('/serveLog')
+      .get('/gameLog')
       .set('Cookie', 'gameKey=1234')
       .expect(200)
       .expect('content-type', 'text/plain; charset=utf-8')
