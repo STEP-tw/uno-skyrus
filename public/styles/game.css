@@ -9,39 +9,46 @@ body {
 
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
+  /* border: 5px solid blue; */
 }
 
 .top-table {
   width: 100%;
-  height: 35%;
+  height: 30%;
 
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  /* border: 2px solid red; */
 }
 
 .middle-table {
   width: 100%;
-  height: 50%;
+  height: 40%;
 
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
+
   /* justify-content: space-between; */
+  /* border: 2px solid green; */
 }
 
 .center-table {
   width: 50%;
-  height: 90%;
+  height: 100%;
 
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  /* border: 1px solid grey; */
 }
 
 .status-bar {
@@ -75,7 +82,7 @@ body {
 }
 
 .cards-on-table {
-  width: 60%;
+  width: 70%;
 
   display: flex;
   flex-direction: row;
@@ -84,49 +91,26 @@ body {
 
 .bottom-table {
   width: 100%;
-  height: 35%;
+  height: 30%;
 
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  /* border: 2px solid brown; */
 }
 
 /*Players and their hands */
 .player {
-  width: 50%;
+  width: 100%;
+  height: 100%;
 
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-}
+  justify-content: space-evenly;
 
-.player1 {
-  width: 80%;
-  height: 65%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.player2 {
-  width: 30%;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.player3 {
-  width: 95%;
-  height: 65%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  /* background-color: aquamarine; */
 }
 
 .otherPlayer {
@@ -318,17 +302,21 @@ body {
 }
 
 .action-btns{
-  height:8%;
+  height:15%;
   width:100%;
 
   display: flex;
   justify-content: center;
   align-items: center;
+  
 }
 
 .pass{
-  width:3%;
-  height:100%;
-
+  width:10%;
+  height:70%;
+  text-align: center;
+  line-height: 2.5;
   cursor: pointer;
+  background-color: black;
+  color: white;
 }
