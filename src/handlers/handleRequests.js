@@ -178,6 +178,25 @@ const renderGamePage = function(req, res) {
   res.send(gamePage);
 };
 
+const hasDrawn = function(player) {
+  return !player.getDrawCardStatus();
+};
+
+const isCurrentPlayer = function(game, player) {
+  return game.getPlayers().isCurrent(player);
+};
+
+const passTurn = function(req, res) {
+  const { gameKey, id } = req.cookies;
+  const game = req.app.games.getGame(gameKey);
+  const player = game.getPlayers().getPlayer(id);
+
+  if (hasDrawn(player) && isCurrentPlayer(game, player)) {
+    game.getPlayers().changeTurn();
+  }
+  res.end();
+};
+
 module.exports = {
   getTopDiscard,
   hostGame,
@@ -190,5 +209,6 @@ module.exports = {
   getPlayerNames,
   drawCard,
   serveGameLog,
-  renderGamePage
+  renderGamePage,
+  passTurn
 };

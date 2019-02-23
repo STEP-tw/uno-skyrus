@@ -451,3 +451,66 @@ describe('serveLog', function() {
       .end(done);
   });
 });
+
+describe('passTurn', function() {
+  it('should pass the turn if the player don`t want to play', function(done) {
+    const player = {
+      id: 123,
+      getDrawCardStatus: () => true
+    };
+
+    const players = {
+      getPlayer: () => player,
+      isCurrent: () => true
+    };
+
+    const games = {
+      1234: {
+        players: { changeTurn: () => {} },
+        getPlayers: () => players
+      },
+      getGame: () => {
+        return games['1234'];
+      }
+    };
+
+    app.games = games;
+    request(app)
+      .get('/passTurn')
+      .set('Cookie', 'gameKey=1234')
+      .set('Cookie', 'id=123')
+      .expect(200)
+      .end(done);
+  });
+
+  it('should not pass the turn if the player is not the current player', function(done) {
+    const player = {
+      id: 123,
+      getDrawCardStatus: () => false
+    };
+
+    const players = {
+      getPlayer: () => player,
+      isCurrent: () => true,
+      changeTurn: () => {}
+    };
+
+    const games = {
+      1234: {
+        players: { changeTurn: () => {} },
+        getPlayers: () => players
+      },
+      getGame: () => {
+        return games['1234'];
+      }
+    };
+
+    app.games = games;
+    request(app)
+      .get('/passTurn')
+      .set('Cookie', 'gameKey=1234')
+      .set('Cookie', 'id=123')
+      .expect(200)
+      .end(done);
+  });
+});

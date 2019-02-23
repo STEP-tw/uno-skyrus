@@ -2,6 +2,27 @@
 /*eslint no-unused-vars: "off"*/
 const OTHERS_CARDS_LIMIT = 3;
 
+const removePass = function(document) {
+  const pass = document.getElementById('passTurn');
+  const container = document.getElementById('action-btns');
+  container.removeChild(pass);
+};
+
+const pass = function() {
+  fetch('/passTurn').then(() => removePass(document));
+};
+
+const displayPass = function(document) {
+  const container = document.getElementById('action-btns');
+  const pass = document.createElement('img');
+  pass.className = 'pass';
+  pass.id = 'passTurn';
+  container.appendChild(pass);
+  pass.src = './images/pass_turn.jpeg';
+  pass.setAttribute('onclick', 'pass()');
+  return;
+};
+
 const drawCard = function(document) {
   fetch('/drawCard')
     .then(response => {
@@ -9,6 +30,11 @@ const drawCard = function(document) {
     })
     .then(cardDetails => {
       initializeHand(document, cardDetails);
+      if (cardDetails.playableCards.length) {
+        displayPass(document);
+        return;
+      }
+      
     });
 };
 

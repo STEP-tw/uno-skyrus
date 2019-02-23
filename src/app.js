@@ -16,7 +16,8 @@ const {
   serveGameLog,
   drawCard,
   getPlayerNames,
-  renderGamePage
+  renderGamePage,
+  passTurn
 } = require('./handlers/handleRequests');
 
 const app = express();
@@ -39,6 +40,7 @@ app.get('/playersStatus', handleGame);
 app.get('/gameLog', serveGameLog);
 app.get('/lobby', serveLobby);
 app.get('/drawCard', drawCard);
+app.get('/passTurn', passTurn);
 app.use(express.static('public', options));
 
 module.exports = { app };
