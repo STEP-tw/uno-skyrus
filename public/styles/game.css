@@ -38,7 +38,6 @@ body {
   /* justify-content: space-between; */
   /* border: 2px solid green; */
 }
-
 .center-table {
   width: 50%;
   height: 100%;
@@ -294,6 +293,10 @@ body {
 .pile-stack-card {
   margin-left: -95px;
   background: white;
+}
+
+.stack-of-cards {
+  cursor: pointer;
 }
 
 .action-btns {
