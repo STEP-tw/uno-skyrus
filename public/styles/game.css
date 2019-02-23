@@ -159,15 +159,17 @@ body {
   margin-left: -60px;
   opacity: 1;
   cursor: pointer;
+  align-self: flex-start;
 }
 
 .non-playable-card {
   opacity: 1;
   margin-left: -60px;
+  align-self: flex-end;
 }
 
 .non-playable-card > div {
-  opacity: 0.1;
+  opacity: 0.5;
 }
 
 .uno-card {
