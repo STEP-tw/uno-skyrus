@@ -54,10 +54,10 @@ body {
   width: 100%;
   height: 15%;
 
-  font-size: 20;
-  font-weight: bold;
-
-  color: #7768ae;
+  font-size: 18px;
+  color: black;
+  font-family: sans-serif;
+  font-weight: 100;
 
   display: flex;
   align-items: center;
@@ -82,7 +82,7 @@ body {
 
 .cards-on-table {
   width: 70%;
-  height: 70%;
+  height: 100%;
 
   display: flex;
   flex-direction: row;
@@ -265,11 +265,16 @@ body {
 }
 
 .player-name {
-  background-color: black;
-  color: white;
   width: 80%;
+  color: white;
   text-align: center;
   margin-top: 2px;
+  background-color: #70a5c0;
+  font-weight: 100;
+  letter-spacing: 1.2;
+  font-family: sans-serif;
+  padding: 3px;
+  border-radius: 5px;
 }
 
 .non-current-player {
@@ -312,6 +317,7 @@ body {
   width: 10%;
   text-align: center;
   cursor: pointer;
-  background-color: black;
+  background-color: #70a5c0;
   color: white;
+  border-radius: 5px;
 }
