@@ -14,11 +14,11 @@ const pass = function() {
 
 const displayPass = function(document) {
   const container = document.getElementById('action-btns');
-  const pass = document.createElement('img');
+  const pass = document.createElement('span');
   pass.className = 'pass';
   pass.id = 'passTurn';
   container.appendChild(pass);
-  pass.src = './images/pass_turn.jpeg';
+  pass.innerText = 'PASS';
   pass.setAttribute('onclick', 'pass()');
   return;
 };
