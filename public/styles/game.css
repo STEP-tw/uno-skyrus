@@ -301,22 +301,22 @@ body {
   background: white;
 }
 
-.action-btns{
-  height:15%;
-  width:100%;
+.action-btns {
+  height: 15%;
+  width: 100%;
 
   display: flex;
   justify-content: center;
   align-items: center;
-  
 }
 
-.pass{
-  width:10%;
-  height:70%;
+.pass {
+  width: 10%;
+  height: 70%;
   text-align: center;
   line-height: 2.5;
   cursor: pointer;
   background-color: black;
   color: white;
 }
+

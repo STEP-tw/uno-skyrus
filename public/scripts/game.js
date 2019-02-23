@@ -17,6 +17,7 @@ const displayPass = function(document) {
   const pass = document.createElement('span');
   pass.className = 'pass';
   pass.id = 'passTurn';
+  container.innerHTML = '';
   container.appendChild(pass);
   pass.innerText = 'PASS';
   pass.setAttribute('onclick', 'pass()');
@@ -34,7 +35,6 @@ const drawCard = function(document) {
         displayPass(document);
         return;
       }
-      
     });
 };
 
@@ -102,6 +102,8 @@ const drop = function(event) {
   const cardId = event.dataTransfer.getData('text');
 
   throwCard(document, cardId);
+
+  disableGameElements();
 };
 
 const drawDrop = function(event) {
@@ -110,6 +112,8 @@ const drawDrop = function(event) {
   if (cardId == 'stack') {
     drawCard(document);
   }
+
+  disableGameElements();
 };
 
 const fetchCards = function(document) {
@@ -171,6 +175,9 @@ const updateNamesAndClasses = function(document, id, name, isCurrent) {
 
 const updatePlayersDetails = function(document, playerDetails, playerPosition) {
   const detailsInOrder = getNamesInOrder(playerDetails, playerPosition);
+  if (detailsInOrder[0].isCurrent) {
+    enableDaggableElements(document);
+  }
   let id = 1;
   detailsInOrder.forEach(({ name, isCurrent, cardsCount }) => {
     updateNamesAndClasses(document, id, name, isCurrent);
@@ -191,6 +198,24 @@ const getPlayerDetails = document => {
     });
 };
 
+const enableDaggableElements = function(document) {
+  const hand = document.getElementById('myHand');
+  hand.setAttribute('ondragover', 'allowDrop(event)');
+  hand.setAttribute('ondrop', 'drawDrop(event)');
+
+  const stack = document.getElementById('stack');
+  stack.setAttribute('draggable', 'true');
+  stack.setAttribute('ondragstart', 'drag(event)');
+};
+
+const disableGameElements = function() {
+  const container = document.getElementById('action-btns');
+  container.innerHTML = '';
+
+  const stack = document.getElementById('stack');
+  stack.setAttribute('draggable', 'false');
+};
+
 const initialize = function(document) {
   setInterval(() => {
     initializePile(document);
@@ -199,14 +224,6 @@ const initialize = function(document) {
 
     const pile = document.getElementById('pile');
     pile.setAttribute('ondrop', 'drop(event)');
-
-    const stack = document.getElementById('stack');
-    stack.setAttribute('draggable', 'true');
-    stack.setAttribute('ondragstart', 'drag(event)');
-
-    const hand = document.getElementById('myHand');
-    hand.setAttribute('ondragover', 'allowDrop(event)');
-    hand.setAttribute('ondrop', 'drawDrop(event)');
 
     pile.setAttribute('ondrop', 'drop(event)');
     pile.setAttribute('ondragover', 'allowDrop(event)');
