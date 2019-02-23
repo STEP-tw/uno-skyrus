@@ -279,12 +279,12 @@ body {
 }
 
 .non-current-player {
-  display: none;
+  visibility: hidden;
   margin-right: 10%;
 }
 
 .current-player {
-  display: visible;
+  visibility: visible;
   margin-right: 10%;
   animation: blink 0.9s linear infinite;
 }
@@ -319,4 +319,3 @@ body {
   background-color: black;
   color: white;
 }
-
