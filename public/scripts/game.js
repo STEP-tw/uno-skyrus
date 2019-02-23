@@ -100,10 +100,10 @@ const drag = function(event) {
 const drop = function(event) {
   event.preventDefault();
   const cardId = event.dataTransfer.getData('text');
-
-  throwCard(document, cardId);
-
-  disableGameElements();
+  if (cardId != 'stack') {
+    throwCard(document, cardId);
+    disableGameElements();
+  }
 };
 
 const drawDrop = function(event) {
