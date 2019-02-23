@@ -53,7 +53,7 @@ class Game {
       const drawnCard = this.stack.pop();
       currentPlayer.addCard(drawnCard);
       currentPlayer.setDrawCardStatus(false);
-
+      this.activityLog.addLog(currentPlayer.getName(), ' has drawn ', 'a card');
       currentPlayer.setPlayableCards([]);
       if (drawnCard.canPlayOnTopOf(this.getTopDiscard())) {
         currentPlayer.setPlayableCards([drawnCard]);

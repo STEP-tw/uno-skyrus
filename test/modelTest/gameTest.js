@@ -186,6 +186,7 @@ describe('Game Class', () => {
         calculatePlayableCards: () => {},
         addCards: () => {},
         getId: () => 234,
+        getName: () => 'player',
         getDrawCardStatus: () => true,
         setDrawCardStatus: () => {},
         setPlayableCards: () => {},
@@ -202,20 +203,24 @@ describe('Game Class', () => {
         color: 'red',
         canPlayOnTopOf: () => true
       };
+      const activityLog = {
+        addLog: () => {}
+      };
       const nineCards = sevenCards.slice();
       nineCards.unshift(card);
       nineCards.unshift(card);
       nineCards.unshift(card);
-      const game = new Game(nineCards, 0, 1234, players);
+      const game = new Game(nineCards, 0, 1234, players, activityLog);
       game.startGame(dummyShuffler);
       game.drawCard(234);
       const actual = game.stack;
       const expected = [card];
       chai.assert.deepEqual(actual, expected);
     });
-    it('should remove a card from stack', function() {
+    it('should remove a card from stack and pass turn if it  is not playable', function() {
       const player = {
         addCard: () => {},
+        getName: () => 'player',
         calculatePlayableCards: () => {},
         addCards: () => {},
         getId: () => 234,
@@ -235,11 +240,14 @@ describe('Game Class', () => {
         color: 'red',
         canPlayOnTopOf: () => false
       };
+      const activityLog = {
+        addLog: () => {}
+      };
       const nineCards = sevenCards.slice();
       nineCards.unshift(card);
       nineCards.unshift(card);
       nineCards.unshift(card);
-      const game = new Game(nineCards, 0, 1234, players);
+      const game = new Game(nineCards, 0, 1234, players, activityLog);
       game.startGame(dummyShuffler);
       game.drawCard(234);
       const actual = game.stack;
