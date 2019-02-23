@@ -9,8 +9,15 @@
   </head>
   <body>
     <main>
-      <div><h3>Your game key to invite friends is __gameKey__</h3></div>
-      <div><h4>Waiting for all players to join</h4></div>
+      <div class="gameKey-container">
+        <div>
+          Game key : <input id="gameKey" value="__gameKey__" class="gameKey"/> 
+          <span class="copy-btn" id ="copyBtn">&#x2398</span>
+        </div>
+        <div>
+          Waiting for all players to join
+        </div>
+      </div>
       <div id="players" class="players-container"></div>
     </main>
   </body>

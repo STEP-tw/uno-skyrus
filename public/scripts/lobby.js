@@ -1,5 +1,12 @@
 /* globals createPlayerCard */
 
+const copy = function() {
+  const copyText = document.getElementById('gameKey');
+  copyText.select();
+  document.execCommand('copy');
+  // window.getSelection().removeAllRanges();
+};
+
 const createPlayerDiv = function(document, playerName) {
   const card = createPlayerCard(document, playerName);
   return card;
@@ -32,4 +39,7 @@ const getPlayersStatus = function(document) {
   }, 1000);
 };
 
-window.onload = getPlayersStatus.bind(null, document);
+window.onload = () => {
+  document.getElementById('copyBtn').onclick = copy;
+  getPlayersStatus(document);
+};

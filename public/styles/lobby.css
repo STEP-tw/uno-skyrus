@@ -104,3 +104,30 @@ h4 {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
+.gameKey-container {
+  height: 20%;
+  font-size: 20px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.gameKey {
+  border: none;
+  font-size: 20px;
+  font-weight: bold;
+  width: 170px;
+}
+
+.gameKey:focus {
+  outline: none;
+}
+
+.copy-btn {
+  cursor: pointer;
+  font-size: 30px;
+  font-weight: bold;
+}

@@ -222,7 +222,7 @@ describe('serveLobby', function() {
       .set('Cookie', 'gameKey=1234')
       .expect(200)
       .expect('content-type', 'text/html; charset=utf-8')
-      .expect(/Your game key/)
+      .expect(/Game key/)
       .end(done);
   });
 });
