@@ -16,9 +16,7 @@ const hostGame = function(req, res) {
   const id = generateGameKey();
   const host = new Player(hostName, id);
   const players = new Players(host);
-  const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-  const colors = ['red', 'blue', 'green', 'yellow'];
-  const deck = createDeck(numbers, colors);
+  const deck = createDeck();
   const activityLog = new ActivityLog(gameKey, hostName);
   const game = new Game(deck, totalPlayers, gameKey, players, activityLog);
 
