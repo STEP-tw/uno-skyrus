@@ -136,7 +136,7 @@ button {
 
 .theme-uno-design-inner > span {
   font-family: sans-serif;
-  font-weight: bold;
+  font-weight: 100;
 
   transform: rotate(-30deg);
 }
@@ -148,6 +148,7 @@ input {
   width: 82%;
 
   font-size: 29px;
+  font-weight: 100;
   text-align: center;
 
   border-bottom: 1px solid #ffdf00;
