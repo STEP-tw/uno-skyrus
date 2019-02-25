@@ -6,53 +6,55 @@
     <script src="scripts/joinGame.js"></script>
   </head>
   <body>
-    <header class="header"><h2>JOIN GAME</h2>
-    <p id="invalidGameKey" class="invalid-input"></p>
-  </header>
-    <div class="table">
-      <div class="host-room">
-      <div class="theme-uno-card">
-        <div class="theme-uno-card-inner">
-          <div class="theme-uno-design-inner">
-            <input
-              type="text"
-              class="host-input"
-              name="playerName"
-              id="playerName"
-              placeholder="Name"
-              maxlength="10"
-              required
-            />
-          </div>
-        </div>
-      </div>
-
-      <div class="theme-uno-card">
-        <div class="theme-uno-card-inner">
-          <div class="theme-uno-design-inner">
-            <input
-              type="text"
-              class="host-input"
-              name="gameKey"
-              id="gameKey"
-              placeholder="gameKey"
-              required
-            />
-          </div>
-        </div>
-      </div>
-
-      <button id="joinGameButton" class="host-btn">
-          <div class="theme-uno-card">
-            <div class="theme-uno-card-inner">
-              <div class="theme-uno-design-inner">
-                Join game
+    <main>
+      <header>
+        JOIN GAME
+        <p id="invalidGameKey" class="invalid-input"></p>
+      </header>
+      <div class="table">
+        <div class="host-room">
+          <div class="theme-cards theme-uno-card">
+            <div class="theme-uno-card-inner black">
+              <div class="theme-uno-design-inner red">
+                <input
+                  type="text"
+                  class="host-input"
+                  name="playerName"
+                  id="playerName"
+                  placeholder="Name"
+                  maxlength="10"
+                  autocomplete="off"
+                />
               </div>
             </div>
           </div>
-        </button>
 
-    </div>
-  </div>
+          <div class="theme-cards theme-uno-card">
+            <div class="theme-uno-card-inner black">
+              <div class="theme-uno-design-inner red">
+                <input
+                  type="text"
+                  class="host-input"
+                  name="gameKey"
+                  id="gameKey"
+                  placeholder="gameKey"
+                  autocomplete="off"
+                />
+              </div>
+            </div>
+          </div>
+
+          <button id="joinGameButton">
+            <div class="theme-cards theme-uno-card">
+              <div class="theme-uno-card-inner black">
+                <div class="theme-uno-design-inner red         ">
+                  <span class=" theme-color">Join game</span>
+                </div>
+              </div>
+            </div>
+          </button>
+        </div>
+      </div>
+    </main>
   </body>
 </html>

@@ -4,7 +4,6 @@ const copy = function() {
   const copyText = document.getElementById('gameKey');
   copyText.select();
   document.execCommand('copy');
-  // window.getSelection().removeAllRanges();
 };
 
 const createPlayerDiv = function(document, playerName) {

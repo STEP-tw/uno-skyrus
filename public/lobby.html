@@ -8,16 +8,18 @@
     <link rel="stylesheet" href="/styles/lobby.css" />
   </head>
   <body>
-    <main>
+    <main class="lobby">
+      <header>UNO</header>
       <div class="gameKey-container">
         <div>
-          Game key : <input id="gameKey" value="__gameKey__" class="gameKey"/> 
+          Game key : <input id="gameKey" value="__gameKey__" class="gameKey" readonly/> 
           <span class="copy-btn" id ="copyBtn">&#x2398</span>
         </div>
         <div>
           Waiting for all players to join
         </div>
       </div>
+
       <div id="players" class="players-container"></div>
     </main>
   </body>
