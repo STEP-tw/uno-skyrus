@@ -5,7 +5,10 @@ describe('NumberedCard', function() {
   describe('canPlayOnTopOf', function() {
     it('should return true for a matching color', function() {
       const card = new NumberedCard(4, 'red');
-      const actualOutput = card.canPlayOnTopOf({ number: 7, color: 'red' });
+      const actualOutput = card.canPlayOnTopOf(
+        { number: 7, color: 'red' },
+        'red'
+      );
       const expectedOutput = true;
       chai.assert.deepEqual(actualOutput, expectedOutput);
     });

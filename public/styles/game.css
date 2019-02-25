@@ -328,3 +328,9 @@
   height: 40%;
   cursor: pointer;
 }
+
+.running-color {
+  width: 20%;
+  height: 20%;
+  border: 1px solid black;
+}

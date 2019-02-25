@@ -9,8 +9,8 @@ class NumberedCard extends Card {
     this.color = color;
   }
 
-  canPlayOnTopOf(otherCard) {
-    return otherCard.number == this.number || otherCard.color == this.color;
+  canPlayOnTopOf(otherCard, runningColor) {
+    return runningColor == this.color || otherCard.number == this.number;
   }
 
   action(currentPlayerIndex) {

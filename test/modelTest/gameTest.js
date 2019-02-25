@@ -354,3 +354,16 @@ describe('Game Class', () => {
     });
   });
 });
+
+describe('updateRunningColor', function() {
+  let game;
+  beforeEach(function() {
+    game = new Game([], 1, 1234, {}, { addLog: () => {} });
+  });
+  it('should change the running color of the game', function() {
+    game.updateRunningColor('red');
+    const expectedOutput = 'red';
+    const actualOutput = game.getRunningColor();
+    chai.assert.equal(actualOutput, expectedOutput);
+  });
+});

@@ -401,6 +401,9 @@ describe('gameStatus', function() {
             return 'latest log';
           }
         },
+        getRunningColor: () => {
+          return 'red';
+        },
         getTopDiscard: () => {
           return { number: 9, color: 'red' };
         },
@@ -479,6 +482,36 @@ describe('passTurn', function() {
       .get('/passTurn')
       .set('Cookie', 'gameKey=1234')
       .set('Cookie', 'id=123')
+      .expect(200)
+      .end(done);
+  });
+});
+
+describe('/updateRunningColor', function() {
+  beforeEach(function() {
+    const games = {};
+    const game = {
+      runningColor: '',
+      playersCount: 1,
+      updateRunningColor: function(color) {
+        this.runningColor = color;
+      },
+      getRunningColor: function() {
+        return this.runningColor;
+      },
+      updatePlayableCards: function() {}
+    };
+
+    games.getGame = sinon.stub();
+    games.getGame.withArgs('1234').returns(game);
+
+    app.games = games;
+  });
+  it('should return 200 status code and update the running color with provided color', function(done) {
+    request(app)
+      .post('/updateRunningColor')
+      .send({ declaredColor: 'red' })
+      .set('Cookie', 'gameKey=1234')
       .expect(200)
       .end(done);
   });

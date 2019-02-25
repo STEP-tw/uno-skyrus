@@ -39,9 +39,9 @@ class Player {
     return this.name;
   }
 
-  calculatePlayableCards(otherCard) {
+  calculatePlayableCards(otherCard, runningColor) {
     this.playableCards = this.cards.filter(card => {
-      return card.canPlayOnTopOf(otherCard);
+      return card.canPlayOnTopOf(otherCard, runningColor);
     });
   }
 

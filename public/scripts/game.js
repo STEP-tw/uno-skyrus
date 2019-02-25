@@ -234,11 +234,29 @@ const getGameStatus = function(document) {
       displayLog(document, gameStatus.gameLog);
       displayTopDiscard(document, gameStatus.topDiscard);
       displayVictory(document, gameStatus.victoryStatus);
+      updateRunningColor(document, gameStatus.runningColor);
     });
 };
 
+const updateRunningColor = function(document, color) {
+  const runningColorDiv = document.getElementById('runningColorDiv');
+  runningColorDiv.className = `running-color ${color}`;
+};
+
+const hidePopUp = function() {
+  const wildCardOverlay = document.getElementById('wildCardOverlay');
+  wildCardOverlay.className = 'overlay hidden';
+};
+
 const declareRunningColor = function() {
-  console.log(event.target.classList[0]);
+  const declaredColor = event.target.classList[0];
+  fetch('/updateRunningColor', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ declaredColor })
+  }).then(() => hidePopUp());
 };
 
 const initialize = function(document) {

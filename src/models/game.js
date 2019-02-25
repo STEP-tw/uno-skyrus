@@ -12,6 +12,7 @@ class Game {
     this.playersCount = playersCount;
     this.gameKey = gameKey;
     this.status = false;
+    this.runningColor = '';
   }
 
   getPlayers() {
@@ -24,7 +25,11 @@ class Game {
     const cardId = getGameId(id);
     const playerCards = player.getCards();
     const thrownCard = playerCards[cardId];
-    const isPlayable = thrownCard.canPlayOnTopOf(this.getTopDiscard());
+    this.updateRunningColor(thrownCard.color);
+    const isPlayable = thrownCard.canPlayOnTopOf(
+      this.getTopDiscard(),
+      this.runningColor
+    );
     const name = player.getName();
 
     if (+playerId == currentPlayer.getId() && isPlayable) {
@@ -47,13 +52,19 @@ class Game {
   updatePlayableCards() {
     this.players
       .getPlayers()
-      .forEach(player => player.calculatePlayableCards(this.getTopDiscard()));
+      .forEach(player =>
+        player.calculatePlayableCards(
+          this.getTopDiscard(),
+          this.getRunningColor()
+        )
+      );
   }
 
   startGame(shuffle) {
     this.stack = shuffle(this.deck);
     this.dealCards();
     this.pile.push(this.stack.pop());
+    this.updateRunningColor(this.getTopDiscard().color);
     this.status = true;
     this.players.setCurrentPlayer();
     this.updatePlayableCards();
@@ -67,7 +78,7 @@ class Game {
       currentPlayer.setDrawCardStatus(false);
       this.activityLog.addLog(currentPlayer.getName(), ' has drawn ', 'a card');
       currentPlayer.setPlayableCards([]);
-      if (drawnCard.canPlayOnTopOf(this.getTopDiscard())) {
+      if (drawnCard.canPlayOnTopOf(this.getTopDiscard(), this.runningColor)) {
         currentPlayer.setPlayableCards([drawnCard]);
       } else {
         this.getPlayers().changeTurn();
@@ -114,6 +125,10 @@ class Game {
     return { hasWon: false };
   }
 
+  getRunningColor() {
+    return this.runningColor;
+  }
+
   refillStack() {
     this.stack = this.pile.slice(0, -1);
     this.pile = this.pile.slice(-1);
@@ -122,6 +137,10 @@ class Game {
 
   hasStarted() {
     return this.status;
+  }
+
+  updateRunningColor(color) {
+    this.runningColor = color;
   }
 }
 

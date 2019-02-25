@@ -16,7 +16,8 @@ const {
   drawCard,
   getPlayerNames,
   renderGamePage,
-  passTurn
+  passTurn,
+  updateRunningColor
 } = require('./handlers/handleRequests');
 
 const app = express();
@@ -33,6 +34,7 @@ app.post('/throwCard', handleThrowCard);
 app.post('/hostGame', hostGame);
 app.post('/validateGameKey', validateGameKey);
 app.post('/joinGame', joinGame);
+app.post('/updateRunningColor', updateRunningColor);
 app.get('/getPlayerNames', getPlayerNames);
 app.get('/playersStatus', handleGame);
 app.get('/gameStatus', serveGameStatus);

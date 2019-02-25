@@ -190,6 +190,11 @@ const getTopDiscard = function(game) {
   return topDiscard;
 };
 
+const getRunningColor = function(game) {
+  const runningColor = game.getRunningColor();
+  return runningColor;
+};
+
 const serveGameStatus = function(req, res) {
   const { gameKey } = req.cookies;
   const game = res.app.games.getGame(gameKey);
@@ -197,7 +202,17 @@ const serveGameStatus = function(req, res) {
   const gameLog = serveGameLog(game);
   const topDiscard = getTopDiscard(game);
   const victoryStatus = game.victoryStatus();
-  res.send({ gameLog, topDiscard, victoryStatus });
+  const runningColor = getRunningColor(game);
+  res.send({ gameLog, topDiscard, runningColor, victoryStatus });
+};
+
+const updateRunningColor = function(req, res) {
+  const { declaredColor } = req.body;
+  const { gameKey } = req.cookies;
+  const game = res.app.games.getGame(gameKey);
+  game.updateRunningColor(declaredColor);
+  game.updatePlayableCards();
+  res.end();
 };
 
 module.exports = {
@@ -212,5 +227,6 @@ module.exports = {
   drawCard,
   serveGameStatus,
   renderGamePage,
-  passTurn
+  passTurn,
+  updateRunningColor
 };
