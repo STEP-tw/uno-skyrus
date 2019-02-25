@@ -131,10 +131,19 @@ const throwCard = function(document, cardId) {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({ cardId })
-  }).then(() => {
-    console.log('in throwcard');
-    fetchCards(document);
-  });
+  })
+    .then(res => {
+      // console.log('in throwcard');
+
+      fetchCards(document);
+      return res.json();
+    })
+    .then(json => {
+      if (!json.hasWon) return;
+      document.getElementById('gameEnd').class = 'overlay visible';
+      document.getElementById('popupMessage').innerText =
+        'Congratulation! You Have Won The Game';
+    });
 };
 
 const hideCards = function(hand, cardsCount) {
