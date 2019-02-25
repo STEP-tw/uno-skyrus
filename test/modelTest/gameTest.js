@@ -322,18 +322,35 @@ describe('Game Class', () => {
       chai.assert.deepEqual(actual, expected);
     });
   });
-  
-  describe('hasWon', () => {
-    let game;
+
+  describe('victoryStatus', () => {
+    let players;
     beforeEach(() => {
-      game = new Game([], 1, 1234, {}, { addLog: () => {} });
-    });
-    it('should return true for the palyer', () => {
-      const player = {
-        getCards: () => [],
-        getName: () => 'player'
+      const player1 = {
+        getName: () => 'player1',
+        hasWon: () => false
       };
-      chai.assert.equal(true, game.hasWon(player));
+      const player2 = {
+        getName: () => 'player2',
+        hasWon: () => true
+      };
+      players = {
+        players: [player1, player2],
+        getPlayers: () => players.players
+      };
+    });
+    it('should return has won true and name of player if the player has won', function() {
+      const game = new Game([], 2, 1234, players, { addLog: () => {} });
+      const actual = game.victoryStatus();
+      const expected = { name: 'player2', hasWon: true };
+      chai.assert.deepEqual(actual, expected);
+    });
+    it('should return has won true and name of player if the player has won', function() {
+      players.players[1].hasWon = () => false;
+      const game = new Game([], 2, 1234, players, { addLog: () => {} });
+      const actual = game.victoryStatus();
+      const expected = { hasWon: false };
+      chai.assert.deepEqual(actual, expected);
     });
   });
 });

@@ -403,7 +403,8 @@ describe('gameStatus', function() {
         },
         getTopDiscard: () => {
           return { number: 9, color: 'red' };
-        }
+        },
+        victoryStatus: () => {}
       },
       getGame: () => {
         return games['1234'];

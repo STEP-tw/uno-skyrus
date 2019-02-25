@@ -26,20 +26,12 @@ class Game {
     const thrownCard = playerCards[cardId];
     const isPlayable = thrownCard.canPlayOnTopOf(this.getTopDiscard());
     const name = player.getName();
-    const throwStatus = {
-      name: currentPlayer.getName(),
-      hasWon: true
-    };
 
     if (+playerId == currentPlayer.getId() && isPlayable) {
       player.removeCard(cardId);
       this.pile.push(thrownCard);
       this.log(name, ' has thrown ', thrownCard.logMessage());
-      if (!this.hasWon(currentPlayer)) {
-        this.updatePlayer(thrownCard);
-        throwStatus.hasWon = false;
-      }
-      return throwStatus;
+      this.updatePlayer(thrownCard);
     }
   }
 
@@ -50,14 +42,6 @@ class Game {
   updatePlayer(thrownCard) {
     this.players.updateCurrentPlayer(thrownCard);
     this.updatePlayableCards();
-  }
-
-  hasWon(player) {
-    if (!player.getCards().length) {
-      this.activityLog.addLog(player.getName(), ' has won ', 'the game');
-      return true;
-    }
-    return false;
   }
 
   updatePlayableCards() {
@@ -119,6 +103,15 @@ class Game {
 
   getStack() {
     return this.stack;
+  }
+
+  victoryStatus() {
+    const winner = this.players.getPlayers().find(player => player.hasWon());
+    if (winner) {
+      this.activityLog.addLog(winner.getName(), ' has won ', 'the game');
+      return { name: winner.getName(), hasWon: true };
+    }
+    return { hasWon: false };
   }
 
   refillStack() {

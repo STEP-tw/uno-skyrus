@@ -107,17 +107,9 @@ const throwCard = function(document, cardId) {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({ cardId })
-  })
-    .then(res => {
-      fetchCards(document);
-      return res.json();
-    })
-    .then(json => {
-      if (!json.hasWon) return;
-      document.getElementById('gameEnd').className = 'overlay visible';
-      document.getElementById('popupMessage').innerText =
-        'Congratulation! You Have Won The Game';
-    });
+  }).then(() => {
+    fetchCards(document);
+  });
 };
 
 const drop = function(event) {
@@ -226,12 +218,22 @@ const disableGameElements = function() {
   stack.setAttribute('draggable', 'false');
 };
 
+const displayVictory = function(document, status) {
+  if (status.hasWon) {
+    document.getElementById('gameEnd').className = 'overlay visible';
+    document.getElementById('popupMessage').innerText = `${
+      status.name
+    } Has Won The Game`;
+  }
+};
+
 const getGameStatus = function(document) {
   fetch('/gameStatus')
     .then(response => response.json())
     .then(gameStatus => {
       displayLog(document, gameStatus.gameLog);
       displayTopDiscard(document, gameStatus.topDiscard);
+      displayVictory(document, gameStatus.victoryStatus);
     });
 };
 

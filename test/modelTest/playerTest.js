@@ -118,4 +118,22 @@ describe('Player class', () => {
       chai.assert.deepEqual(actualOutput, expectedOutput);
     });
   });
+
+  describe('hasWon', function() {
+    it('should return true for player without cards', function() {
+      const player = new Player('Player', 1234);
+      const expectedOutput = true;
+      const actualOutput = player.hasWon();
+      chai.assert.deepEqual(actualOutput, expectedOutput);
+    });
+
+    it('should return false for player with cards', function() {
+      const player = new Player('Player', 1234);
+      player.addCard({ number: 4, color: 'red' });
+      player.addCard({ number: 9, color: 'green' });
+      const expectedOutput = false;
+      const actualOutput = player.hasWon();
+      chai.assert.deepEqual(actualOutput, expectedOutput);
+    });
+  });
 });

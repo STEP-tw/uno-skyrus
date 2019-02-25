@@ -45,6 +45,13 @@ class Player {
     });
   }
 
+  hasWon() {
+    if (!this.cards.length) {
+      return true;
+    }
+    return false;
+  }
+
   setPlayableCards(cards) {
     this.playableCards = cards;
   }

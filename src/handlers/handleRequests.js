@@ -114,8 +114,8 @@ const handleThrowCard = function(req, res) {
   const { cardId } = req.body;
 
   const game = req.app.games.getGame(gameKey);
-  const throwStatus = game.throwCard(id, cardId);
-  res.send(throwStatus);
+  game.throwCard(id, cardId);
+  res.end();
 };
 
 const drawCard = function(req, res) {
@@ -198,7 +198,8 @@ const serveGameStatus = function(req, res) {
 
   const gameLog = serveGameLog(game);
   const topDiscard = getTopDiscard(game);
-  res.send({ gameLog, topDiscard });
+  const victoryStatus = game.victoryStatus();
+  res.send({ gameLog, topDiscard, victoryStatus });
 };
 
 module.exports = {
