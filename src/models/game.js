@@ -16,20 +16,47 @@ class Game {
 
   throwCard(playerId, cardId) {
     const currentPlayer = this.players.getCurrentPlayer();
-    if (+playerId == currentPlayer.getId()) {
-      const player = this.players.getPlayer(playerId);
-      const playerCards = player.getCards();
-      const thrownCard = playerCards[cardId];
+    const player = this.players.getPlayer(playerId);
+    const playerCards = player.getCards();
+    const thrownCard = playerCards[cardId];
+    const isPlayable = thrownCard.canPlayOnTopOf(this.getTopDiscard());
+    const name = player.getName();
+    const throwStatus = {
+      name: currentPlayer.getName(),
+      hasWon: true
+    };
+
+    if (+playerId == currentPlayer.getId() && isPlayable) {
       player.removeCard(cardId);
       this.pile.push(thrownCard);
-      this.activityLog.addLog(
-        player.getName(),
+      this.log(
+        name,
         ' has thrown ',
         thrownCard.number + ' ' + thrownCard.color
       );
-      this.players.updateCurrentPlayer(thrownCard);
-      this.updatePlayableCards();
+      if (!this.hasWon(currentPlayer)) {
+        this.updatePlayer(thrownCard);
+        throwStatus.hasWon = false;
+      }
+      return throwStatus;
     }
+  }
+
+  log(subject, action, object) {
+    this.activityLog.addLog(subject, action, object);
+  }
+
+  updatePlayer(thrownCard) {
+    this.players.updateCurrentPlayer(thrownCard);
+    this.updatePlayableCards();
+  }
+
+  hasWon(player) {
+    if (!player.getCards().length) {
+      this.activityLog.addLog(player.getName(), ' has won ', 'the game');
+      return true;
+    }
+    return false;
   }
 
   updatePlayableCards() {

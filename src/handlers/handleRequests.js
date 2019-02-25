@@ -53,7 +53,9 @@ const joinGame = function(req, res) {
   const game = games.getGame(gameKey);
   const id = generateGameKey();
   const player = new Player(playerName, id);
+
   game.getPlayers().addPlayer(player);
+
   res.cookie('gameKey', gameKey);
   res.cookie('id', id);
   res.end();
@@ -81,6 +83,7 @@ const serveGameLog = function(req, res) {
   const { gameKey } = req.cookies;
   const game = res.app.games.getGame(gameKey);
   const latestLog = game.activityLog.getLatestLog();
+
   res.set('Content-Type', 'text/plain');
   res.send(latestLog);
 };
@@ -127,8 +130,8 @@ const handleThrowCard = function(req, res) {
   const { cardId } = req.body;
 
   const game = req.app.games.getGame(gameKey);
-  game.throwCard(id, cardId);
-  res.end();
+  const throwStatus = game.throwCard(id, cardId);
+  res.send(throwStatus);
 };
 
 const drawCard = function(req, res) {
@@ -139,7 +142,6 @@ const drawCard = function(req, res) {
   console.log(game.getStack());
   const stackLength = game.getStack().length;
   if (!stackLength) {
-    console.log('refilling stack...................');
     game.refillStack();
   }
   const cards = game.getPlayerCards(+id);

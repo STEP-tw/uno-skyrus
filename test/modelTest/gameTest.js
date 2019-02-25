@@ -119,6 +119,8 @@ describe('Game Class', () => {
   describe('throw card', () => {
     let game;
     beforeEach(() => {
+      numberDeck[5] = { number: 6, color: 'green', canPlayOnTopOf: () => true };
+
       const identity = deck => deck;
       const player = {
         id: 1234,
@@ -131,6 +133,9 @@ describe('Game Class', () => {
         addCards: function(cards) {
           player.cards = cards;
         },
+        getPlayableCards: () => {
+          return [];
+        },
         getId() {
           return player.id;
         },
@@ -138,6 +143,7 @@ describe('Game Class', () => {
           player.cards.splice(cardId, 1);
         },
         getCards() {
+          console.log(player.cards, 'this is player cards');
           return player.cards;
         }
       };
@@ -298,6 +304,19 @@ describe('Game Class', () => {
       const actual = game.getStack();
       const expected = [{ color: 'red', number: 5 }];
       chai.assert.deepEqual(actual, expected);
+    });
+  });
+  describe('hasWon', () => {
+    let game;
+    beforeEach(() => {
+      game = new Game([], 1, 1234, {}, { addLog: () => {} });
+    });
+    it('should return true for the palyer', () => {
+      const player = {
+        getCards: () => [],
+        getName: () => 'player'
+      };
+      chai.assert.equal(true, game.hasWon(player));
     });
   });
 });

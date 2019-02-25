@@ -41,4 +41,10 @@ const sevenCards = [
   { number: 7, color: 'blue' }
 ];
 
-module.exports = { sevenCards, twoCards, dummyShuffler, numberDeck, tenCards };
+module.exports = {
+  sevenCards,
+  twoCards,
+  dummyShuffler,
+  numberDeck,
+  tenCards
+};
