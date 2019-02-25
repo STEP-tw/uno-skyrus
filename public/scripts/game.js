@@ -42,7 +42,6 @@ const initializePile = function(document) {
   const pile = document.getElementById('pile');
   fetch('/pile')
     .then(response => {
-      console.log(typeof response.status, response.status);
       return response.json();
     })
     .then(card => {
@@ -51,8 +50,11 @@ const initializePile = function(document) {
     });
 };
 
+const isNumberCardSimilar = (card1, card2) =>
+  card1.number == card2.number && card1.color == card2.color;
+
 const isSimilarCards = function(card1, card2) {
-  return card1.number == card2.number && card1.color == card2.color;
+  return card2.isWildCard || isNumberCardSimilar(card1, card2);
 };
 
 const hasCard = (playableCards, card) => {
@@ -72,20 +74,24 @@ const getLog = function(document) {
     .then(log => displayLog(document, log));
 };
 
+const setCardAttributes = function(cardView, playableCards, card) {
+  let className = 'non-playable-card';
+  if (hasCard(playableCards, card)) {
+    cardView.setAttribute('draggable', 'true');
+    cardView.setAttribute('ondragstart', 'drag(event)');
+    className = 'highlight-playable-card';
+  }
+  cardView.classList.add(className);
+  return cardView;
+};
+
 const initializeHand = function(document, { cards, playableCards }) {
   const hand = document.getElementById('myHand');
   hand.innerHTML = '';
-  cards.forEach((card, index) => {
-    const cardView = createCard(document, card);
-    let className = 'non-playable-card';
-    if (hasCard(playableCards, card)) {
-      cardView.setAttribute('draggable', 'true');
-      cardView.setAttribute('ondragstart', 'drag(event)');
-      cardView.id = index;
-      className = 'highlight-playable-card';
-    }
-    cardView.classList.add(className);
-    hand.append(cardView);
+  cards.forEach((card, cardId) => {
+    let cardView = createCard(document, card, cardId);
+    const styledCard = setCardAttributes(cardView, playableCards, card);
+    hand.append(styledCard);
   });
 };
 
@@ -95,6 +101,31 @@ const allowDrop = function(event) {
 
 const drag = function(event) {
   event.dataTransfer.setData('text', event.target.id);
+};
+
+const isWildCard = cardId => {
+  return cardId.startsWith('wild');
+};
+
+const throwCard = function(document, cardId) {
+  
+  fetch('/throwCard', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ cardId })
+  })
+    .then(res => {
+      fetchCards(document);
+      return res.json();
+    })
+    .then(json => {
+      if (!json.hasWon) return;
+      document.getElementById('gameEnd').class = 'overlay visible';
+      document.getElementById('popupMessage').innerText =
+        'Congratulation! You Have Won The Game';
+    });
 };
 
 const drop = function(event) {
@@ -121,28 +152,6 @@ const fetchCards = function(document) {
     .then(response => response.json())
     .then(cards => {
       initializeHand(document, cards);
-    });
-};
-
-const throwCard = function(document, cardId) {
-  fetch('/throwCard', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ cardId })
-  })
-    .then(res => {
-      // console.log('in throwcard');
-
-      fetchCards(document);
-      return res.json();
-    })
-    .then(json => {
-      if (!json.hasWon) return;
-      document.getElementById('gameEnd').class = 'overlay visible';
-      document.getElementById('popupMessage').innerText =
-        'Congratulation! You Have Won The Game';
     });
 };
 
@@ -185,7 +194,7 @@ const updateNamesAndClasses = function(document, id, name, isCurrent) {
 const updatePlayersDetails = function(document, playerDetails, playerPosition) {
   const detailsInOrder = getNamesInOrder(playerDetails, playerPosition);
   if (detailsInOrder[0].isCurrent) {
-    enableDaggableElements(document);
+    enableDraggableElements(document);
   }
   let id = 1;
   detailsInOrder.forEach(({ name, isCurrent, cardsCount }) => {
@@ -207,7 +216,7 @@ const getPlayerDetails = document => {
     });
 };
 
-const enableDaggableElements = function(document) {
+const enableDraggableElements = function(document) {
   const hand = document.getElementById('myHand');
   hand.setAttribute('ondragover', 'allowDrop(event)');
   hand.setAttribute('ondrop', 'drawDrop(event)');

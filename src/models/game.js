@@ -1,3 +1,7 @@
+const getGameId = function(cardId) {
+  return +cardId.match(/[0-9]+/)[0];
+};
+
 class Game {
   constructor(deck, playersCount, gameKey, players, activityLog) {
     this.players = players;
@@ -14,9 +18,10 @@ class Game {
     return this.players;
   }
 
-  throwCard(playerId, cardId) {
+  throwCard(playerId, id) {
     const currentPlayer = this.players.getCurrentPlayer();
     const player = this.players.getPlayer(playerId);
+    const cardId = getGameId(id);
     const playerCards = player.getCards();
     const thrownCard = playerCards[cardId];
     const isPlayable = thrownCard.canPlayOnTopOf(this.getTopDiscard());
@@ -29,11 +34,7 @@ class Game {
     if (+playerId == currentPlayer.getId() && isPlayable) {
       player.removeCard(cardId);
       this.pile.push(thrownCard);
-      this.log(
-        name,
-        ' has thrown ',
-        thrownCard.number + ' ' + thrownCard.color
-      );
+      this.log(name, ' has thrown ', thrownCard.logMessage());
       if (!this.hasWon(currentPlayer)) {
         this.updatePlayer(thrownCard);
         throwStatus.hasWon = false;

@@ -118,6 +118,9 @@ describe('Game Class', () => {
 
   describe('throw card', () => {
     let game;
+    const logMessage = () => {};
+    const canPlayOnTopOf = () => true;
+
     beforeEach(() => {
       numberDeck[5] = { number: 6, color: 'green', canPlayOnTopOf: () => true };
 
@@ -161,25 +164,38 @@ describe('Game Class', () => {
         setCurrentPlayer: () => {},
         updateCurrentPlayer: () => {}
       };
-      game = new Game(numberDeck, 1, 1234, players, { addLog: () => {} });
+
+      const deck = [
+        { number: 1, color: 'yellow', logMessage, canPlayOnTopOf },
+        { number: 2, color: 'green', logMessage, canPlayOnTopOf },
+        { number: 3, color: 'blue', logMessage, canPlayOnTopOf },
+        { number: 4, color: 'yellow', logMessage, canPlayOnTopOf },
+        { number: 5, color: 'red', logMessage, canPlayOnTopOf },
+        { number: 6, color: 'red', logMessage, canPlayOnTopOf },
+        { number: 7, color: 'blue', logMessage, canPlayOnTopOf },
+        { number: 8, color: 'blue', logMessage, canPlayOnTopOf },
+        { number: 9, color: 'green', logMessage, canPlayOnTopOf }
+      ];
+
+      game = new Game(deck, 1, 1234, players, { addLog: () => {} });
       game.startGame(identity);
     });
     it('should remove card from player hand and put it on top of pile', () => {
-      game.throwCard(1234, 3);
+      game.throwCard(1234, '3');
       const actual = game.getPlayerCards(1234);
       const expected = [
-        { number: 3, color: 'blue' },
-        { number: 4, color: 'yellow' },
-        { number: 5, color: 'red' },
-        { number: 7, color: 'blue' },
-        { number: 8, color: 'blue' },
-        { number: 9, color: 'green' }
+        { number: 3, color: 'blue', logMessage, canPlayOnTopOf },
+        { number: 4, color: 'yellow', logMessage, canPlayOnTopOf },
+        { number: 5, color: 'red', logMessage, canPlayOnTopOf },
+        { number: 7, color: 'blue', logMessage, canPlayOnTopOf },
+        { number: 8, color: 'blue', logMessage, canPlayOnTopOf },
+        { number: 9, color: 'green', logMessage, canPlayOnTopOf }
       ];
       chai.assert.deepEqual(actual, expected);
     });
     it('should remove card from player hand and put it on top of pile', () => {
       const expected = game.pile;
-      game.throwCard(124, 3);
+      game.throwCard(124, '3');
       const actual = game.pile;
       chai.assert.deepEqual(actual, expected);
     });
@@ -306,6 +322,7 @@ describe('Game Class', () => {
       chai.assert.deepEqual(actual, expected);
     });
   });
+  
   describe('hasWon', () => {
     let game;
     beforeEach(() => {

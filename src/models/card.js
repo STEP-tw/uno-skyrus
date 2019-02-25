@@ -16,6 +16,29 @@ class NumberedCard extends Card {
   action(currentPlayerIndex) {
     return ++currentPlayerIndex;
   }
+
+  logMessage() {
+    return this.number + ' ' + this.color;
+  }
 }
 
-module.exports = { NumberedCard };
+class WildCard extends Card {
+  constructor() {
+    super();
+    this.isWildCard = true;
+  }
+
+  action(currentPlayerIndex) {
+    return ++currentPlayerIndex;
+  }
+
+  canPlayOnTopOf() {
+    return true;
+  }
+
+  logMessage() {
+    return 'wildcard';
+  }
+}
+
+module.exports = { NumberedCard, WildCard };
