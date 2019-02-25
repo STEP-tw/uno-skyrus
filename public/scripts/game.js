@@ -115,6 +115,13 @@ const isWildCard = cardId => {
 };
 
 const throwCard = function(document, cardId) {
+<<<<<<< HEAD
+=======
+  if (isWildCard(cardId)) {
+    document.getElementById('wildCardOverlay').className = 'overlay visible';
+  }
+
+>>>>>>> [#14] Kanishka/Aftab - Create an overlay for declaring running color.
   fetch('/throwCard', {
     method: 'POST',
     headers: {
@@ -128,7 +135,7 @@ const throwCard = function(document, cardId) {
     })
     .then(json => {
       if (!json.hasWon) return;
-      document.getElementById('gameEnd').class = 'overlay visible';
+      document.getElementById('gameEnd').className = 'overlay visible';
       document.getElementById('popupMessage').innerText =
         'Congratulation! You Have Won The Game';
     });
