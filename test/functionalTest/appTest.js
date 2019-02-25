@@ -29,41 +29,6 @@ describe('hostGame', function() {
   });
 });
 
-describe('pile', function() {
-  beforeEach(function() {
-    const games = {};
-    const game = {
-      addPlayer: () => {},
-      getTopDiscard: () => {
-        return { color: 'red', number: 5 };
-      }
-    };
-    games.getGame = sinon.stub();
-    games.getGame.withArgs('1234').returns(game);
-
-    app.games = games;
-  });
-
-  it('should return a card object as content', function(done) {
-    request(app)
-      .get('/pile')
-      .set('Cookie', 'gameKey=1234')
-      .expect(200)
-      .expect('Content-Type', /json/)
-      .end(done);
-  });
-
-  it('should return an Object of card with properties color and number', function(done) {
-    request(app)
-      .get('/pile')
-      .set('Cookie', 'gameKey=1234')
-      .expect(res => {
-        chai.expect(res.body).to.have.all.keys('color', 'number');
-      })
-      .end(done);
-  });
-});
-
 describe('gamepage', function() {
   beforeEach(function() {
     const games = {};
@@ -427,14 +392,17 @@ describe('get players', () => {
   });
 });
 
-describe('serveLog', function() {
-  it('should return 200 status code for serveLog', function(done) {
+describe('gameStatus', function() {
+  it('should return gameStatus for the game', function(done) {
     const games = {
       1234: {
         activityLog: {
           getLatestLog: () => {
             return 'latest log';
           }
+        },
+        getTopDiscard: () => {
+          return { number: 9, color: 'red' };
         }
       },
       getGame: () => {
@@ -444,10 +412,10 @@ describe('serveLog', function() {
 
     app.games = games;
     request(app)
-      .get('/gameLog')
+      .get('/gameStatus')
       .set('Cookie', 'gameKey=1234')
       .expect(200)
-      .expect('content-type', 'text/plain; charset=utf-8')
+      .expect('content-type', 'application/json; charset=utf-8')
       .end(done);
   });
 });

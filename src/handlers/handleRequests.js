@@ -10,13 +10,6 @@ const { ActivityLog } = require('./../models/activityLog');
 
 const LOBBY = fs.readFileSync('./public/lobby.html', 'utf8');
 
-const getTopDiscard = function(req, res) {
-  const { gameKey } = req.cookies;
-  const game = req.app.games.getGame(gameKey);
-  const topDiscard = game.getTopDiscard();
-  res.send(topDiscard);
-};
-
 const hostGame = function(req, res) {
   const gameKey = generateGameKey();
   const { hostName, totalPlayers } = req.body;
@@ -77,15 +70,6 @@ const servePlayerCards = function(req, res) {
     playableCards = player.getPlayableCards();
   }
   res.send({ cards, playableCards });
-};
-
-const serveGameLog = function(req, res) {
-  const { gameKey } = req.cookies;
-  const game = res.app.games.getGame(gameKey);
-  const latestLog = game.activityLog.getLatestLog();
-
-  res.set('Content-Type', 'text/plain');
-  res.send(latestLog);
 };
 
 const haveAllPlayersJoined = function(game) {
@@ -198,8 +182,26 @@ const passTurn = function(req, res) {
   res.end();
 };
 
+const serveGameLog = function(game) {
+  const latestLog = game.activityLog.getLatestLog();
+  return latestLog;
+};
+
+const getTopDiscard = function(game) {
+  const topDiscard = game.getTopDiscard();
+  return topDiscard;
+};
+
+const serveGameStatus = function(req, res) {
+  const { gameKey } = req.cookies;
+  const game = res.app.games.getGame(gameKey);
+
+  const gameLog = serveGameLog(game);
+  const topDiscard = getTopDiscard(game);
+  res.send({ gameLog, topDiscard });
+};
+
 module.exports = {
-  getTopDiscard,
   hostGame,
   validateGameKey,
   joinGame,
@@ -209,7 +211,7 @@ module.exports = {
   handleThrowCard,
   getPlayerNames,
   drawCard,
-  serveGameLog,
+  serveGameStatus,
   renderGamePage,
   passTurn
 };

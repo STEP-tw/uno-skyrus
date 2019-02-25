@@ -5,7 +5,6 @@ const { Games } = require('./models/games');
 const { logRequest } = require('./handlers/logger');
 
 const {
-  getTopDiscard,
   servePlayerCards,
   hostGame,
   validateGameKey,
@@ -13,7 +12,7 @@ const {
   serveLobby,
   handleGame,
   handleThrowCard,
-  serveGameLog,
+  serveGameStatus,
   drawCard,
   getPlayerNames,
   renderGamePage,
@@ -34,10 +33,9 @@ app.post('/throwCard', handleThrowCard);
 app.post('/hostGame', hostGame);
 app.post('/validateGameKey', validateGameKey);
 app.post('/joinGame', joinGame);
-app.get('/pile', getTopDiscard);
 app.get('/getPlayerNames', getPlayerNames);
 app.get('/playersStatus', handleGame);
-app.get('/gameLog', serveGameLog);
+app.get('/gameStatus', serveGameStatus);
 app.get('/lobby', serveLobby);
 app.get('/drawCard', drawCard);
 app.get('/passTurn', passTurn);

@@ -1,5 +1,6 @@
 /* globals createCard */
 /*eslint no-unused-vars: "off"*/
+
 const OTHERS_CARDS_LIMIT = 3;
 
 const removePass = function(document) {
@@ -38,16 +39,22 @@ const drawCard = function(document) {
     });
 };
 
-const initializePile = function(document) {
+// const initializePile = function(document) {
+//   const pile = document.getElementById('pile');
+//   fetch('/pile')
+//     .then(response => {
+//       return response.json();
+//     })
+//     .then(card => {
+//       pile.innerHTML = '';
+//       pile.append(createCard(document, card));
+//     });
+// };
+
+const displayTopDiscard = function(document, card) {
   const pile = document.getElementById('pile');
-  fetch('/pile')
-    .then(response => {
-      return response.json();
-    })
-    .then(card => {
-      pile.innerHTML = '';
-      pile.append(createCard(document, card));
-    });
+  pile.innerHTML = '';
+  pile.append(createCard(document, card));
 };
 
 const isNumberCardSimilar = (card1, card2) =>
@@ -68,11 +75,11 @@ const displayLog = function(document, log) {
   status.innerHTML = log;
 };
 
-const getLog = function(document) {
-  fetch('/gameLog')
-    .then(response => response.text())
-    .then(log => displayLog(document, log));
-};
+// const getLog = function(document) {
+//   fetch('/gameLog')
+//     .then(response => response.text())
+//     .then(log => displayLog(document, log));
+// };
 
 const setCardAttributes = function(cardView, playableCards, card) {
   let className = 'non-playable-card';
@@ -108,7 +115,6 @@ const isWildCard = cardId => {
 };
 
 const throwCard = function(document, cardId) {
-  
   fetch('/throwCard', {
     method: 'POST',
     headers: {
@@ -234,10 +240,20 @@ const disableGameElements = function() {
   stack.setAttribute('draggable', 'false');
 };
 
+const getGameStatus = function(document) {
+  fetch('/gameStatus')
+    .then(response => response.json())
+    .then(gameStatus => {
+      displayLog(document, gameStatus.gameLog);
+      displayTopDiscard(document, gameStatus.topDiscard);
+    });
+};
+
 const initialize = function(document) {
   setInterval(() => {
-    initializePile(document);
-    getLog(document);
+    // initializePile(document);
+    // getLog(document);
+    getGameStatus(document);
     fetchCards(document);
 
     const pile = document.getElementById('pile');
