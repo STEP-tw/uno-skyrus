@@ -39,18 +39,6 @@ const drawCard = function(document) {
     });
 };
 
-// const initializePile = function(document) {
-//   const pile = document.getElementById('pile');
-//   fetch('/pile')
-//     .then(response => {
-//       return response.json();
-//     })
-//     .then(card => {
-//       pile.innerHTML = '';
-//       pile.append(createCard(document, card));
-//     });
-// };
-
 const displayTopDiscard = function(document, card) {
   const pile = document.getElementById('pile');
   pile.innerHTML = '';
@@ -74,12 +62,6 @@ const displayLog = function(document, log) {
   const status = document.getElementById('statusBar');
   status.innerHTML = log;
 };
-
-// const getLog = function(document) {
-//   fetch('/gameLog')
-//     .then(response => response.text())
-//     .then(log => displayLog(document, log));
-// };
 
 const setCardAttributes = function(cardView, playableCards, card) {
   let className = 'non-playable-card';
@@ -115,13 +97,10 @@ const isWildCard = cardId => {
 };
 
 const throwCard = function(document, cardId) {
-<<<<<<< HEAD
-=======
   if (isWildCard(cardId)) {
     document.getElementById('wildCardOverlay').className = 'overlay visible';
   }
 
->>>>>>> [#14] Kanishka/Aftab - Create an overlay for declaring running color.
   fetch('/throwCard', {
     method: 'POST',
     headers: {
@@ -256,10 +235,12 @@ const getGameStatus = function(document) {
     });
 };
 
+const declareRunningColor = function() {
+  console.log(event.target.classList[0]);
+};
+
 const initialize = function(document) {
   setInterval(() => {
-    // initializePile(document);
-    // getLog(document);
     getGameStatus(document);
     fetchCards(document);
 
