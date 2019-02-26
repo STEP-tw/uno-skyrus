@@ -1,4 +1,4 @@
-const { NumberedCard, WildCard, DrawTwo } = require('./card');
+const { NumberedCard, WildCard, DrawTwo, SkipCard } = require('./card');
 
 const addNumberCards = function(colors, cards, number) {
   colors.forEach(color => {
@@ -27,12 +27,20 @@ const createNumberCards = function() {
   return numbers.reduce(addNumberCards.bind(null, colors), []);
 };
 
+const createSkipCards = function() {
+  const container = [];
+  const colors = ['red', 'blue', 'green', 'yellow'];
+  const cards = colors.map(color => new SkipCard(color));
+  return container.concat(cards, cards);
+};
+
 const createDeck = function() {
   const deck = [];
   const numberCards = createNumberCards();
   const wildCards = createWildCards();
   const drawTwoCards = createDrawTwoCards();
-  return deck.concat(numberCards, wildCards, drawTwoCards);
+  const skipCards = createSkipCards();
+  return deck.concat(numberCards, wildCards, drawTwoCards, skipCards);
 };
 
 module.exports = { createDeck };
