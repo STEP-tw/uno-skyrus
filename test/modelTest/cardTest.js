@@ -1,4 +1,4 @@
-const { NumberedCard, WildCard, DrawTwo } = require('./../../src/models/card');
+const { SkipCard, WildCard, NumberedCard, DrawTwo } = require('./../../src/models/card');
 const chai = require('chai');
 
 describe('NumberedCard', function() {
@@ -82,26 +82,34 @@ describe('DrawTwoCard', function() {
   describe('canPlayOnTopOf', function() {
     it('should return true when color is same', function() {
       const card = new DrawTwo('red');
-      const actualOutput = card.canPlayOnTopOf({ number: 2, color: 'red' }, 'red');
+      const actualOutput = card.canPlayOnTopOf(
+        { number: 2, color: 'red' },
+        'red'
+      );
       const expectedOutput = true;
       chai.assert.deepEqual(actualOutput, expectedOutput);
     });
 
     it('should return true when symbol is same', function() {
       const card = new DrawTwo('red');
-      const actualOutput = card.canPlayOnTopOf({ symbol: '+2', color: 'blue' }, 'blue');
+      const actualOutput = card.canPlayOnTopOf(
+        { symbol: '+2', color: 'blue' },
+        'blue'
+      );
       const expectedOutput = true;
       chai.assert.deepEqual(actualOutput, expectedOutput);
     });
 
     it('should return false when color and symbol is different', function() {
       const card = new DrawTwo('red');
-      const actualOutput = card.canPlayOnTopOf({ number: 2, color: 'blue' }, 'blue');
+      const actualOutput = card.canPlayOnTopOf(
+        { number: 2, color: 'blue' },
+        'blue'
+      );
       const expectedOutput = false;
       chai.assert.deepEqual(actualOutput, expectedOutput);
     });
   });
-
   describe('action', function() {
     it('should update current player index by 1', function() {
       const card = new DrawTwo('red');
@@ -111,13 +119,62 @@ describe('DrawTwoCard', function() {
       chai.assert.deepEqual(actualOutput, expectedOutput);
     });
   });
-
   describe('logMessage', function() {
-    it('should return the log message', function() {
+    it('should return the log Message', function() {
       const card = new DrawTwo('blue');
       const actualOutput = card.logMessage();
       const expectedOutput = '+2 blue';
       chai.assert.deepEqual(actualOutput, expectedOutput);
+    });
+  });
+  
+});
+
+
+describe('SkipCard', function() {
+  let card;
+
+  beforeEach(function() {
+    card = new SkipCard('red');
+  });
+
+  describe('canPlayOnTopOf', function() {
+    it('should return true for a matching color regardless of the symbol', function() {
+      const topDiscard = { number: 7, color: 'red' };
+      const actualOutput = card.canPlayOnTopOf(topDiscard, 'red');
+      const expectedOutput = true;
+      chai.assert.equal(actualOutput, expectedOutput);
+    });
+
+    it('should return false for a non-matching color and symbol', function() {
+      const topDiscard = { number: 7, color: 'green' };
+      const actualOutput = card.canPlayOnTopOf(topDiscard, 'green');
+      const expectedOutput = false;
+      chai.assert.equal(actualOutput, expectedOutput);
+    });
+
+    it('should return true for a matching symbol regardless of the color', function() {
+      const topDiscard = { symbol: 'skip', color: 'green' };
+      const actualOutput = card.canPlayOnTopOf(topDiscard, 'green');
+      const expectedOutput = true;
+      chai.assert.equal(actualOutput, expectedOutput);
+    });
+  });
+
+  describe('logMessage', function() {
+    it('should return the log message', function() {
+      const actualOutput = card.logMessage();
+      const expectedOutput = 'skip red';
+      chai.assert.deepEqual(actualOutput, expectedOutput);
+    });
+  });
+  
+  describe('action', function() {
+    it('should update current player index by 2', function() {
+      const currentPlayerIndex = 0;
+      const actualOutput = card.action(currentPlayerIndex);
+      const expectedOutput = 2;
+      chai.assert.equal(actualOutput, expectedOutput);
     });
   });
 });

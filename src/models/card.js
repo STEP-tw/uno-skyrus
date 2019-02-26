@@ -63,4 +63,24 @@ class DrawTwo extends Card {
   }
 }
 
-module.exports = { NumberedCard, WildCard, DrawTwo };
+class SkipCard extends Card {
+  constructor(color) {
+    super();
+    this.color = color;
+    this.symbol = 'skip';
+  }
+
+  action(currentPlayerIndex) {
+    return currentPlayerIndex + 2;
+  }
+
+  canPlayOnTopOf(topDiscard, runningColor) {
+    return runningColor == this.color || topDiscard.symbol == this.symbol;
+  }
+
+  logMessage() {
+    return `${this.symbol} ${this.color}`;
+  }
+}
+
+module.exports = { NumberedCard, WildCard, SkipCard, DrawTwo };
