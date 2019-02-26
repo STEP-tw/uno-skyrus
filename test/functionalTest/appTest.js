@@ -99,6 +99,19 @@ describe('playerCards', function() {
       })
       .end(done);
   });
+  it('should return 200 status code for playerCards request and json content-type', function(done) {
+    request(app)
+      .get('/playerCards')
+      .set('Cookie', 'gameKey=1234')
+      .set('Cookie', 'id=123')
+      .expect(200)
+      .expect('content-type', 'application/json; charset=utf-8')
+      .expect({
+        cards: [{ color: 'red', number: 3 }],
+        playableCards: [{ color: 'red', number: 2 }]
+      })
+      .end(done);
+  });
 
   it('should return 200 status code for playerCards request and json content-type', function(done) {
     request(app)

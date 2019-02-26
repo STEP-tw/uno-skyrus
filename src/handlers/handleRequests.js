@@ -7,6 +7,7 @@ const { createDeck } = require('../models/deck');
 const { Players } = require('../models/players.js');
 const ld = require('lodash');
 const { ActivityLog } = require('./../models/activityLog');
+const { modifySymbol, modifySymbols } = require('../utils/util.js');
 
 const LOBBY = fs.readFileSync('./public/lobby.html', 'utf8');
 
@@ -55,7 +56,7 @@ const joinGame = function(req, res) {
 const servePlayerCards = function(req, res) {
   const { gameKey, id } = req.cookies;
   const game = req.app.games.getGame(gameKey);
-  const cards = game.getPlayerCards(+id);
+  let cards = game.getPlayerCards(+id);
   const player = game.getPlayers().getPlayer(id);
   let playableCards = [];
 
@@ -67,6 +68,9 @@ const servePlayerCards = function(req, res) {
   ) {
     playableCards = player.getPlayableCards();
   }
+
+  cards = modifySymbols(cards);
+  playableCards = modifySymbols(playableCards);
   res.send({ cards, playableCards });
 };
 
@@ -187,7 +191,7 @@ const serveGameLog = function(game) {
 
 const getTopDiscard = function(game) {
   const topDiscard = game.getTopDiscard();
-  return topDiscard;
+  return modifySymbol(topDiscard);
 };
 
 const getRunningColor = function(game) {

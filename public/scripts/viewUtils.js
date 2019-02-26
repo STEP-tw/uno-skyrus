@@ -1,11 +1,13 @@
 /* eslint no-unused-vars: "off" */
-
 const createCard = function(document, card, cardId) {
   if (card.isWildCard) {
     return createWildCard(document, cardId);
   }
   if (card.isDrawTwo) {
-    return createDrawTwo(document, card, cardId);
+    return createActionCards(document, card, cardId);
+  }
+  if (card.isSkipCard) {
+    return createActionCards(document, card, cardId);
   }
   return createNumberedCard(document, card, cardId);
 };
@@ -95,14 +97,16 @@ const createWildCard = function(document, cardId) {
   return unoCard;
 };
 
-const createDrawTwo = function(document, card, cardId) {
+const createActionCards = function(document, card, cardId) {
+  // console.log('card is ->', card);
+
   const unoCard = document.createElement('div');
   unoCard.id = cardId;
   unoCard.className = 'uno-card theme-uno-card';
 
   const numberLeft = document.createElement('div');
   numberLeft.className = 'number-left';
-  numberLeft.innerText = card.symbol;
+  numberLeft.innerHTML = card.symbol;
 
   const cardInner = document.createElement('div');
   cardInner.className = 'theme-uno-card-inner';
@@ -113,13 +117,13 @@ const createDrawTwo = function(document, card, cardId) {
 
   const numberSpan = document.createElement('span');
   numberSpan.className = card.color;
-  numberSpan.innerText = card.symbol;
+  numberSpan.innerHTML = card.symbol;
   numberSpan.classList.add('symbol');
   designInner.appendChild(numberSpan);
 
   const numberRight = document.createElement('div');
   numberRight.className = 'number-right';
-  numberRight.innerText = card.symbol;
+  numberRight.innerHTML = card.symbol;
 
   cardInner.appendChild(designInner);
   unoCard.appendChild(numberLeft);

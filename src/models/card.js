@@ -78,6 +78,7 @@ class SkipCard extends Card {
   constructor(color) {
     super();
     this.color = color;
+    this.isSkipCard = true;
     this.symbol = 'skip';
   }
 
