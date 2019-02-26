@@ -11,7 +11,7 @@ const {
 
 describe('Game Class', () => {
   describe('startGame', function() {
-    let game;
+    let game, deck;
 
     beforeEach(function() {
       const identity = deck => deck;
@@ -31,31 +31,35 @@ describe('Game Class', () => {
         setFirstTurn: () => {},
         setCurrentPlayer: () => {}
       };
-      game = new Game(numberDeck, 1, 1234, players);
+      deck = numberDeck.map(card => {
+        card.getColor = () => card.color;
+        return card;
+      });
+      game = new Game(deck, 1, 1234, players);
       game.startGame(identity);
     });
 
     it('startGame method should create stack', function() {
       const actual = game.stack;
-      const expected = [{ color: 'red', number: 1 }];
+      const expected = [deck[0]];
       chai.assert.deepEqual(actual, expected);
     });
 
     it('startGame method should initialize pile', function() {
       const actual = game.pile;
-      const expected = [{ number: 2, color: 'green' }];
+      const expected = [deck[1]];
       chai.assert.deepEqual(actual, expected);
     });
 
     it('should assign 7 cards to each player', function() {
       const expectedOutput = [
-        { number: 3, color: 'blue' },
-        { number: 4, color: 'yellow' },
-        { number: 5, color: 'red' },
-        { number: 6, color: 'green' },
-        { number: 7, color: 'blue' },
-        { number: 8, color: 'blue' },
-        { number: 9, color: 'green' }
+        deck[2],
+        deck[3],
+        deck[4],
+        deck[5],
+        deck[6],
+        deck[7],
+        deck[8]
       ];
       const actualOutput = game.getPlayerCards(1234);
       chai.assert.deepEqual(actualOutput, expectedOutput);
@@ -69,10 +73,14 @@ describe('Game Class', () => {
         setFirstTurn: () => {},
         setCurrentPlayer: () => {}
       };
-      const game = new Game(twoCards, 0, 1234, players);
+      const deck = numberDeck.map(card => {
+        card.getColor = () => card.color;
+        return card;
+      });
+      const game = new Game(deck, 0, 1234, players);
       game.startGame(dummyShuffler);
       const actual = game.getTopDiscard();
-      const expected = { color: 'red', number: 5 };
+      const expected = deck[0];
       chai.assert.deepEqual(actual, expected);
     });
   });
@@ -120,10 +128,10 @@ describe('Game Class', () => {
     let game;
     const logMessage = () => {};
     const canPlayOnTopOf = () => true;
+    let deck;
 
     beforeEach(() => {
       numberDeck[5] = { number: 6, color: 'green', canPlayOnTopOf: () => true };
-
       const identity = deck => deck;
       const player = {
         id: 1234,
@@ -164,16 +172,70 @@ describe('Game Class', () => {
         updateCurrentPlayer: () => {}
       };
 
-      const deck = [
-        { number: 1, color: 'yellow', logMessage, canPlayOnTopOf },
-        { number: 2, color: 'green', logMessage, canPlayOnTopOf },
-        { number: 3, color: 'blue', logMessage, canPlayOnTopOf },
-        { number: 4, color: 'yellow', logMessage, canPlayOnTopOf },
-        { number: 5, color: 'red', logMessage, canPlayOnTopOf },
-        { number: 6, color: 'red', logMessage, canPlayOnTopOf },
-        { number: 7, color: 'blue', logMessage, canPlayOnTopOf },
-        { number: 8, color: 'blue', logMessage, canPlayOnTopOf },
-        { number: 9, color: 'green', logMessage, canPlayOnTopOf }
+      deck = [
+        {
+          number: 1,
+          color: 'yellow',
+          logMessage,
+          canPlayOnTopOf,
+          getColor: () => 'yellow'
+        },
+        {
+          number: 2,
+          color: 'green',
+          logMessage,
+          canPlayOnTopOf,
+          getColor: () => 'green'
+        },
+        {
+          number: 3,
+          color: 'blue',
+          logMessage,
+          canPlayOnTopOf,
+          getColor: () => 'blue'
+        },
+        {
+          number: 4,
+          color: 'yellow',
+          logMessage,
+          canPlayOnTopOf,
+          getColor: () => 'yellow'
+        },
+        {
+          number: 5,
+          color: 'red',
+          logMessage,
+          canPlayOnTopOf,
+          getColor: () => 'red'
+        },
+        {
+          number: 6,
+          color: 'red',
+          logMessage,
+          canPlayOnTopOf,
+          getColor: () => 'red'
+        },
+        {
+          number: 7,
+          color: 'blue',
+          logMessage,
+          canPlayOnTopOf,
+          getColor: () => 'blue'
+        },
+        {
+          number: 8,
+          color: 'blue',
+          logMessage,
+          canPlayOnTopOf,
+          getColor: () => 'blue'
+        },
+        {
+          number: 9,
+          color: 'green',
+          logMessage,
+          canPlayOnTopOf,
+          getColor: () => 'green'
+        }
       ];
 
       game = new Game(deck, 1, 1234, players, { addLog: () => {} });
@@ -182,17 +244,10 @@ describe('Game Class', () => {
     it('should remove card from player hand and put it on top of pile', () => {
       game.throwCard(1234, '3');
       const actual = game.getPlayerCards(1234);
-      const expected = [
-        { number: 3, color: 'blue', logMessage, canPlayOnTopOf },
-        { number: 4, color: 'yellow', logMessage, canPlayOnTopOf },
-        { number: 5, color: 'red', logMessage, canPlayOnTopOf },
-        { number: 7, color: 'blue', logMessage, canPlayOnTopOf },
-        { number: 8, color: 'blue', logMessage, canPlayOnTopOf },
-        { number: 9, color: 'green', logMessage, canPlayOnTopOf }
-      ];
+      const expected = [deck[2], deck[3], deck[4], deck[6], deck[7], deck[8]];
       chai.assert.deepEqual(actual, expected);
     });
-    it('should remove card from player hand and put it on top of pile', () => {
+    it('should not remove card from player hand', () => {
       const expected = game.pile;
       game.throwCard(124, '3');
       const actual = game.pile;
@@ -222,15 +277,22 @@ describe('Game Class', () => {
       const card = {
         number: 4,
         color: 'red',
-        canPlayOnTopOf: () => true
+        canPlayOnTopOf: () => true,
+        getColor: () => 'red'
       };
       const activityLog = {
         addLog: () => {}
       };
-      const nineCards = sevenCards.slice();
+      let nineCards = sevenCards.slice();
       nineCards.unshift(card);
       nineCards.unshift(card);
       nineCards.unshift(card);
+      nineCards = nineCards.map(card => {
+        card.getColor = () => card.color;
+        return card;
+      });
+      console.log(nineCards);
+
       const game = new Game(nineCards, 0, 1234, players, activityLog);
       game.startGame(dummyShuffler);
       game.drawCard(234);
@@ -268,6 +330,7 @@ describe('Game Class', () => {
       nineCards.unshift(card);
       nineCards.unshift(card);
       nineCards.unshift(card);
+
       const game = new Game(nineCards, 0, 1234, players, activityLog);
       game.startGame(dummyShuffler);
       game.drawCard(234);
@@ -289,14 +352,15 @@ describe('Game Class', () => {
         getPlayers: () => [player],
         setCurrentPlayer: () => player
       };
-      const game = new Game(tenCards, 0, 1234, players);
+      const deck = tenCards.map(card => {
+        card.getColor = () => card.color;
+        return card;
+      });
+      const game = new Game(deck, 0, 1234, players);
       game.startGame(dummyShuffler);
       game.drawCard(235);
       const actual = game.stack;
-      const expected = [
-        { number: 2, color: 'green' },
-        { number: 3, color: 'blue' }
-      ];
+      const expected = [deck[1], deck[2]];
       chai.assert.deepEqual(actual, expected);
     });
   });
@@ -352,17 +416,46 @@ describe('Game Class', () => {
       chai.assert.deepEqual(actual, expected);
     });
   });
-});
 
-describe('updateRunningColor', function() {
-  let game;
-  beforeEach(function() {
-    game = new Game([], 1, 1234, {}, { addLog: () => {} });
-  });
-  it('should change the running color of the game', function() {
-    game.updateRunningColor('red');
-    const expectedOutput = 'red';
-    const actualOutput = game.getRunningColor();
-    chai.assert.equal(actualOutput, expectedOutput);
+  describe('updateRunningColor', function() {
+    let game, player, players;
+    const identity = value => value;
+
+    beforeEach(function() {
+      player = {
+        getId: () => 12,
+        calculatePlayableCards: () => {},
+        addCards: () => {}
+      };
+      players = {
+        getCurrentPlayer: () => player,
+        getPlayers: () => [player],
+        setCurrentPlayer: () => {},
+        changeTurn: () => {}
+      };
+    });
+    it('should not change the running color when wild card is not in the pile', function() {
+      game = new Game(tenCards, 1, 1234, players, { addLog: () => {} });
+      game.startGame(identity);
+      game.updateRunningColor(12, 'red');
+      const expectedOutput = 'blue';
+      const actualOutput = game.getRunningColor();
+      chai.assert.equal(actualOutput, expectedOutput);
+    });
+
+    it('should change the running color when wild card is on the top of pile', function() {
+      tenCards[2] = {
+        isWildCard: true,
+        getColor: () => 'green',
+        setColorAsDeclared: () => {}
+      };
+      game = new Game(tenCards, 1, 1234, players, { addLog: () => {} });
+      game.startGame(identity);
+      game.updateRunningColor(12, 'red');
+      console.log(game.getTopDiscard());
+      const expectedOutput = 'red';
+      const actualOutput = game.getRunningColor();
+      chai.assert.equal(actualOutput, expectedOutput);
+    });
   });
 });

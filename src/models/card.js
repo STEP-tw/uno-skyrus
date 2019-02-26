@@ -18,6 +18,10 @@ class NumberedCard extends Card {
     return ++currentPlayerIndex;
   }
 
+  getColor() {
+    return this.color;
+  }
+
   logMessage() {
     return this.number + ' ' + this.color;
   }
@@ -27,10 +31,12 @@ class WildCard extends Card {
   constructor() {
     super();
     this.isWildCard = true;
+    this.isColorDeclared = false;
   }
 
   action(currentPlayerIndex) {
-    return ++currentPlayerIndex;
+    this.isColorDeclared = false;
+    return currentPlayerIndex;
   }
 
   canPlayOnTopOf() {
@@ -40,6 +46,11 @@ class WildCard extends Card {
   logMessage() {
     return 'wildcard';
   }
+
+  setColorAsDeclared() {
+    this.isColorDeclared = true;
+  }
+
 }
 
 class DrawTwo extends Card {

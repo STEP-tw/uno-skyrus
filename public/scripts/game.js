@@ -32,6 +32,7 @@ const drawCard = function(document) {
     })
     .then(cardDetails => {
       initializeHand(document, cardDetails);
+      console.log(cardDetails);
       if (cardDetails.playableCards.length) {
         displayPass(document);
         return;
@@ -49,7 +50,9 @@ const isNumberCardSimilar = (card1, card2) =>
   card1.number == card2.number && card1.color == card2.color;
 
 const isSimilarCards = function(card1, card2) {
-  return card2.isWildCard || isNumberCardSimilar(card1, card2);
+  return (
+    (card1.isWildCard && card2.isWildCard) || isNumberCardSimilar(card1, card2)
+  );
 };
 
 const hasCard = (playableCards, card) => {

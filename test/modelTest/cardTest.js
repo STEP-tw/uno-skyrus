@@ -46,6 +46,15 @@ describe('NumberedCard', function() {
       chai.assert.deepEqual(actualOutput, expectedOutput);
     });
   });
+
+  describe('logMessage', function() {
+    it('should return the log message', function() {
+      const card = new NumberedCard(4, 'red');
+      const actualOutput = card.getColor();
+      const expectedOutput = 'red';
+      chai.assert.deepEqual(actualOutput, expectedOutput);
+    });
+  });
 });
 
 describe('WildCard', function() {
@@ -58,12 +67,22 @@ describe('WildCard', function() {
     });
   });
 
+  describe('setColorAsDeclared', function() {
+    it('should return true for each call', function() {
+      const card = new WildCard();
+      card.setColorAsDeclared();
+      const actualOutput = card.isColorDeclared;
+      const expectedOutput = true;
+      chai.assert.deepEqual(actualOutput, expectedOutput);
+    });
+  });
+
   describe('action', function() {
-    it('should update current player index by 1', function() {
+    it('should not  update current player index', function() {
       const card = new WildCard();
       const currentPlayerIndex = 0;
       const actualOutput = card.action(currentPlayerIndex);
-      const expectedOutput = 1;
+      const expectedOutput = 0;
       chai.assert.deepEqual(actualOutput, expectedOutput);
     });
   });

@@ -119,14 +119,14 @@ const handleThrowCard = function(req, res) {
 const drawCard = function(req, res) {
   const { gameKey, id } = req.cookies;
   const game = res.app.games.getGame(gameKey);
-  const player = game.getPlayers().getPlayer(id);
-  game.drawCard(id);
+  // const player = game.getPlayers().getPlayer(id);
+  const playableCards = game.drawCard(id);
   const stackLength = game.getStack().length;
   if (!stackLength) {
     game.refillStack();
   }
   const cards = game.getPlayerCards(+id);
-  const playableCards = player.getPlayableCards();
+  // const playableCards = player.getPlayableCards();
   res.send({ cards, playableCards });
 };
 
@@ -208,10 +208,9 @@ const serveGameStatus = function(req, res) {
 
 const updateRunningColor = function(req, res) {
   const { declaredColor } = req.body;
-  const { gameKey } = req.cookies;
+  const { gameKey, id } = req.cookies;
   const game = res.app.games.getGame(gameKey);
-  game.updateRunningColor(declaredColor);
-  game.updatePlayableCards();
+  game.updateRunningColor(id, declaredColor);
   res.end();
 };
 

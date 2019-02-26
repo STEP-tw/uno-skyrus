@@ -1,4 +1,4 @@
-const getGameId = function(cardId) {
+const getCardId = function(cardId) {
   return +cardId.match(/[0-9]+/)[0];
 };
 
@@ -22,10 +22,10 @@ class Game {
   throwCard(playerId, id) {
     const currentPlayer = this.players.getCurrentPlayer();
     const player = this.players.getPlayer(playerId);
-    const cardId = getGameId(id);
+    const cardId = getCardId(id);
     const playerCards = player.getCards();
     const thrownCard = playerCards[cardId];
-    this.updateRunningColor(thrownCard.color);
+    this.runningColor = thrownCard.color;
     const isPlayable = thrownCard.canPlayOnTopOf(
       this.getTopDiscard(),
       this.runningColor
@@ -64,7 +64,7 @@ class Game {
     this.stack = shuffle(this.deck);
     this.dealCards();
     this.pile.push(this.stack.pop());
-    this.updateRunningColor(this.getTopDiscard().color);
+    this.runningColor = this.getTopDiscard().getColor();
     this.status = true;
     this.players.setCurrentPlayer();
     this.updatePlayableCards();
@@ -77,11 +77,13 @@ class Game {
       currentPlayer.addCard(drawnCard);
       currentPlayer.setDrawCardStatus(false);
       this.activityLog.addLog(currentPlayer.getName(), ' has drawn ', 'a card');
-      currentPlayer.setPlayableCards([]);
       if (drawnCard.canPlayOnTopOf(this.getTopDiscard(), this.runningColor)) {
         currentPlayer.setPlayableCards([drawnCard]);
+        return [drawnCard];
       } else {
         this.getPlayers().changeTurn();
+        this.updatePlayableCards();
+        return [];
       }
     }
   }
@@ -139,8 +141,21 @@ class Game {
     return this.status;
   }
 
-  updateRunningColor(color) {
-    this.runningColor = color;
+  isCurrentPlayer(playerId) {
+    return this.players.getCurrentPlayer().getId() == playerId;
+  }
+
+  updateRunningColor(playerId, color) {
+    const topDiscard = this.getTopDiscard();
+    const validateCredentials = function() {
+      return topDiscard.isWildCard && !topDiscard.isColorDeclared;
+    };
+    if (this.isCurrentPlayer(playerId) && validateCredentials()) {
+      this.runningColor = color;
+      this.players.changeTurn();
+      topDiscard.setColorAsDeclared();
+    }
+    this.updatePlayableCards();
   }
 }
 
