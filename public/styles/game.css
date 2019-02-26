@@ -187,6 +187,12 @@
   text-shadow: 1.5px 1.5px 5px black;
 }
 
+.symbol {
+  background: transparent;
+  font-size: 55px;
+  text-shadow: 1.5px 1.5px 5px black;
+}
+
 .uno-card {
   width: 110px;
   height: 160px;

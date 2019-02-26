@@ -1,6 +1,4 @@
-class Card {
-  constructor() {}
-}
+class Card {}
 
 class NumberedCard extends Card {
   constructor(number, color) {
@@ -10,7 +8,10 @@ class NumberedCard extends Card {
   }
 
   canPlayOnTopOf(otherCard, runningColor) {
-    return runningColor == this.color || otherCard.number == this.number;
+    if (!otherCard.symbol) {
+      return otherCard.number == this.number || runningColor == this.color;
+    }
+    return false;
   }
 
   action(currentPlayerIndex) {
@@ -41,4 +42,25 @@ class WildCard extends Card {
   }
 }
 
-module.exports = { NumberedCard, WildCard };
+class DrawTwo extends Card {
+  constructor(color) {
+    super();
+    this.symbol = '+2';
+    this.color = color;
+    this.isDrawTwo = true;
+  }
+
+  action(currentPlayerIndex) {
+    return ++currentPlayerIndex;
+  }
+
+  canPlayOnTopOf(otherCard, runningColor) {
+    return runningColor == this.color || otherCard.symbol === this.symbol;
+  }
+
+  logMessage() {
+    return this.symbol + ' ' + this.color;
+  }
+}
+
+module.exports = { NumberedCard, WildCard, DrawTwo };

@@ -146,7 +146,6 @@ describe('Game Class', () => {
           player.cards.splice(cardId, 1);
         },
         getCards() {
-          console.log(player.cards, 'this is player cards');
           return player.cards;
         }
       };
