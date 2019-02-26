@@ -326,12 +326,13 @@
   width: 30%;
   height: 50%;
   color: white;
-  background: black;
+  background: white;
 }
 
 .color-div {
   width: 40%;
   height: 40%;
+  border: 1px solid white;
   cursor: pointer;
 }
 
@@ -339,4 +340,27 @@
   width: 20%;
   height: 20%;
   border: 1px solid black;
+}
+
+.color-container {
+  border-radius: 10px;
+  width: 30%;
+  height: 50%;
+  justify-content: flex-end;
+  align-content: center;
+  display: flex;
+  flex-direction: column;
+  color: white;
+  text-align: center;
+  font-size: 24px;
+}
+
+.color-row {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.color-header {
+  margin: 5%;
 }
