@@ -1,13 +1,20 @@
-const { SkipCard, WildCard, NumberedCard, DrawTwo } = require('./../../src/models/card');
+const {
+  SkipCard,
+  WildCard,
+  NumberedCard,
+  DrawTwo
+} = require('./../../src/models/card');
 const chai = require('chai');
 
 describe('NumberedCard', function() {
   describe('canPlayOnTopOf', function() {
     it('should return true for a matching color', function() {
       const card = new NumberedCard(4, 'red');
+      const hasDrawnTwo = true;
       const actualOutput = card.canPlayOnTopOf(
         { number: 7, color: 'red' },
-        'red'
+        'red',
+        hasDrawnTwo
       );
       const expectedOutput = true;
       chai.assert.deepEqual(actualOutput, expectedOutput);
@@ -15,15 +22,60 @@ describe('NumberedCard', function() {
 
     it('should return false for a non-matching color', function() {
       const card = new NumberedCard(4, 'red');
-      const actualOutput = card.canPlayOnTopOf({ number: 7, color: 'green' });
+      const hasDrawnTwo = true;
+      const actualOutput = card.canPlayOnTopOf(
+        { number: 7, color: 'green' },
+        'green',
+        hasDrawnTwo
+      );
       const expectedOutput = false;
       chai.assert.deepEqual(actualOutput, expectedOutput);
     });
 
-    it('should return false for any other card with symbol', function() {
+    it('should return false for a draw two card', function() {
       const card = new NumberedCard(4, 'red');
-      const actualOutput = card.canPlayOnTopOf({ symbol: 7, color: 'green' });
+      const hasDrawnTwo = true;
+      const actualOutput = card.canPlayOnTopOf(
+        {
+          symbol: '+2',
+          color: 'green'
+        },
+        'green',
+        hasDrawnTwo
+      );
       const expectedOutput = false;
+      chai.assert.deepEqual(actualOutput, expectedOutput);
+    });
+
+    it('should return false for a draw two card and if player has not drawn the card', function() {
+      const card = new NumberedCard(4, 'red');
+      const hasDrawnTwo = false;
+      const actualOutput = card.canPlayOnTopOf(
+        {
+          symbol: '+2',
+          color: 'green',
+          isDrawTwo: true
+        },
+        'green',
+        hasDrawnTwo
+      );
+      const expectedOutput = false;
+      chai.assert.deepEqual(actualOutput, expectedOutput);
+    });
+
+    it('should return true for a draw tow card if hasDrawnTwo is true', function() {
+      const card = new NumberedCard(4, 'red');
+      const hasDrawnTwo = true;
+      const runningColor = 'red';
+      const actualOutput = card.canPlayOnTopOf(
+        {
+          symbol: '+2',
+          color: 'green'
+        },
+        runningColor,
+        hasDrawnTwo
+      );
+      const expectedOutput = true;
       chai.assert.deepEqual(actualOutput, expectedOutput);
     });
   });
@@ -146,9 +198,7 @@ describe('DrawTwoCard', function() {
       chai.assert.deepEqual(actualOutput, expectedOutput);
     });
   });
-  
 });
-
 
 describe('SkipCard', function() {
   let card;
@@ -187,7 +237,7 @@ describe('SkipCard', function() {
       chai.assert.deepEqual(actualOutput, expectedOutput);
     });
   });
-  
+
   describe('action', function() {
     it('should update current player index by 2', function() {
       const currentPlayerIndex = 0;

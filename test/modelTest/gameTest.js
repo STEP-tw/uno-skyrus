@@ -5,6 +5,7 @@ const {
   twoCards,
   dummyShuffler,
   numberDeck,
+  twelveCards,
   tenCards,
   sevenCards
 } = require('../testHelpers/testHelpers.js');
@@ -255,7 +256,38 @@ describe('Game Class', () => {
     });
   });
 
-  describe('drawCard', function() {
+  describe('drawCards', function() {
+    it('should not remove a card from stack if not current player', function() {
+      const player = {
+        addCard: () => {},
+        calculatePlayableCards: () => {},
+        addCards: () => {},
+        getId: () => 234,
+        id: 234
+      };
+      const players = {
+        getCurrentPlayer: () => player,
+        getPlayers: () => [player],
+        setCurrentPlayer: () => player
+      };
+
+      const getColor = () => this.color;
+
+      const deck = tenCards.map(card => {
+        card.getColor = getColor;
+        return card;
+      });
+
+      const game = new Game(deck, 0, 1234, players);
+      game.startGame(dummyShuffler);
+      game.drawCards(235);
+      const actual = game.stack;
+      const expected = [
+        { number: 2, color: 'green', getColor },
+        { number: 3, color: 'blue', getColor }
+      ];
+      chai.assert.deepEqual(actual, expected);
+    });
     it('should remove a card from stack', function() {
       const player = {
         addCard: () => {},
@@ -291,11 +323,10 @@ describe('Game Class', () => {
         card.getColor = () => card.color;
         return card;
       });
-      console.log(nineCards);
 
       const game = new Game(nineCards, 0, 1234, players, activityLog);
       game.startGame(dummyShuffler);
-      game.drawCard(234);
+      game.drawCards(234);
       const actual = game.stack;
       const expected = [card];
       chai.assert.deepEqual(actual, expected);
@@ -333,35 +364,56 @@ describe('Game Class', () => {
 
       const game = new Game(nineCards, 0, 1234, players, activityLog);
       game.startGame(dummyShuffler);
-      game.drawCard(234);
+      game.drawCards(234);
       const actual = game.stack;
       const expected = [card];
       chai.assert.deepEqual(actual, expected);
     });
 
-    it('should not remove a card from stack if not current player', function() {
+    it('should remove two cards from stack ', function() {
       const player = {
         addCard: () => {},
+        getName: () => 'player',
         calculatePlayableCards: () => {},
         addCards: () => {},
         getId: () => 234,
+        getDrawCardStatus: () => true,
+        setDrawCardStatus: () => {},
+        setPlayableCards: () => {},
         id: 234
       };
+
       const players = {
         getCurrentPlayer: () => player,
         getPlayers: () => [player],
-        setCurrentPlayer: () => player
+        setCurrentPlayer: () => player,
+        changeTurn: () => {}
       };
-      const deck = tenCards.map(card => {
-        card.getColor = () => card.color;
+
+      const getColor = () => this.color;
+
+      const deck = twelveCards.map(card => {
+        card.getColor = getColor;
         return card;
       });
-      const game = new Game(deck, 0, 1234, players);
+
+      const activityLog = {
+        addLog: () => {}
+      };
+
+      const game = new Game(deck, 0, 1234, players, activityLog);
       game.startGame(dummyShuffler);
-      game.drawCard(235);
+      game.numberOfCardsToDraw = 2;
+      game.drawCards(234);
       const actual = game.stack;
-      const expected = [deck[1], deck[2]];
+
+      const expected = [
+        { number: 2, color: 'green', getColor },
+        { number: 3, color: 'blue', getColor }
+      ];
       chai.assert.deepEqual(actual, expected);
+      chai.assert.deepEqual(game.numberOfCardsToDraw, 1);
+      chai.assert.deepEqual(game.hasDrawnTwo, true);
     });
   });
 
@@ -435,6 +487,11 @@ describe('Game Class', () => {
       };
     });
     it('should not change the running color when wild card is not in the pile', function() {
+      tenCards[2] = {
+        isWildCard: false,
+        getColor: () => 'blue',
+        setColorAsDeclared: () => {}
+      };
       game = new Game(tenCards, 1, 1234, players, { addLog: () => {} });
       game.startGame(identity);
       game.updateRunningColor(12, 'red');
@@ -452,7 +509,6 @@ describe('Game Class', () => {
       game = new Game(tenCards, 1, 1234, players, { addLog: () => {} });
       game.startGame(identity);
       game.updateRunningColor(12, 'red');
-      console.log(game.getTopDiscard());
       const expectedOutput = 'red';
       const actualOutput = game.getRunningColor();
       chai.assert.equal(actualOutput, expectedOutput);

@@ -35,7 +35,7 @@ class Players {
   changeTurn() {
     this.currentPlayerIndex += 1;
     this.currentPlayerIndex =
-      this.currentPlayerIndex % this.getNumberOfPlayers();
+    this.currentPlayerIndex % this.getNumberOfPlayers();
     this.setCurrentPlayer();
     this.currentPlayer.setDrawCardStatus(true);
   }

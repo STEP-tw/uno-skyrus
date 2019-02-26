@@ -123,14 +123,12 @@ const handleThrowCard = function(req, res) {
 const drawCard = function(req, res) {
   const { gameKey, id } = req.cookies;
   const game = res.app.games.getGame(gameKey);
-  // const player = game.getPlayers().getPlayer(id);
-  const playableCards = game.drawCard(id);
+  const playableCards = game.drawCards(id);
   const stackLength = game.getStack().length;
   if (!stackLength) {
     game.refillStack();
   }
   const cards = game.getPlayerCards(+id);
-  // const playableCards = player.getPlayableCards();
   res.send({ cards, playableCards });
 };
 

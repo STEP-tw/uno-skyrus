@@ -7,9 +7,9 @@ class NumberedCard extends Card {
     this.color = color;
   }
 
-  canPlayOnTopOf(otherCard, runningColor) {
-    if (!otherCard.symbol) {
-      return otherCard.number == this.number || runningColor == this.color;
+  canPlayOnTopOf(otherCard, runningColor, hasDrawnTwo) {
+    if (!otherCard.isDrawTwo || hasDrawnTwo) {
+      return runningColor == this.color || otherCard.number == this.number;
     }
     return false;
   }

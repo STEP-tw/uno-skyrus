@@ -26,8 +26,7 @@ const createNumberedCard = function(document, card, cardId) {
 
   const designInner = document.createElement('div');
   designInner.className = 'theme-uno-design-inner white';
-  // designInner.id = `design${cardId}`;
-
+  
   cardInner.classList.add(card.color);
 
   const numberSpan = document.createElement('span');
@@ -98,8 +97,6 @@ const createWildCard = function(document, cardId) {
 };
 
 const createActionCards = function(document, card, cardId) {
-  // console.log('card is ->', card);
-
   const unoCard = document.createElement('div');
   unoCard.id = cardId;
   unoCard.className = 'uno-card theme-uno-card';

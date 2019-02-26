@@ -19,7 +19,7 @@ class Player {
   }
 
   addCards(cards) {
-    this.cards = cards;
+    this.cards = this.cards.concat(cards);
   }
 
   addCard(card) {
@@ -39,9 +39,9 @@ class Player {
     return this.name;
   }
 
-  calculatePlayableCards(otherCard, runningColor) {
+  calculatePlayableCards(otherCard, runningColor, hasDrawnTwo) {
     this.playableCards = this.cards.filter(card => {
-      return card.canPlayOnTopOf(otherCard, runningColor);
+      return card.canPlayOnTopOf(otherCard, runningColor, hasDrawnTwo);
     });
   }
 

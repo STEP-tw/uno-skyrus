@@ -32,7 +32,7 @@ const drawCard = function(document) {
     })
     .then(cardDetails => {
       initializeHand(document, cardDetails);
-      console.log(cardDetails);
+
       if (cardDetails.playableCards.length) {
         displayPass(document);
         return;

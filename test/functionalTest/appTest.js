@@ -312,12 +312,13 @@ describe('Handle Draw Card', () => {
       pile: [1, 2, 3, 4],
       getPlayers: () => players,
       getTopDiscard: () => card,
-      drawCard: () => {},
+      drawCards: () => {},
       getPlayerCards: () => [card],
       refillStack: () => {},
       getStack: () => {
         return [1, 2];
-      }
+      },
+      haveToDrawMultiple: () => false
     };
 
     const games = {

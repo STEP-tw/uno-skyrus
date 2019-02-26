@@ -13,6 +13,8 @@ class Game {
     this.gameKey = gameKey;
     this.status = false;
     this.runningColor = '';
+    this.numberOfCardsToDraw = 1;
+    this.hasDrawnTwo = true;
   }
 
   getPlayers() {
@@ -28,11 +30,21 @@ class Game {
     this.runningColor = thrownCard.color;
     const isPlayable = thrownCard.canPlayOnTopOf(
       this.getTopDiscard(),
-      this.runningColor
+      this.runningColor,
+      this.hasDrawnTwo
     );
     const name = player.getName();
 
     if (+playerId == currentPlayer.getId() && isPlayable) {
+      if (thrownCard.isDrawTwo) {
+        let cardsToIncrement = 2;
+        if (this.numberOfCardsToDraw === 1) {
+          cardsToIncrement = 1;
+        }
+        this.hasDrawnTwo = false;
+        this.numberOfCardsToDraw += cardsToIncrement;
+      }
+
       player.removeCard(cardId);
       this.pile.push(thrownCard);
       this.log(name, ' has thrown ', thrownCard.logMessage());
@@ -55,7 +67,8 @@ class Game {
       .forEach(player =>
         player.calculatePlayableCards(
           this.getTopDiscard(),
-          this.getRunningColor()
+          this.getRunningColor(),
+          this.hasDrawnTwo
         )
       );
   }
@@ -70,22 +83,47 @@ class Game {
     this.updatePlayableCards();
   }
 
-  drawCard(playerId) {
+  drawCards(playerId) {
     const currentPlayer = this.players.getCurrentPlayer();
     if (currentPlayer.id == playerId && currentPlayer.getDrawCardStatus()) {
-      const drawnCard = this.stack.pop();
-      currentPlayer.addCard(drawnCard);
+      const drawnCards = this.stack.splice(-this.numberOfCardsToDraw);
+      currentPlayer.addCards(drawnCards);
       currentPlayer.setDrawCardStatus(false);
-      this.activityLog.addLog(currentPlayer.getName(), ' has drawn ', 'a card');
-      if (drawnCard.canPlayOnTopOf(this.getTopDiscard(), this.runningColor)) {
-        currentPlayer.setPlayableCards([drawnCard]);
-        return [drawnCard];
+
+      this.activityLog.addLog(
+        currentPlayer.getName(),
+        ' has drawn ',
+        this.numberOfCardsToDraw + ' cards'
+      );
+
+      currentPlayer.setPlayableCards([]);
+      if (this.numberOfCardsToDraw === 1) {
+        if (
+          drawnCards[0].canPlayOnTopOf(
+            this.getTopDiscard(),
+            this.runningColor,
+            this.hasDrawnTwo
+          )
+        ) {
+          currentPlayer.setPlayableCards(drawnCards);
+          return drawnCards;
+        } else {
+          this.getPlayers().changeTurn();
+          this.updatePlayableCards();
+          return [];
+        }
       } else {
+        this.numberOfCardsToDraw = 1;
+        this.hasDrawnTwo = true;
         this.getPlayers().changeTurn();
         this.updatePlayableCards();
         return [];
       }
     }
+  }
+
+  haveToDrawMultiple() {
+    return this.numberOfCardsToDraw > 1;
   }
 
   getPlayerCards(playerId) {
