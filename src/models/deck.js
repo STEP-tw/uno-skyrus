@@ -8,10 +8,10 @@ const addNumberCards = function(colors, cards, number) {
 };
 
 const createDrawTwoCards = function() {
+  const container = [];
   const colors = ['red', 'blue', 'green', 'yellow'];
-  return colors.map(color => {
-    return new DrawTwo(color);
-  });
+  const cards = colors.map(color => new DrawTwo(color));
+  return container.concat(cards, cards);
 };
 
 const createWildCards = function() {
