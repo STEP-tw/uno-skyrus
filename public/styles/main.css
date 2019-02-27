@@ -51,8 +51,8 @@ button {
   cursor: pointer;
 }
 
-::placeholder {
-  color: #ffdf00;
+::placeholder { 
+  color: #ed896b;
 }
 
 ::selection {
@@ -235,13 +235,14 @@ input {
 }
 
 .single-btn{
+  font-size: 29px;
   cursor: pointer;
-
-  font-family: sans-serif;
-  font-weight: 100;
-
-  text-indent: -10%;
-  text-shadow: 0 -1px 1px #fbeb37;
+    font-family: sans-serif;
+    font-weight: 100;
+    border-radius: 10px;
+    text-align: center;
+    background: #ffde00;
+    color: #d33e32;
 }
 
 .inner-container{
@@ -266,5 +267,5 @@ input {
 
   border-bottom: 2px solid #ffdf00;
   background: transparent;
-  color: #ffdf00;
+  color: #ed896b;
 }
