@@ -71,7 +71,7 @@ button {
 
 .host-room {
   width: 100%;
-  height: 50%;
+  height: 80%;
 
   display: flex;
   flex-direction: row;
@@ -153,10 +153,8 @@ input {
   text-align: center;
 
   border-bottom: 1px solid #ffdf00;
-  background: #d33e32;
+  background: transparent;
   color: #ffdf00;
-
-  transform: rotate(-30deg);
 }
 
 /* ................................... */
@@ -232,8 +230,8 @@ input {
 }
 
 .big-theme-card{
-  width:330px;
-  height:480px;
+  width:400px;
+  height:600px;
 }
 
 .single-btn{
@@ -243,20 +241,19 @@ input {
   font-weight: 100;
 
   text-indent: -10%;
-
   text-shadow: 0 -1px 1px #fbeb37;
-
-  transform: rotate(-30deg);
 }
 
 .inner-container{
-  height:252px;
-  width:100%;
-
-  display:flex;
-  overflow: hidden;
-  flex-direction: column;
-  justify-content: space-evenly;
+  height: 252px;
+    width: 100%;
+    display: flex;
+    overflow: hidden;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    transform: rotate(-30deg);
+    background-color: transparent;
 }
 
 .drop-down-menu{
@@ -268,9 +265,6 @@ input {
   text-indent:40%;
 
   border-bottom: 2px solid #ffdf00;
-  background: #d33e32;
+  background: transparent;
   color: #ffdf00;
-
-  transform: rotate(-30deg);
-
 }
