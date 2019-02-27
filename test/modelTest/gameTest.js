@@ -262,18 +262,18 @@ describe('Game Class', () => {
       const actual = game.pile;
       chai.assert.deepEqual(actual, expected);
     });
-    it('should increase the numberOfCardsToDraw by 1', function() {
+    it('should increase the cardsToDraw by 1', function() {
       game.throwCard(1234, '6');
       const expected = 2;
-      const actual = game.numberOfCardsToDraw;
+      const actual = game.cardsToDraw;
       chai.assert.deepEqual(actual, expected);
     });
 
-    it('should increase the numberOfCardsToDraw by 2', function() {
-      game.numberOfCardsToDraw = 2;
+    it('should increase the cardsToDraw by 2', function() {
+      game.cardsToDraw = 2;
       game.throwCard(1234, '6');
       const expected = 4;
-      const actual = game.numberOfCardsToDraw;
+      const actual = game.cardsToDraw;
       chai.assert.deepEqual(actual, expected);
     });
 
@@ -432,7 +432,7 @@ describe('Game Class', () => {
 
       const game = new Game(deck, 0, 1234, players, activityLog);
       game.startGame(dummyShuffler);
-      game.numberOfCardsToDraw = 2;
+      game.cardsToDraw = 2;
       game.drawCards(234);
       const actual = game.stack;
 
@@ -441,7 +441,7 @@ describe('Game Class', () => {
         { number: 3, color: 'blue', getColor }
       ];
       chai.assert.deepEqual(actual, expected);
-      chai.assert.deepEqual(game.numberOfCardsToDraw, 1);
+      chai.assert.deepEqual(game.cardsToDraw, 1);
       chai.assert.deepEqual(game.hasDrawnTwo, true);
     });
   });
@@ -545,16 +545,16 @@ describe('Game Class', () => {
   });
 
   describe('haveToDrawMultiple', function() {
-    it('should return true if numberOfCardsToDraw is greater than 1', function() {
+    it('should return true if cardsToDraw is greater than 1', function() {
       let game = new Game([], 2, 1234, {}, {});
-      game.numberOfCardsToDraw = 2;
+      game.cardsToDraw = 2;
       const actual = true;
       const expected = game.haveToDrawMultiple();
       chai.assert.equal(actual, expected);
     });
-    it('should return false if numberOfCardsToDraw is 1', function() {
+    it('should return false if cardsToDraw is 1', function() {
       let game = new Game([], 2, 1234, {}, {});
-      game.numberOfCardsToDraw = 1;
+      game.cardsToDraw = 1;
       const actual = false;
       const expected = game.haveToDrawMultiple();
       chai.assert.equal(actual, expected);

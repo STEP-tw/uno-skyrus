@@ -2,6 +2,15 @@ const getCardId = function(cardId) {
   return +cardId.match(/[0-9]+/)[0];
 };
 
+const canThrow = (playerId, id, isPlayable) => +playerId == id && isPlayable;
+
+const increaseGain = cardsToDraw => {
+  if (cardsToDraw === 1) {
+    return cardsToDraw;
+  }
+  return 2;
+};
+
 class Game {
   constructor(deck, playersCount, gameKey, players, activityLog) {
     this.players = players;
@@ -13,7 +22,7 @@ class Game {
     this.gameKey = gameKey;
     this.status = false;
     this.runningColor = '';
-    this.numberOfCardsToDraw = 1;
+    this.cardsToDraw = 1;
     this.hasDrawnTwo = true;
   }
 
@@ -35,21 +44,20 @@ class Game {
     );
     const name = player.getName();
 
-    if (+playerId == currentPlayer.getId() && isPlayable) {
-      if (thrownCard.isDrawTwo) {
-        let cardsToIncrement = 2;
-        if (this.numberOfCardsToDraw === 1) {
-          cardsToIncrement = 1;
-        }
-        this.hasDrawnTwo = false;
-        this.numberOfCardsToDraw += cardsToIncrement;
-      }
-
-      player.removeCard(cardId);
-      this.pile.push(thrownCard);
-      this.log(name, ' has thrown ', thrownCard.logMessage());
-      this.updatePlayer(thrownCard);
+    if (!canThrow(playerId, currentPlayer.getId(), isPlayable)) {
+      return;
     }
+
+    if (thrownCard.isDrawTwo) {
+      const gain = increaseGain(this.cardsToDraw);
+      this.hasDrawnTwo = false;
+      this.cardsToDraw = this.cardsToDraw + gain;
+    }
+
+    player.removeCard(cardId);
+    this.pile.push(thrownCard);
+    this.log(name, ' has thrown ', thrownCard.logMessage());
+    this.updatePlayer(thrownCard);
   }
 
   log(subject, action, object) {
@@ -84,18 +92,18 @@ class Game {
   drawCards(playerId) {
     const currentPlayer = this.players.getCurrentPlayer();
     if (currentPlayer.id == playerId && currentPlayer.getDrawCardStatus()) {
-      const drawnCards = this.stack.splice(-this.numberOfCardsToDraw);
+      const drawnCards = this.stack.splice(-this.cardsToDraw);
       currentPlayer.addCards(drawnCards);
       currentPlayer.setDrawCardStatus(false);
 
       this.activityLog.addLog(
         currentPlayer.getName(),
         ' has drawn ',
-        this.numberOfCardsToDraw + ' cards'
+        this.cardsToDraw + ' cards'
       );
 
       currentPlayer.setPlayableCards([]);
-      if (this.numberOfCardsToDraw === 1) {
+      if (this.cardsToDraw === 1) {
         if (
           drawnCards[0].canPlayOnTopOf(
             this.getTopDiscard(),
@@ -111,7 +119,7 @@ class Game {
           return [];
         }
       } else {
-        this.numberOfCardsToDraw = 1;
+        this.cardsToDraw = 1;
         this.hasDrawnTwo = true;
         this.getPlayers().changeTurn();
         this.updatePlayableCards();
@@ -121,7 +129,7 @@ class Game {
   }
 
   haveToDrawMultiple() {
-    return this.numberOfCardsToDraw > 1;
+    return this.cardsToDraw > 1;
   }
 
   getPlayerCards(playerId) {
