@@ -164,7 +164,8 @@ input {
   max-height: 140px;
   border: 0px solid rgb(100, 100, 100);
   border-radius: 7px;
-
+  padding: 1px 0.5px;
+  
   display: flex;
   align-items: center;
   justify-content: center;
