@@ -11,9 +11,10 @@
       </header>
       <form method="POST" action="/hostGame" class="table" >
         <div class="host-room">
-          <div class="theme-cards theme-uno-card">
+          <div class="big-theme-card theme-uno-card">
             <div class="theme-uno-card-inner black">
               <div class="theme-uno-design-inner red">
+                <div class="inner-container">
                 <input 
                   type="text"
                   name="hostName"
@@ -22,36 +23,23 @@
                   autocomplete="off"
                   required
                 />
+                <select name="totalPlayers" class="drop-down-menu" required>
+                    <option value="">Players</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                  </select>
+                  <button class="single-btn theme-color">
+                      Host game
+                    </button>
+              </div>
               </div>
             </div>
           </div>
-
-          <div class="theme-cards theme-uno-card">
-            <div class="theme-uno-card-inner black">
-              <div class="theme-uno-design-inner red">
-                <select name="totalPlayers" required>
-                  <option value="">Players</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                  <option value="6">6</option>
-                  <option value="7">7</option>
-                  <option value="8">8</option>
-                </select>
-              </div>
-            </div>
-          </div>
-
-          <button >
-            <div class="theme-cards theme-uno-card">
-              <div class="theme-uno-card-inner black">
-                <div class="theme-uno-design-inner red">
-                  <span class=" theme-color">Host game</span>
-                </div>
-              </div>
-            </div>
-          </button>
         </div>
       </form>
     </main>

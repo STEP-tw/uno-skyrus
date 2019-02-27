@@ -13,46 +13,34 @@
       </header>
       <div class="table">
         <div class="host-room">
-          <div class="theme-cards theme-uno-card">
+          <div class="big-theme-card theme-uno-card">
             <div class="theme-uno-card-inner black">
               <div class="theme-uno-design-inner red">
-                <input
-                  type="text"
-                  class="host-input"
-                  name="playerName"
-                  id="playerName"
-                  placeholder="Name"
-                  maxlength="10"
-                  autocomplete="off"
-                />
-              </div>
-            </div>
-          </div>
-
-          <div class="theme-cards theme-uno-card">
-            <div class="theme-uno-card-inner black">
-              <div class="theme-uno-design-inner red">
-                <input
-                  type="text"
-                  class="host-input"
-                  name="gameKey"
-                  id="gameKey"
-                  placeholder="gameKey"
-                  autocomplete="off"
-                />
-              </div>
-            </div>
-          </div>
-
-          <button id="joinGameButton">
-            <div class="theme-cards theme-uno-card">
-              <div class="theme-uno-card-inner black">
-                <div class="theme-uno-design-inner red         ">
-                  <span class=" theme-color">Join game</span>
+                <div class="inner-container">
+                  <input
+                    type="text"
+                    class="host-input"
+                    name="playerName"
+                    id="playerName"
+                    placeholder="Name"
+                    maxlength="10"
+                    autocomplete="off"
+                  />
+                  <input
+                    type="text"
+                    class="host-input"
+                    name="gameKey"
+                    id="gameKey"
+                    placeholder="gameKey"
+                    autocomplete="off"
+                  />
+                  <button id="joinGameButton" class="single-btn theme-color">
+                    Join game
+                  </button>
                 </div>
               </div>
             </div>
-          </button>
+          </div>
         </div>
       </div>
     </main>

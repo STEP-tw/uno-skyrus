@@ -137,6 +137,7 @@ button {
 .theme-uno-design-inner > span {
   font-family: sans-serif;
   font-weight: 100;
+  text-align: center;
 
   transform: rotate(-30deg);
 }
@@ -228,4 +229,48 @@ input {
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+.big-theme-card{
+  width:330px;
+  height:480px;
+}
+
+.single-btn{
+  cursor: pointer;
+
+  font-family: sans-serif;
+  font-weight: 100;
+
+  text-indent: -10%;
+
+  text-shadow: 0 -1px 1px #fbeb37;
+
+  transform: rotate(-30deg);
+}
+
+.inner-container{
+  height:252px;
+  width:100%;
+
+  display:flex;
+  overflow: hidden;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.drop-down-menu{
+  width: 82%;
+
+  font-size: 29px;
+  font-weight: 100;
+
+  text-indent:40%;
+
+  border-bottom: 2px solid #ffdf00;
+  background: #d33e32;
+  color: #ffdf00;
+
+  transform: rotate(-30deg);
+
 }
