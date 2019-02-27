@@ -236,6 +236,14 @@ describe('Game Class', () => {
           logMessage,
           canPlayOnTopOf,
           getColor: () => 'green'
+        },
+        {
+          symbol: '+2',
+          color: 'green',
+          isDrawTwo: true,
+          logMessage,
+          canPlayOnTopOf,
+          getColor: () => 'green'
         }
       ];
 
@@ -245,13 +253,34 @@ describe('Game Class', () => {
     it('should remove card from player hand and put it on top of pile', () => {
       game.throwCard(1234, '3');
       const actual = game.getPlayerCards(1234);
-      const expected = [deck[2], deck[3], deck[4], deck[6], deck[7], deck[8]];
+      const expected = [deck[3], deck[4], deck[5], deck[7], deck[8], deck[9]];
       chai.assert.deepEqual(actual, expected);
     });
     it('should not remove card from player hand', () => {
       const expected = game.pile;
       game.throwCard(124, '3');
       const actual = game.pile;
+      chai.assert.deepEqual(actual, expected);
+    });
+    it('should increase the numberOfCardsToDraw by 1', function() {
+      game.throwCard(1234, '6');
+      const expected = 2;
+      const actual = game.numberOfCardsToDraw;
+      chai.assert.deepEqual(actual, expected);
+    });
+
+    it('should increase the numberOfCardsToDraw by 2', function() {
+      game.numberOfCardsToDraw = 2;
+      game.throwCard(1234, '6');
+      const expected = 4;
+      const actual = game.numberOfCardsToDraw;
+      chai.assert.deepEqual(actual, expected);
+    });
+
+    it('should change hasDrawn to false', function() {
+      game.throwCard(1234, '6');
+      const expected = false;
+      const actual = game.hasDrawnTwo;
       chai.assert.deepEqual(actual, expected);
     });
   });
@@ -512,6 +541,23 @@ describe('Game Class', () => {
       const expectedOutput = 'red';
       const actualOutput = game.getRunningColor();
       chai.assert.equal(actualOutput, expectedOutput);
+    });
+  });
+
+  describe('haveToDrawMultiple', function() {
+    it('should return true if numberOfCardsToDraw is greater than 1', function() {
+      let game = new Game([], 2, 1234, {}, {});
+      game.numberOfCardsToDraw = 2;
+      const actual = true;
+      const expected = game.haveToDrawMultiple();
+      chai.assert.equal(actual, expected);
+    });
+    it('should return false if numberOfCardsToDraw is 1', function() {
+      let game = new Game([], 2, 1234, {}, {});
+      game.numberOfCardsToDraw = 1;
+      const actual = false;
+      const expected = game.haveToDrawMultiple();
+      chai.assert.equal(actual, expected);
     });
   });
 });
