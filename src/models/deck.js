@@ -1,4 +1,11 @@
-const { NumberedCard, WildCard, DrawTwo, SkipCard } = require('./card');
+const {
+  NumberedCard,
+  WildCard,
+  DrawTwo,
+  SkipCard,
+  ReverseCard
+} = require('./card');
+const REVERSE_SYMBOL = '&#8693';
 
 const addNumberCards = function(colors, cards, number) {
   colors.forEach(color => {
@@ -34,13 +41,27 @@ const createSkipCards = function(symbol) {
   return container.concat(cards, cards);
 };
 
+const createReverseCards = function(symbol) {
+  const container = [];
+  const colors = ['red', 'blue', 'green', 'yellow'];
+  const cards = colors.map(color => new ReverseCard(symbol, color));
+  return container.concat(cards, cards);
+};
+
 const createDeck = function(skipCardSymbol) {
   const deck = [];
   const numberCards = createNumberCards();
   const wildCards = createWildCards();
   const drawTwoCards = createDrawTwoCards();
   const skipCards = createSkipCards(skipCardSymbol);
-  return deck.concat(numberCards, wildCards, drawTwoCards, skipCards);
+  const reverseCards = createReverseCards(REVERSE_SYMBOL);
+  return deck.concat(
+    numberCards,
+    wildCards,
+    drawTwoCards,
+    skipCards,
+    reverseCards
+  );
 };
 
 module.exports = { createDeck };

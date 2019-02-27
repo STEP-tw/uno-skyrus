@@ -8,14 +8,15 @@ class NumberedCard extends Card {
   }
 
   canPlayOnTopOf(otherCard, runningColor, hasDrawnTwo) {
-    if (otherCard.isSkipCard || !otherCard.isDrawTwo || hasDrawnTwo) {
-      return runningColor == this.color || otherCard.number == this.number;
-    }
-    return false;
+    return (
+      hasDrawnTwo &&
+      (runningColor == this.color || otherCard.number == this.number)
+    );
   }
 
   action(currentPlayerIndex) {
-    return ++currentPlayerIndex;
+    ++currentPlayerIndex;
+    return { updatedIndex: currentPlayerIndex };
   }
 
   getColor() {
@@ -36,11 +37,11 @@ class WildCard extends Card {
 
   action(currentPlayerIndex) {
     this.isColorDeclared = false;
-    return currentPlayerIndex;
+    return { updatedIndex: currentPlayerIndex };
   }
 
-  canPlayOnTopOf() {
-    return true;
+  canPlayOnTopOf(topDiscard, runningColor, hasDrawnTwo) {
+    return hasDrawnTwo;
   }
 
   logMessage() {
@@ -61,11 +62,12 @@ class DrawTwo extends Card {
   }
 
   action(currentPlayerIndex) {
-    return ++currentPlayerIndex;
+    ++currentPlayerIndex;
+    return { updatedIndex: currentPlayerIndex };
   }
 
   canPlayOnTopOf(otherCard, runningColor) {
-    return runningColor == this.color || otherCard.symbol === this.symbol;
+    return runningColor == this.color || otherCard.symbol == this.symbol;
   }
 
   getColor() {
@@ -86,11 +88,12 @@ class SkipCard extends Card {
   }
 
   action(currentPlayerIndex) {
-    return currentPlayerIndex + 2;
+    currentPlayerIndex += 2;
+    return { updatedIndex: currentPlayerIndex };
   }
 
-  canPlayOnTopOf(topDiscard, runningColor) {
-    return runningColor == this.color || topDiscard.isSkipCard === true;
+  canPlayOnTopOf(topDiscard, runningColor, hasDrawnTwo) {
+    return hasDrawnTwo && (runningColor == this.color || topDiscard.isSkipCard);
   }
 
   logMessage() {
@@ -102,4 +105,33 @@ class SkipCard extends Card {
   }
 }
 
-module.exports = { NumberedCard, WildCard, SkipCard, DrawTwo };
+class ReverseCard extends Card {
+  constructor(symbol, color) {
+    super();
+    this.symbol = symbol;
+    this.color = color;
+    this.isReverseCard = true;
+  }
+
+  getColor() {
+    return this.color;
+  }
+
+  action(currentPlayerIndex, players) {
+    players = players.reverse();
+    const updatedIndex = 1 + currentPlayerIndex;
+    return { players, updatedIndex };
+  }
+
+  logMessage() {
+    return `Reverse ${this.color}`;
+  }
+
+  canPlayOnTopOf(topDiscard, runningColor, hasDrawnTwo) {
+    const status =
+      hasDrawnTwo && (runningColor == this.color || topDiscard.isReverseCard);
+    return status;
+  }
+}
+
+module.exports = { NumberedCard, WildCard, SkipCard, DrawTwo, ReverseCard };

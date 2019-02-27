@@ -94,7 +94,7 @@ describe('setCurrentPlayer', function() {
     };
     const thrownCard = {
       action: currentPlayerIndex => {
-        return ++currentPlayerIndex;
+        return { updatedIndex: ++currentPlayerIndex };
       }
     };
 
@@ -105,7 +105,41 @@ describe('setCurrentPlayer', function() {
       setDrawCardStatus: () => {}
     };
     const players = new Players(hostPlayer);
-    players.currentPlayer = player;
+    players.currentPlayerIndex = 0;
+    players.addPlayer(player);
+    players.addPlayer(player);
+    players.setCurrentPlayer();
+    players.updateCurrentPlayer(thrownCard);
+    const actualOutput = players.getCurrentPlayer();
+    const expectedOutput = player;
+    chai.assert.deepEqual(expectedOutput, actualOutput);
+  });
+
+  it('should update the players array which consist of turn', function() {
+    const player = {
+      name: 'Rahul',
+      id: 1212,
+      cards: [],
+      setDrawCardStatus: () => {}
+    };
+    const thrownCard = {
+      action: currentPlayerIndex => {
+        return {
+          updatedIndex: ++currentPlayerIndex,
+          players: [player, hostPlayer]
+        };
+      }
+    };
+
+    const hostPlayer = {
+      name: 'Aftab',
+      cards: [],
+      id: 1234,
+      setDrawCardStatus: () => {}
+    };
+    const players = new Players(hostPlayer);
+    players.currentPlayerIndex = 0;
+    players.addPlayer(player);
     players.addPlayer(player);
     players.setCurrentPlayer();
     players.updateCurrentPlayer(thrownCard);

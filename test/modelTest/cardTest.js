@@ -2,7 +2,8 @@ const {
   SkipCard,
   WildCard,
   NumberedCard,
-  DrawTwo
+  DrawTwo,
+  ReverseCard
 } = require('./../../src/models/card');
 const chai = require('chai');
 
@@ -85,7 +86,7 @@ describe('NumberedCard', function() {
       const card = new NumberedCard(4, 'red');
       const currentPlayerIndex = 0;
       const actualOutput = card.action(currentPlayerIndex);
-      const expectedOutput = 1;
+      const expectedOutput = { updatedIndex: 1 };
       chai.assert.deepEqual(actualOutput, expectedOutput);
     });
   });
@@ -99,8 +100,8 @@ describe('NumberedCard', function() {
     });
   });
 
-  describe('logMessage', function() {
-    it('should return the log message', function() {
+  describe('Util', function() {
+    it('should give the color', function() {
       const card = new NumberedCard(4, 'red');
       const actualOutput = card.getColor();
       const expectedOutput = 'red';
@@ -111,9 +112,30 @@ describe('NumberedCard', function() {
 
 describe('WildCard', function() {
   describe('canPlayOnTopOf', function() {
-    it('should return true for each call', function() {
+    it('should return false when hasDrawnTwo status is false', function() {
+      const otherCard = {};
+      const runningColor = 'red';
+      const hasDrawnTwo = false;
       const card = new WildCard();
-      const actualOutput = card.canPlayOnTopOf();
+      const actualOutput = card.canPlayOnTopOf(
+        otherCard,
+        runningColor,
+        hasDrawnTwo
+      );
+      const expectedOutput = false;
+      chai.assert.deepEqual(actualOutput, expectedOutput);
+    });
+
+    it('should return true when hasDrawnTwo status is true', function() {
+      const otherCard = {};
+      const runningColor = 'red';
+      const hasDrawnTwo = true;
+      const card = new WildCard();
+      const actualOutput = card.canPlayOnTopOf(
+        otherCard,
+        runningColor,
+        hasDrawnTwo
+      );
       const expectedOutput = true;
       chai.assert.deepEqual(actualOutput, expectedOutput);
     });
@@ -134,7 +156,7 @@ describe('WildCard', function() {
       const card = new WildCard();
       const currentPlayerIndex = 0;
       const actualOutput = card.action(currentPlayerIndex);
-      const expectedOutput = 0;
+      const expectedOutput = { updatedIndex: 0 };
       chai.assert.deepEqual(actualOutput, expectedOutput);
     });
   });
@@ -186,7 +208,7 @@ describe('DrawTwoCard', function() {
       const card = new DrawTwo('red');
       const currentPlayerIndex = 0;
       const actualOutput = card.action(currentPlayerIndex);
-      const expectedOutput = 1;
+      const expectedOutput = { updatedIndex: 1 };
       chai.assert.deepEqual(actualOutput, expectedOutput);
     });
   });
@@ -195,6 +217,15 @@ describe('DrawTwoCard', function() {
       const card = new DrawTwo('blue');
       const actualOutput = card.logMessage();
       const expectedOutput = '+2 blue';
+      chai.assert.deepEqual(actualOutput, expectedOutput);
+    });
+  });
+
+  describe('Utils', function() {
+    it('should give the color', function() {
+      const card = new DrawTwo('blue');
+      const actualOutput = card.getColor();
+      const expectedOutput = 'blue';
       chai.assert.deepEqual(actualOutput, expectedOutput);
     });
   });
@@ -211,22 +242,41 @@ describe('SkipCard', function() {
 
   describe('canPlayOnTopOf', function() {
     it('should return true for a matching color regardless of the symbol', function() {
-      const topDiscard = { number: 7, color: 'red' };
-      const actualOutput = card.canPlayOnTopOf(topDiscard, 'red');
+      const topDiscard = { number: 7, color: 'red', isSkipCard: false };
+      const hasDrawnTwo = true;
+      const actualOutput = card.canPlayOnTopOf(topDiscard, 'red', hasDrawnTwo);
       const expectedOutput = true;
       chai.assert.equal(actualOutput, expectedOutput);
     });
 
     it('should return false for a non-matching color and symbol', function() {
-      const topDiscard = { number: 7, color: 'green' };
-      const actualOutput = card.canPlayOnTopOf(topDiscard, 'green');
+      const topDiscard = {
+        number: 7,
+        color: 'green',
+        isSkipCard: false
+      };
+      const hasDrawnTwo = true;
+      const actualOutput = card.canPlayOnTopOf(
+        topDiscard,
+        'green',
+        hasDrawnTwo
+      );
+
       const expectedOutput = false;
       chai.assert.equal(actualOutput, expectedOutput);
     });
 
     it('should return true for a matching symbol regardless of the color', function() {
-      const topDiscard = { isSkipCard: true, color: 'green' };
-      const actualOutput = card.canPlayOnTopOf(topDiscard, 'green');
+      const topDiscard = {
+        isSkipCard: true,
+        color: 'green'
+      };
+      const hasDrawnTwo = true;
+      const actualOutput = card.canPlayOnTopOf(
+        topDiscard,
+        'green',
+        hasDrawnTwo
+      );
       const expectedOutput = true;
       chai.assert.equal(actualOutput, expectedOutput);
     });
@@ -244,8 +294,94 @@ describe('SkipCard', function() {
     it('should update current player index by 2', function() {
       const currentPlayerIndex = 0;
       const actualOutput = card.action(currentPlayerIndex);
-      const expectedOutput = 2;
+      const expectedOutput = { updatedIndex: 2 };
+      chai.assert.deepEqual(actualOutput, expectedOutput);
+    });
+  });
+  describe('Utils', function() {
+    it('should give the color', function() {
+      const card = new SkipCard('skip', 'blue');
+      const actualOutput = card.getColor();
+      const expectedOutput = 'blue';
+      chai.assert.deepEqual(actualOutput, expectedOutput);
+    });
+  });
+});
+describe('ReverseCard', function() {
+  let card;
+
+  beforeEach(function() {
+    const symbol = 'REVERSE';
+    const color = 'red';
+    card = new ReverseCard(symbol, color);
+  });
+
+  describe('canPlayOnTopOf', function() {
+    it('should return true for a matching color regardless of the symbol', function() {
+      const topDiscard = { number: 7, color: 'red', isReverseCard: false };
+      const hasDrawnTwo = true;
+      const actualOutput = card.canPlayOnTopOf(topDiscard, 'red', hasDrawnTwo);
+      const expectedOutput = true;
       chai.assert.equal(actualOutput, expectedOutput);
+    });
+
+    it('should return false for a non-matching color and symbol', function() {
+      const topDiscard = {
+        number: 7,
+        color: 'green',
+        isReverseCard: false
+      };
+      const hasDrawnTwo = true;
+      const actualOutput = card.canPlayOnTopOf(
+        topDiscard,
+        'green',
+        hasDrawnTwo
+      );
+
+      const expectedOutput = false;
+      chai.assert.equal(actualOutput, expectedOutput);
+    });
+
+    it('should return true for a matching symbol regardless of the color', function() {
+      const topDiscard = {
+        isReverseCard: true,
+        color: 'green'
+      };
+      const hasDrawnTwo = true;
+      const actualOutput = card.canPlayOnTopOf(
+        topDiscard,
+        'green',
+        hasDrawnTwo
+      );
+      const expectedOutput = true;
+      chai.assert.equal(actualOutput, expectedOutput);
+    });
+  });
+
+  describe('logMessage', function() {
+    it('should return the log message', function() {
+      const actualOutput = card.logMessage();
+      const expectedOutput = 'Reverse red';
+      chai.assert.deepEqual(actualOutput, expectedOutput);
+    });
+  });
+
+  describe('action', function() {
+    it('should update current player index by 2', function() {
+      const currentPlayerIndex = 0;
+      const players = [1, 2];
+      const actualOutput = card.action(currentPlayerIndex, players);
+      const expectedOutput = { players: [2, 1], updatedIndex: 1 };
+      chai.assert.deepEqual(actualOutput, expectedOutput);
+    });
+  });
+
+  describe('Utils', function() {
+    it('should give the color', function() {
+      const card = new ReverseCard('reverse', 'blue');
+      const actualOutput = card.getColor();
+      const expectedOutput = 'blue';
+      chai.assert.deepEqual(actualOutput, expectedOutput);
     });
   });
 });
