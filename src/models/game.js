@@ -104,14 +104,16 @@ class Game {
 
     const playerName = currentPlayer.getName();
     const action = ' has drawn ';
-    const subject = this.cardsToDraw + ' cards';
+    let subject = 'a card';
     const drawnCards = this.stack.splice(-this.cardsToDraw);
     currentPlayer.addCards(drawnCards);
     currentPlayer.setDrawCardStatus(false);
-    this.activityLog.addLog(playerName, action, subject);
+
     currentPlayer.setPlayableCards([]);
 
-    if (!(this.cardsToDraw === 1)) {
+    if (this.cardsToDraw != 1) {
+      subject = this.cardsToDraw + ' cards';
+      this.activityLog.addLog(playerName, action, subject);
       this.cardsToDraw = 1;
       this.hasDrawnTwo = true;
       this.getPlayers().changeTurn();
@@ -124,10 +126,12 @@ class Game {
       this.hasDrawnTwo
     );
 
+    this.activityLog.addLog(playerName, action, subject);
     if (isPlayable) {
       currentPlayer.setPlayableCards(drawnCards);
       return drawnCards;
     }
+
     this.getPlayers().changeTurn();
     this.updatePlayableCards();
     return [];
