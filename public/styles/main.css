@@ -187,6 +187,7 @@ input {
 .invalid-input {
   color: red;
   font-size: 25px;
+  font-weight: 100;
 }
 
 /* colors */
@@ -231,7 +232,7 @@ input {
 
 .big-theme-card{
   width:400px;
-  height:600px;
+  height:550px;
 }
 
 .single-btn{
