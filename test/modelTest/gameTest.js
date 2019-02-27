@@ -292,6 +292,8 @@ describe('Game Class', () => {
         calculatePlayableCards: () => {},
         addCards: () => {},
         getId: () => 234,
+        getName: () => 'Aftab',
+        getDrawCardStatus: () => true,
         id: 234
       };
       const players = {

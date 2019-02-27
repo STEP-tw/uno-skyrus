@@ -2,7 +2,11 @@ const getCardId = function(cardId) {
   return +cardId.match(/[0-9]+/)[0];
 };
 
-const canThrow = (playerId, id, isPlayable) => +playerId == id && isPlayable;
+const canNotThrow = (playerId, id, isThrowable) =>
+  !(+playerId == id && isThrowable);
+
+const canNotDraw = (playerId, id, drawCardStatus) =>
+  !(+playerId == id && drawCardStatus);
 
 const increaseGain = cardsToDraw => {
   if (cardsToDraw === 1) {
@@ -37,14 +41,14 @@ class Game {
     const playerCards = player.getCards();
     const thrownCard = playerCards[cardId];
     this.runningColor = thrownCard.color;
-    const isPlayable = thrownCard.canPlayOnTopOf(
+    const isThrowable = thrownCard.canPlayOnTopOf(
       this.getTopDiscard(),
       this.runningColor,
       this.hasDrawnTwo
     );
     const name = player.getName();
 
-    if (!canThrow(playerId, currentPlayer.getId(), isPlayable)) {
+    if (canNotThrow(playerId, currentPlayer.getId(), isThrowable)) {
       return;
     }
 
@@ -91,41 +95,42 @@ class Game {
 
   drawCards(playerId) {
     const currentPlayer = this.players.getCurrentPlayer();
-    if (currentPlayer.id == playerId && currentPlayer.getDrawCardStatus()) {
-      const drawnCards = this.stack.splice(-this.cardsToDraw);
-      currentPlayer.addCards(drawnCards);
-      currentPlayer.setDrawCardStatus(false);
+    const currentPlayerId = currentPlayer.getId();
+    const drawCardStatus = currentPlayer.getDrawCardStatus();
 
-      this.activityLog.addLog(
-        currentPlayer.getName(),
-        ' has drawn ',
-        this.cardsToDraw + ' cards'
-      );
-
-      currentPlayer.setPlayableCards([]);
-      if (this.cardsToDraw === 1) {
-        if (
-          drawnCards[0].canPlayOnTopOf(
-            this.getTopDiscard(),
-            this.runningColor,
-            this.hasDrawnTwo
-          )
-        ) {
-          currentPlayer.setPlayableCards(drawnCards);
-          return drawnCards;
-        } else {
-          this.getPlayers().changeTurn();
-          this.updatePlayableCards();
-          return [];
-        }
-      } else {
-        this.cardsToDraw = 1;
-        this.hasDrawnTwo = true;
-        this.getPlayers().changeTurn();
-        this.updatePlayableCards();
-        return [];
-      }
+    if (canNotDraw(playerId, currentPlayerId, drawCardStatus)) {
+      return;
     }
+
+    const playerName = currentPlayer.getName();
+    const action = ' has drawn ';
+    const subject = this.cardsToDraw + ' cards';
+    const drawnCards = this.stack.splice(-this.cardsToDraw);
+    currentPlayer.addCards(drawnCards);
+    currentPlayer.setDrawCardStatus(false);
+    this.activityLog.addLog(playerName, action, subject);
+    currentPlayer.setPlayableCards([]);
+
+    if (!(this.cardsToDraw === 1)) {
+      this.cardsToDraw = 1;
+      this.hasDrawnTwo = true;
+      this.getPlayers().changeTurn();
+      this.updatePlayableCards();
+      return [];
+    }
+    const isPlayable = drawnCards[0].canPlayOnTopOf(
+      this.getTopDiscard(),
+      this.runningColor,
+      this.hasDrawnTwo
+    );
+
+    if (isPlayable) {
+      currentPlayer.setPlayableCards(drawnCards);
+      return drawnCards;
+    }
+    this.getPlayers().changeTurn();
+    this.updatePlayableCards();
+    return [];
   }
 
   haveToDrawMultiple() {
