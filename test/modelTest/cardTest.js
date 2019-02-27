@@ -204,7 +204,9 @@ describe('SkipCard', function() {
   let card;
 
   beforeEach(function() {
-    card = new SkipCard('red');
+    const symbol = 'SKIP';
+    const color = 'red';
+    card = new SkipCard(symbol, color);
   });
 
   describe('canPlayOnTopOf', function() {
@@ -223,7 +225,7 @@ describe('SkipCard', function() {
     });
 
     it('should return true for a matching symbol regardless of the color', function() {
-      const topDiscard = { symbol: 'skip', color: 'green' };
+      const topDiscard = { isSkipCard: true, color: 'green' };
       const actualOutput = card.canPlayOnTopOf(topDiscard, 'green');
       const expectedOutput = true;
       chai.assert.equal(actualOutput, expectedOutput);
@@ -233,7 +235,7 @@ describe('SkipCard', function() {
   describe('logMessage', function() {
     it('should return the log message', function() {
       const actualOutput = card.logMessage();
-      const expectedOutput = 'skip red';
+      const expectedOutput = 'Skip red';
       chai.assert.deepEqual(actualOutput, expectedOutput);
     });
   });

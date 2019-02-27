@@ -27,19 +27,19 @@ const createNumberCards = function() {
   return numbers.reduce(addNumberCards.bind(null, colors), []);
 };
 
-const createSkipCards = function() {
+const createSkipCards = function(symbol) {
   const container = [];
   const colors = ['red', 'blue', 'green', 'yellow'];
-  const cards = colors.map(color => new SkipCard(color));
+  const cards = colors.map(color => new SkipCard(symbol, color));
   return container.concat(cards, cards);
 };
 
-const createDeck = function() {
+const createDeck = function(skipCardSymbol) {
   const deck = [];
   const numberCards = createNumberCards();
   const wildCards = createWildCards();
   const drawTwoCards = createDrawTwoCards();
-  const skipCards = createSkipCards();
+  const skipCards = createSkipCards(skipCardSymbol);
   return deck.concat(numberCards, wildCards, drawTwoCards, skipCards);
 };
 

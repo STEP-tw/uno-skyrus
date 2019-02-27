@@ -211,11 +211,12 @@ describe('player Status', function() {
       '1234': {
         getPlayers: () => {
           return { getNumberOfPlayers: sinon.stub().returns(1) };
+          
         },
 
         getPlayersCount: sinon.stub().returns(1),
         startGame: () => {},
-        hasStarted: () => true
+        hasStarted: () => true,
       },
 
       '5678': {

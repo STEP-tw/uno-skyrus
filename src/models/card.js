@@ -8,7 +8,7 @@ class NumberedCard extends Card {
   }
 
   canPlayOnTopOf(otherCard, runningColor, hasDrawnTwo) {
-    if (!otherCard.isDrawTwo || hasDrawnTwo) {
+    if (otherCard.isSkipCard || !otherCard.isDrawTwo || hasDrawnTwo) {
       return runningColor == this.color || otherCard.number == this.number;
     }
     return false;
@@ -50,7 +50,6 @@ class WildCard extends Card {
   setColorAsDeclared() {
     this.isColorDeclared = true;
   }
-
 }
 
 class DrawTwo extends Card {
@@ -69,17 +68,21 @@ class DrawTwo extends Card {
     return runningColor == this.color || otherCard.symbol === this.symbol;
   }
 
+  getColor() {
+    return this.color;
+  }
+
   logMessage() {
     return this.symbol + ' ' + this.color;
   }
 }
 
 class SkipCard extends Card {
-  constructor(color) {
+  constructor(symbol, color) {
     super();
     this.color = color;
     this.isSkipCard = true;
-    this.symbol = 'skip';
+    this.symbol = symbol;
   }
 
   action(currentPlayerIndex) {
@@ -87,11 +90,15 @@ class SkipCard extends Card {
   }
 
   canPlayOnTopOf(topDiscard, runningColor) {
-    return runningColor == this.color || topDiscard.symbol == this.symbol;
+    return runningColor == this.color || topDiscard.isSkipCard === true;
   }
 
   logMessage() {
-    return `${this.symbol} ${this.color}`;
+    return `Skip ${this.color}`;
+  }
+
+  getColor() {
+    return this.color;
   }
 }
 

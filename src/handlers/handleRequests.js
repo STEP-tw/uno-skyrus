@@ -7,9 +7,9 @@ const { createDeck } = require('../models/deck');
 const { Players } = require('../models/players.js');
 const ld = require('lodash');
 const { ActivityLog } = require('./../models/activityLog');
-const { modifySymbol, modifySymbols } = require('../utils/util.js');
 
 const LOBBY = fs.readFileSync('./public/lobby.html', 'utf8');
+const SYMBOLS = { skipCard: '&#8856;' };
 
 const hostGame = function(req, res) {
   const gameKey = generateGameKey();
@@ -17,7 +17,7 @@ const hostGame = function(req, res) {
   const id = generateGameKey();
   const host = new Player(hostName, id);
   const players = new Players(host);
-  const deck = createDeck();
+  const deck = createDeck(SYMBOLS.skipCard);
   const activityLog = new ActivityLog(gameKey, hostName);
   const game = new Game(deck, totalPlayers, gameKey, players, activityLog);
 
@@ -56,7 +56,7 @@ const joinGame = function(req, res) {
 const servePlayerCards = function(req, res) {
   const { gameKey, id } = req.cookies;
   const game = req.app.games.getGame(gameKey);
-  let cards = game.getPlayerCards(+id);
+  const cards = game.getPlayerCards(+id);
   const player = game.getPlayers().getPlayer(id);
   let playableCards = [];
 
@@ -67,10 +67,8 @@ const servePlayerCards = function(req, res) {
       .getId() == id
   ) {
     playableCards = player.getPlayableCards();
+    // console.log('playable cards***************', playableCards);
   }
-
-  cards = modifySymbols(cards);
-  playableCards = modifySymbols(playableCards);
   res.send({ cards, playableCards });
 };
 
@@ -189,7 +187,7 @@ const serveGameLog = function(game) {
 
 const getTopDiscard = function(game) {
   const topDiscard = game.getTopDiscard();
-  return modifySymbol(topDiscard);
+  return topDiscard;
 };
 
 const getRunningColor = function(game) {
@@ -213,6 +211,7 @@ const updateRunningColor = function(req, res) {
   const { gameKey, id } = req.cookies;
   const game = res.app.games.getGame(gameKey);
   game.updateRunningColor(id, declaredColor);
+
   res.end();
 };
 

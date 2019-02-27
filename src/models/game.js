@@ -62,15 +62,13 @@ class Game {
   }
 
   updatePlayableCards() {
-    this.players
-      .getPlayers()
-      .forEach(player =>
-        player.calculatePlayableCards(
-          this.getTopDiscard(),
-          this.getRunningColor(),
-          this.hasDrawnTwo
-        )
+    this.players.getPlayers().forEach(player => {
+      player.calculatePlayableCards(
+        this.getTopDiscard(),
+        this.getRunningColor(),
+        this.hasDrawnTwo
       );
+    });
   }
 
   startGame(shuffle) {

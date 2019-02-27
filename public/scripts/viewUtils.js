@@ -121,7 +121,7 @@ const createActionCards = function(document, card, cardId) {
   const numberRight = document.createElement('div');
   numberRight.className = 'number-right';
   numberRight.innerHTML = card.symbol;
-
+ 
   cardInner.appendChild(designInner);
   unoCard.appendChild(numberLeft);
   unoCard.appendChild(cardInner);

@@ -32,7 +32,6 @@ const drawCard = function(document) {
     })
     .then(cardDetails => {
       initializeHand(document, cardDetails);
-
       if (cardDetails.playableCards.length) {
         displayPass(document);
         return;
@@ -82,6 +81,7 @@ const initializeHand = function(document, { cards, playableCards }) {
   hand.innerHTML = '';
   cards.forEach((card, cardId) => {
     let cardView = createCard(document, card, cardId);
+    // console.log(playableCards);
     const styledCard = setCardAttributes(cardView, playableCards, card);
     hand.append(styledCard);
   });
