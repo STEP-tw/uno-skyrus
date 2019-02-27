@@ -56,9 +56,7 @@ button {
   color: #ed896b;
 }
 
-::selection {
-  background: transparent;
-}
+
 /* HomePage ,Join Page and Host Page Styles */
 
 .table {

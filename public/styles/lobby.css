@@ -1,4 +1,7 @@
 /* Lobby general styles */
+::selection {
+  background: transparent;
+}
 
 .lobby {
   display: flex;

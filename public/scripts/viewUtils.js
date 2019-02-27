@@ -3,10 +3,7 @@ const createCard = function(document, card, cardId) {
   if (card.isWildCard) {
     return createWildCard(document, cardId);
   }
-  if (card.isDrawTwo) {
-    return createActionCards(document, card, cardId);
-  }
-  if (card.isSkipCard) {
+  if (card.isDrawTwo || card.isReverseCard || card.isSkipCard) {
     return createActionCards(document, card, cardId);
   }
   return createNumberedCard(document, card, cardId);
@@ -26,7 +23,7 @@ const createNumberedCard = function(document, card, cardId) {
 
   const designInner = document.createElement('div');
   designInner.className = 'theme-uno-design-inner white';
-  
+
   cardInner.classList.add(card.color);
 
   const numberSpan = document.createElement('span');
@@ -121,7 +118,7 @@ const createActionCards = function(document, card, cardId) {
   const numberRight = document.createElement('div');
   numberRight.className = 'number-right';
   numberRight.innerHTML = card.symbol;
- 
+
   cardInner.appendChild(designInner);
   unoCard.appendChild(numberLeft);
   unoCard.appendChild(cardInner);
