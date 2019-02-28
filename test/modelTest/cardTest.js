@@ -85,7 +85,7 @@ describe('NumberedCard', function() {
     it('should update current player index by 1', function() {
       const card = new NumberedCard(4, 'red');
       const currentPlayerIndex = 0;
-      const actualOutput = card.action(currentPlayerIndex);
+      const actualOutput = card.action(1, currentPlayerIndex);
       const expectedOutput = { updatedIndex: 1 };
       chai.assert.deepEqual(actualOutput, expectedOutput);
     });
@@ -155,7 +155,7 @@ describe('WildCard', function() {
     it('should not  update current player index', function() {
       const card = new WildCard();
       const currentPlayerIndex = 0;
-      const actualOutput = card.action(currentPlayerIndex);
+      const actualOutput = card.action(1, currentPlayerIndex);
       const expectedOutput = { updatedIndex: 0 };
       chai.assert.deepEqual(actualOutput, expectedOutput);
     });
@@ -207,7 +207,7 @@ describe('DrawTwoCard', function() {
     it('should update current player index by 1', function() {
       const card = new DrawTwo('red');
       const currentPlayerIndex = 0;
-      const actualOutput = card.action(currentPlayerIndex);
+      const actualOutput = card.action(1, currentPlayerIndex);
       const expectedOutput = { updatedIndex: 1 };
       chai.assert.deepEqual(actualOutput, expectedOutput);
     });
@@ -293,7 +293,7 @@ describe('SkipCard', function() {
   describe('action', function() {
     it('should update current player index by 2', function() {
       const currentPlayerIndex = 0;
-      const actualOutput = card.action(currentPlayerIndex);
+      const actualOutput = card.action(1, currentPlayerIndex);
       const expectedOutput = { updatedIndex: 2 };
       chai.assert.deepEqual(actualOutput, expectedOutput);
     });
@@ -369,9 +369,8 @@ describe('ReverseCard', function() {
   describe('action', function() {
     it('should update current player index by 2', function() {
       const currentPlayerIndex = 0;
-      const players = [1, 2];
-      const actualOutput = card.action(currentPlayerIndex, players);
-      const expectedOutput = { players: [2, 1], updatedIndex: 1 };
+      const actualOutput = card.action(1, currentPlayerIndex);
+      const expectedOutput = { turnDirection: -1, updatedIndex: -1 };
       chai.assert.deepEqual(actualOutput, expectedOutput);
     });
   });

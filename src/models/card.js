@@ -14,8 +14,8 @@ class NumberedCard extends Card {
     );
   }
 
-  action(currentPlayerIndex) {
-    ++currentPlayerIndex;
+  action(turnDirection, currentPlayerIndex) {
+    currentPlayerIndex += turnDirection;
     return { updatedIndex: currentPlayerIndex };
   }
 
@@ -35,7 +35,7 @@ class WildCard extends Card {
     this.isColorDeclared = false;
   }
 
-  action(currentPlayerIndex) {
+  action(turnDirection, currentPlayerIndex) {
     this.isColorDeclared = false;
     return { updatedIndex: currentPlayerIndex };
   }
@@ -61,8 +61,8 @@ class DrawTwo extends Card {
     this.isDrawTwo = true;
   }
 
-  action(currentPlayerIndex) {
-    ++currentPlayerIndex;
+  action(turnDirection, currentPlayerIndex) {
+    currentPlayerIndex += turnDirection;
     return { updatedIndex: currentPlayerIndex };
   }
 
@@ -87,8 +87,8 @@ class SkipCard extends Card {
     this.symbol = symbol;
   }
 
-  action(currentPlayerIndex) {
-    currentPlayerIndex += 2;
+  action(turnDirection, currentPlayerIndex) {
+    currentPlayerIndex += 2 * turnDirection;
     return { updatedIndex: currentPlayerIndex };
   }
 
@@ -117,10 +117,10 @@ class ReverseCard extends Card {
     return this.color;
   }
 
-  action(currentPlayerIndex, players) {
-    players = players.reverse();
-    const updatedIndex = 1 + currentPlayerIndex;
-    return { players, updatedIndex };
+  action(turnDirection, currentPlayerIndex) {
+    turnDirection = -turnDirection;
+    const updatedIndex = turnDirection + currentPlayerIndex;
+    return { turnDirection, updatedIndex };
   }
 
   logMessage() {

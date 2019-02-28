@@ -4,6 +4,7 @@ class Players {
     this.players = [hostPlayer];
     this.currentPlayer = {};
     this.currentPlayerIndex = 1;
+    this.turnDirection = 1;
   }
   getCurrentPlayer() {
     return this.currentPlayer;
@@ -29,11 +30,14 @@ class Players {
   }
 
   setCurrentPlayer() {
+    if (this.currentPlayerIndex < 0) {
+      this.currentPlayerIndex += this.getNumberOfPlayers();
+    }
     this.currentPlayer = this.players[this.currentPlayerIndex];
   }
 
   changeTurn() {
-    this.currentPlayerIndex += 1;
+    this.currentPlayerIndex += this.turnDirection;
     this.currentPlayerIndex =
       this.currentPlayerIndex % this.getNumberOfPlayers();
     this.setCurrentPlayer();
@@ -41,12 +45,12 @@ class Players {
   }
 
   updateCurrentPlayer(thrownCard) {
-    const { updatedIndex, players } = thrownCard.action(
-      this.currentPlayerIndex,
-      this.players
+    const { updatedIndex, turnDirection } = thrownCard.action(
+      this.turnDirection,
+      this.currentPlayerIndex
     );
-    if (players) {
-      this.players = players;
+    if (turnDirection) {
+      this.turnDirection = turnDirection;
     }
 
     this.currentPlayerIndex = updatedIndex % this.getNumberOfPlayers();
