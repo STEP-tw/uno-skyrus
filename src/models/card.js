@@ -134,4 +134,39 @@ class ReverseCard extends Card {
   }
 }
 
-module.exports = { NumberedCard, WildCard, SkipCard, DrawTwo, ReverseCard };
+class WildDrawFour extends Card {
+  constructor() {
+    super();
+    this.symbol = '+4';
+    this.isDrawFour = true;
+    this.isWildCard = true;
+    this.isColorDeclared = false;
+  }
+
+  action(currentPlayerIndex) {
+    this.isColorDeclared = false;
+    currentPlayerIndex += 1;
+    return { updatedIndex: currentPlayerIndex };
+  }
+
+  canPlayOnTopOf(topDiscard, runningColor, hasDrawnTwo, playableCards) {
+    return hasDrawnTwo && !playableCards.length;
+  }
+
+  logMessage() {
+    return 'Wild Draw Four';
+  }
+
+  setColorAsDeclared() {
+    this.isColorDeclared = true;
+  }
+}
+
+module.exports = {
+  NumberedCard,
+  WildCard,
+  SkipCard,
+  DrawTwo,
+  ReverseCard,
+  WildDrawFour
+};
