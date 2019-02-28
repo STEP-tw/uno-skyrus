@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const { generateGameKey } = require('../utils/util.js');
+const { generateGameKey, writeData } = require('../utils/util.js');
 const { Player } = require('../models/player');
 const { Game } = require('../models/game');
 const { createDeck } = require('../models/deck');
@@ -67,7 +67,6 @@ const servePlayerCards = function(req, res) {
       .getId() == id
   ) {
     playableCards = player.getPlayableCards();
-    // console.log('playable cards***************', playableCards);
   }
   res.send({ cards, playableCards });
 };
@@ -215,6 +214,13 @@ const updateRunningColor = function(req, res) {
   res.end();
 };
 
+const saveGame = function(req, res) {
+  const { gameKey } = req.cookies;
+  const games = res.app.games;
+  games.saveGame(writeData.bind(null, fs), gameKey);
+  res.end();
+};
+
 module.exports = {
   hostGame,
   validateGameKey,
@@ -228,5 +234,6 @@ module.exports = {
   serveGameStatus,
   renderGamePage,
   passTurn,
-  updateRunningColor
+  updateRunningColor,
+  saveGame
 };

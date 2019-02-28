@@ -14,6 +14,9 @@ class Games {
   getGame(gameKey) {
     return this.games.find(game => game.getKey() == gameKey);
   }
+  saveGame(writeData, gameKey) {
+    writeData(gameKey, this.getGame(gameKey));
+  }
 }
 
 module.exports = { Games };

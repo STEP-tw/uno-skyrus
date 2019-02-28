@@ -41,3 +41,15 @@ describe('games', function() {
     chai.assert.deepEqual(actual, expected);
   });
 });
+
+describe('saveGame', function() {
+  it('should call writeData method with proper arguments', function() {
+    const games = new Games();
+    const game = { getKey: () => '1234' };
+    games.addGame(game);
+    const writeData = function(gameKey) {
+      chai.assert.equal(gameKey, '1234');
+    };
+    games.saveGame(writeData, '1234');
+  });
+});

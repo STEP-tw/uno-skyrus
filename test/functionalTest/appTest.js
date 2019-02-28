@@ -211,12 +211,11 @@ describe('player Status', function() {
       '1234': {
         getPlayers: () => {
           return { getNumberOfPlayers: sinon.stub().returns(1) };
-          
         },
 
         getPlayersCount: sinon.stub().returns(1),
         startGame: () => {},
-        hasStarted: () => true,
+        hasStarted: () => true
       },
 
       '5678': {
@@ -527,6 +526,24 @@ describe('/updateRunningColor', function() {
       .post('/updateRunningColor')
       .send({ declaredColor: 'red' })
       .set('Cookie', 'gameKey=1234')
+      .expect(200)
+      .end(done);
+  });
+});
+
+describe('/saveGame', function() {
+  beforeEach(() => {
+    const games = {
+      saveGame: (writeFun, gameKey) => {
+        chai.assert.equal(gameKey, '1234');
+      }
+    };
+    app.games = games;
+  });
+  it('should call save game function in games', done => {
+    request(app)
+      .get('/saveGame')
+      .set('Cookie', 'gameKey=1234; id=5678')
       .expect(200)
       .end(done);
   });
