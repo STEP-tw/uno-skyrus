@@ -57,6 +57,11 @@ class Game {
       this.hasDrawnTwo = false;
       this.cardsToDraw = this.cardsToDraw + gain;
     }
+
+    if (thrownCard.isDrawFour){
+      this.cardsToDraw = 4;
+    }
+
     player.resetHasCaught();
     player.removeCard(cardId);
     this.pile.push(thrownCard);
