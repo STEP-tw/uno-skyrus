@@ -3,7 +3,8 @@ const {
   WildCard,
   NumberedCard,
   DrawTwo,
-  ReverseCard
+  ReverseCard,
+  WildDrawFour
 } = require('./../../src/models/card');
 const chai = require('chai');
 
@@ -307,6 +308,7 @@ describe('SkipCard', function() {
     });
   });
 });
+
 describe('ReverseCard', function() {
   let card;
 
@@ -380,6 +382,112 @@ describe('ReverseCard', function() {
       const card = new ReverseCard('reverse', 'blue');
       const actualOutput = card.getColor();
       const expectedOutput = 'blue';
+      chai.assert.deepEqual(actualOutput, expectedOutput);
+    });
+  });
+});
+
+describe('WildDrawFour', function() {
+  let card;
+
+  beforeEach(function() {
+    card = new WildDrawFour();
+  });
+
+  describe('action', function() {
+    it('should update the player index by one', function() {
+      const currentIndex = 1;
+      const actualOutput = card.action(currentIndex);
+      const expectedOutput = { updatedIndex: 2 };
+      chai.assert.deepEqual(actualOutput, expectedOutput);
+    });
+
+    it('should set the property isColorDeclared as false if it is true', function() {
+      const currentIndex = 0;
+      card.isColorDeclared = true;
+      card.action(currentIndex);
+      const actualOutput = card.isColorDeclared;
+      const expectedOutput = false;
+      chai.assert.equal(actualOutput, expectedOutput);
+    });
+    it('should set the property isColorDeclared as false if it is false', function() {
+      const currentIndex = 0;
+      card.action(currentIndex);
+      const actualOutput = card.isColorDeclared;
+      const expectedOutput = false;
+      chai.assert.equal(actualOutput, expectedOutput);
+    });
+  });
+
+  describe('logMessage', function() {
+    it('should return the log message', function() {
+      const actualOutput = card.logMessage();
+      const expectedOutput = 'Wild Draw Four';
+      chai.assert.deepEqual(actualOutput, expectedOutput);
+    });
+  });
+
+  describe('canPlayOnTopOf', function() {
+    const topDiscard = null;
+    const runningColor = null;
+    it('should return true if no playable cards are available and hasDrawnTwo status is true', function() {
+      const hasDrawnTwo = true;
+      const playableCards = [];
+      const actualOutput = card.canPlayOnTopOf(
+        topDiscard,
+        runningColor,
+        hasDrawnTwo,
+        playableCards
+      );
+      const expectedOutput = true;
+      chai.assert.deepEqual(actualOutput, expectedOutput);
+    });
+
+    it('should reuturn false if no playable cards are available but hasDrawnTwo status is false', function() {
+      const hasDrawnTwo = false;
+      const playableCards = [];
+      const actualOutput = card.canPlayOnTopOf(
+        topDiscard,
+        runningColor,
+        hasDrawnTwo,
+        playableCards
+      );
+      const expectedOutput = false;
+      chai.assert.deepEqual(actualOutput, expectedOutput);
+    });
+
+    it('should return false if playable cards are available and hasDrawnTwo status is true', function() {
+      const hasDrawnTwo = true;
+      const playableCards = [1];
+      const actualOutput = card.canPlayOnTopOf(
+        topDiscard,
+        runningColor,
+        hasDrawnTwo,
+        playableCards
+      );
+      const expectedOutput = false;
+      chai.assert.deepEqual(actualOutput, expectedOutput);
+    });
+
+    it('should return false if playable cards are available and hasDrawnTwo status is false', function() {
+      const hasDrawnTwo = false;
+      const playableCards = [1];
+      const actualOutput = card.canPlayOnTopOf(
+        topDiscard,
+        runningColor,
+        hasDrawnTwo,
+        playableCards
+      );
+      const expectedOutput = false;
+      chai.assert.deepEqual(actualOutput, expectedOutput);
+    });
+  });
+
+  describe('SetColorAsDeclared', function() {
+    it('should set property isColorDeclared as true', function() {
+      card.setColorAsDeclared();
+      const actualOutput = card.isColorDeclared;
+      const expectedOutput = true;
       chai.assert.deepEqual(actualOutput, expectedOutput);
     });
   });
