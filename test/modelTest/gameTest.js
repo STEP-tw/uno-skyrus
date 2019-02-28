@@ -160,7 +160,8 @@ describe('Game Class', () => {
         setUnoCall: () => {},
         getUnoCallStatus: () => {
           return true;
-        }
+        },
+        resetHasCaught: () => {}
       };
       const players = {
         getPlayers: () => {
@@ -333,7 +334,9 @@ describe('Game Class', () => {
         getDrawCardStatus: () => true,
         setDrawCardStatus: () => {},
         setPlayableCards: () => {},
-        id: 234
+        id: 234,
+        resetHasCaught: () => {},
+        resetUnoCall: () => {}
       };
       const players = {
         getCurrentPlayer: () => player,
@@ -376,7 +379,9 @@ describe('Game Class', () => {
         getDrawCardStatus: () => true,
         setDrawCardStatus: () => {},
         setPlayableCards: () => {},
-        id: 234
+        id: 234,
+        resetHasCaught: () => {},
+        resetUnoCall: () => {}
       };
       const players = {
         getCurrentPlayer: () => player,
@@ -415,7 +420,9 @@ describe('Game Class', () => {
         getDrawCardStatus: () => true,
         setDrawCardStatus: () => {},
         setPlayableCards: () => {},
-        id: 234
+        id: 234,
+        resetHasCaught: () => {},
+        resetUnoCall: () => {}
       };
 
       const players = {
@@ -564,6 +571,179 @@ describe('Game Class', () => {
       const actual = false;
       const expected = game.haveToDrawMultiple();
       chai.assert.equal(actual, expected);
+    });
+  });
+
+  describe('catch player', () => {
+    let game;
+    const logMessage = () => {};
+    const canPlayOnTopOf = () => true;
+    let deck;
+
+    beforeEach(() => {
+      numberDeck[5] = { number: 6, color: 'green', canPlayOnTopOf: () => true };
+      const identity = deck => deck;
+      const player = {
+        id: 1234,
+        name: 'player',
+        cards: [],
+        getName: () => {
+          return 'player';
+        },
+        calculatePlayableCards: () => {},
+        addCards: function(cardsToAdd) {
+          player.cards = player.cards.concat(cardsToAdd);
+        },
+        getPlayableCards: () => {
+          return [];
+        },
+        getId() {
+          return player.id;
+        },
+        removeCard(cardId) {
+          player.cards.splice(cardId, 1);
+        },
+        getCards() {
+          return player.cards;
+        },
+        setUnoCall: () => {},
+        getUnoCallStatus: () => {
+          return false;
+        },
+        resetHasCaught: () => {},
+        hasCaught: false,
+        getCardsCount: function() {
+          return this.cards.length;
+        },
+        setHasCaught: () => {}
+      };
+      const players = {
+        getPlayers: () => {
+          return [player];
+        },
+        getCurrentPlayer: () => {
+          return player;
+        },
+        getPlayer() {
+          return player;
+        },
+        setFirstTurn: () => {},
+        setCurrentPlayer: () => {},
+        updateCurrentPlayer: () => {},
+        getLastPlayer: () => player
+      };
+
+      deck = [
+        {
+          number: 1,
+          color: 'yellow',
+          logMessage,
+          canPlayOnTopOf,
+          getColor: () => 'yellow'
+        },
+        {
+          number: 2,
+          color: 'green',
+          logMessage,
+          canPlayOnTopOf,
+          getColor: () => 'green'
+        },
+        {
+          number: 3,
+          color: 'blue',
+          logMessage,
+          canPlayOnTopOf,
+          getColor: () => 'blue'
+        },
+        {
+          number: 4,
+          color: 'yellow',
+          logMessage,
+          canPlayOnTopOf,
+          getColor: () => 'yellow'
+        },
+        {
+          number: 5,
+          color: 'red',
+          logMessage,
+          canPlayOnTopOf,
+          getColor: () => 'red'
+        },
+        {
+          number: 6,
+          color: 'red',
+          logMessage,
+          canPlayOnTopOf,
+          getColor: () => 'red'
+        },
+        {
+          number: 7,
+          color: 'blue',
+          logMessage,
+          canPlayOnTopOf,
+          getColor: () => 'blue'
+        },
+        {
+          number: 8,
+          color: 'blue',
+          logMessage,
+          canPlayOnTopOf,
+          getColor: () => 'blue'
+        },
+        {
+          number: 9,
+          color: 'green',
+          logMessage,
+          canPlayOnTopOf,
+          getColor: () => 'green'
+        },
+        {
+          symbol: '+2',
+          color: 'green',
+          isDrawTwo: true,
+          logMessage,
+          canPlayOnTopOf,
+          getColor: () => 'green'
+        },
+        {
+          symbol: '+2',
+          color: 'blue',
+          isDrawTwo: true,
+          logMessage,
+          canPlayOnTopOf,
+          getColor: () => 'blue'
+        }
+      ];
+
+      game = new Game(deck, 1, 1234, players, { addLog: () => {} });
+      game.startGame(identity);
+    });
+    it('should add 2 cards to the hand of last player', () => {
+      game.players.getPlayer().cards = [{ number: 9, color: 'green' }];
+      game.catchPlayer('1234');
+
+      const actual = game.players.getPlayer().getCardsCount();
+      const expected = 3;
+      chai.assert.deepEqual(actual, expected);
+    });
+
+    it('should refill the stack and add 2 cards to the hand of last player when stack length is less than 2 cards', () => {
+      game.players.getPlayer().cards = [{ number: 9, color: 'green' }];
+      game.stack = [{ number: 9, color: 'green' }];
+      game.pile = deck;
+      game.catchPlayer('1234');
+
+      const actual = game.players.getPlayer().getCardsCount();
+      const expected = 3;
+      chai.assert.deepEqual(actual, expected);
+    });
+
+    it('should not add 2 cards to the hand of last player when last player have more than 1 cards', () => {
+      game.catchPlayer('1234');
+
+      const actual = game.players.getPlayer().getCardsCount();
+      const expected = 7;
+      chai.assert.deepEqual(actual, expected);
     });
   });
 });

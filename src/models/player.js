@@ -6,6 +6,7 @@ class Player {
     this.playableCards = [];
     this.canDrawCard = true;
     this.unoCallStatus = false;
+    this.hasCaught = false;
   }
   getCards() {
     return this.cards;
@@ -26,6 +27,7 @@ class Player {
   addCard(card) {
     this.cards.push(card);
   }
+
   getCardsCount() {
     return this.cards.length;
   }
@@ -65,6 +67,17 @@ class Player {
     if (hasCalledUno && this.cards.length == 1) {
       this.unoCallStatus = true;
     }
+  }
+  resetUnoCall() {
+    this.unoCallStatus = false;
+  }
+
+  setHasCaught() {
+    this.hasCaught = true;
+  }
+
+  resetHasCaught() {
+    this.hasCaught = false;
   }
 
   getUnoCallStatus() {

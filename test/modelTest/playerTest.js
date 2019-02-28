@@ -157,4 +157,46 @@ describe('Player class', () => {
       chai.assert.deepEqual(actualOutput, expectedOutput);
     });
   });
+
+  describe('resetUnoCall', function() {
+    it('should set unoCallStatus to false', function() {
+      const player = new Player('Player', 1234);
+      player.addCard({ number: 4, color: 'red' });
+      player.resetUnoCall();
+      const expectedOutput = false;
+      const actualOutput = player.unoCallStatus;
+      chai.assert.deepEqual(actualOutput, expectedOutput);
+    });
+  });
+
+  describe('setHasCaught', function() {
+    it('should set hasCaught to true', function() {
+      const player = new Player('Player', 1234);
+      player.addCard({ number: 4, color: 'red' });
+      player.setHasCaught();
+      const expectedOutput = true;
+      const actualOutput = player.hasCaught;
+      chai.assert.deepEqual(actualOutput, expectedOutput);
+    });
+  });
+  describe('resetHasCaught', function() {
+    it('should set hasCaught to false', function() {
+      const player = new Player('Player', 1234);
+      player.addCard({ number: 4, color: 'red' });
+      player.resetHasCaught();
+      const expectedOutput = false;
+      const actualOutput = player.hasCaught;
+      chai.assert.deepEqual(actualOutput, expectedOutput);
+    });
+  });
+  describe('getUnoCallStatus', function() {
+    it('should get the value of status', function() {
+      const player = new Player('Player', 1234);
+      player.addCard({ number: 4, color: 'red' });
+      player.getUnoCallStatus();
+      const expectedOutput = false;
+      const actualOutput = player.hasCaught;
+      chai.assert.deepEqual(actualOutput, expectedOutput);
+    });
+  });
 });

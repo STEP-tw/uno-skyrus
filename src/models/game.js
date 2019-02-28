@@ -57,7 +57,7 @@ class Game {
       this.hasDrawnTwo = false;
       this.cardsToDraw = this.cardsToDraw + gain;
     }
-
+    player.resetHasCaught();
     player.removeCard(cardId);
     this.pile.push(thrownCard);
     player.setUnoCall(unoCallStatus);
@@ -110,6 +110,8 @@ class Game {
     const action = ' has drawn ';
     let subject = 'a card';
     const drawnCards = this.stack.splice(-this.cardsToDraw);
+    currentPlayer.resetHasCaught();
+    currentPlayer.resetUnoCall();
     currentPlayer.addCards(drawnCards);
     currentPlayer.setDrawCardStatus(false);
 
@@ -213,6 +215,25 @@ class Game {
       topDiscard.setColorAsDeclared();
     }
     this.updatePlayableCards();
+  }
+
+  catchPlayer(playerId) {
+    const lastPlayer = this.players.getLastPlayer();
+    const catchingPlayer = this.players.getPlayer(playerId).getName();
+
+    if (
+      !lastPlayer.getUnoCallStatus() &&
+      lastPlayer.getCardsCount() == 1 &&
+      !lastPlayer.hasCaught
+    ) {
+      if (this.stack.length < 2) {
+        this.refillStack();
+      }
+      lastPlayer.setHasCaught();
+      const penaltyCards = this.stack.splice(-2);
+      lastPlayer.addCards(penaltyCards);
+      this.log(catchingPlayer, ' has caught ', lastPlayer.getName());
+    }
   }
 }
 

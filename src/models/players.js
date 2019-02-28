@@ -3,6 +3,7 @@ class Players {
     this.host = hostPlayer;
     this.players = [hostPlayer];
     this.currentPlayer = {};
+    this.lastPlayer = hostPlayer;
     this.currentPlayerIndex = 1;
     this.turnDirection = 1;
   }
@@ -33,6 +34,7 @@ class Players {
     if (this.currentPlayerIndex < 0) {
       this.currentPlayerIndex += this.getNumberOfPlayers();
     }
+    this.lastPlayer = this.currentPlayer;
     this.currentPlayer = this.players[this.currentPlayerIndex];
   }
 
@@ -56,6 +58,10 @@ class Players {
     this.currentPlayerIndex = updatedIndex % this.getNumberOfPlayers();
     this.setCurrentPlayer();
     this.currentPlayer.setDrawCardStatus(true);
+  }
+
+  getLastPlayer() {
+    return this.lastPlayer;
   }
 }
 

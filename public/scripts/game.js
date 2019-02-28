@@ -19,7 +19,6 @@ const displayPass = function(document) {
   const pass = document.createElement('span');
   pass.className = 'pass';
   pass.id = 'passTurn';
-  container.innerHTML = '';
   container.appendChild(pass);
   pass.innerText = 'PASS';
   pass.setAttribute('onclick', 'pass()');
@@ -84,6 +83,12 @@ const initializeHand = function(document, { cards, playableCards }) {
     let cardView = createCard(document, card, cardId);
     const styledCard = setCardAttributes(cardView, playableCards, card);
     hand.append(styledCard);
+  });
+};
+
+const catchPlayer = function() {
+  fetch('/catch', {
+    method: 'GET'
   });
 };
 
@@ -218,9 +223,7 @@ const enableDraggableElements = function(document) {
 };
 
 const disableGameElements = function() {
-  const container = document.getElementById('action-btns');
-  container.innerHTML = '';
-
+  removePass(document);
   const stack = document.getElementById('stack');
   stack.setAttribute('draggable', 'false');
 };

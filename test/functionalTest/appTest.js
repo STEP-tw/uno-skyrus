@@ -548,3 +548,22 @@ describe('/saveGame', function() {
       .end(done);
   });
 });
+describe('/catch', function() {
+  beforeEach(function() {
+    const games = {};
+    const game = {
+      catchPlayer: () => {}
+    };
+
+    games.getGame = sinon.stub();
+    games.getGame.withArgs('1234').returns(game);
+    app.games = games;
+  });
+  it('should return 200 status code and update the running color with provided color', function(done) {
+    request(app)
+      .get('/catch')
+      .set('Cookie', 'gameKey=1234')
+      .expect(200)
+      .end(done);
+  });
+});

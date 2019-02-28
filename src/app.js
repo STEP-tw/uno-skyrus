@@ -18,7 +18,8 @@ const {
   renderGamePage,
   passTurn,
   updateRunningColor,
-  saveGame
+  saveGame,
+  catchPlayer
 } = require('./handlers/handleRequests');
 
 const app = express();
@@ -43,6 +44,7 @@ app.get('/gameStatus', serveGameStatus);
 app.get('/lobby', serveLobby);
 app.get('/drawCard', drawCard);
 app.get('/passTurn', passTurn);
+app.get('/catch', catchPlayer);
 app.use(express.static('public', options));
 
 module.exports = { app };

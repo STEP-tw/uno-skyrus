@@ -221,6 +221,13 @@ const saveGame = function(req, res) {
   res.end();
 };
 
+const catchPlayer = function(req, res) {
+  const { gameKey, id } = req.cookies;
+  const game = res.app.games.getGame(gameKey);
+  game.catchPlayer(id);
+  res.end();
+};
+
 module.exports = {
   hostGame,
   validateGameKey,
@@ -235,5 +242,6 @@ module.exports = {
   renderGamePage,
   passTurn,
   updateRunningColor,
-  saveGame
+  saveGame,
+  catchPlayer
 };

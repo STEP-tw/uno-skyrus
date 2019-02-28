@@ -411,7 +411,7 @@ describe('WildDrawFour', function() {
       const expectedOutput = false;
       chai.assert.equal(actualOutput, expectedOutput);
     });
-    
+
     it('should set the property isColorDeclared as false if it is false', function() {
       const currentIndex = 0;
       card.action(turnDirection, currentIndex);

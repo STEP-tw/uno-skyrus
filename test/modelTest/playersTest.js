@@ -27,6 +27,16 @@ describe('getCurrentPlayer', function() {
   });
 });
 
+describe('getLastPlayer', function() {
+  it('should return current player', function() {
+    const host = { name: 'Aftab', cards: [] };
+    const players = new Players(host);
+    const expectedOutput = { name: 'Aftab', cards: [] };
+    const actualOutput = players.getLastPlayer();
+    chai.assert.deepEqual(expectedOutput, actualOutput);
+  });
+});
+
 describe('getNumberOfPlayers', function() {
   it('should return numbers of all players', function() {
     const players = new Players({ name: 'hostName', cards: [] });
