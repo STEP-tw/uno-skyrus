@@ -1,8 +1,13 @@
 /* eslint no-unused-vars: "off" */
 const createCard = function(document, card, cardId) {
-  if (card.isWildCard) {
+  if (card.isWildCard && !card.isDrawFour) {
     return createWildCard(document, cardId);
   }
+
+  if (card.isDrawFour) {
+    return createDrawFourCards(document, card, cardId);
+  }
+
   if (card.isDrawTwo || card.isReverseCard || card.isSkipCard) {
     return createActionCards(document, card, cardId);
   }
@@ -123,6 +128,28 @@ const createActionCards = function(document, card, cardId) {
   unoCard.appendChild(numberLeft);
   unoCard.appendChild(cardInner);
   unoCard.appendChild(numberRight);
+
+  return unoCard;
+};
+
+const createDrawFourCards = function(document, card, cardId) {
+  const unoCard = document.createElement('div');
+  unoCard.className = 'uno-card theme-uno-card';
+  unoCard.id = 'wild-card' + cardId;
+
+  const cardInner = document.createElement('div');
+  cardInner.className = 'theme-uno-card-inner black';
+
+  const designInner = document.createElement('div');
+  designInner.className = 'theme-uno-design-inner white';
+
+  const numberSpan = document.createElement('span');
+  numberSpan.innerText = card.symbol;
+  numberSpan.className = 'num';
+
+  designInner.appendChild(numberSpan);
+  cardInner.appendChild(designInner);
+  unoCard.appendChild(cardInner);
 
   return unoCard;
 };

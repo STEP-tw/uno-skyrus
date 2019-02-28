@@ -143,14 +143,13 @@ class WildDrawFour extends Card {
     this.isColorDeclared = false;
   }
 
-  action(currentPlayerIndex) {
+  action(turnDirection,currentPlayerIndex) {
     this.isColorDeclared = false;
-    currentPlayerIndex += 1;
     return { updatedIndex: currentPlayerIndex };
   }
 
-  canPlayOnTopOf(topDiscard, runningColor, hasDrawnTwo, playableCards) {
-    return hasDrawnTwo && !playableCards.length;
+  canPlayOnTopOf(topDiscard, runningColor, hasDrawnTwo) {
+    return hasDrawnTwo;
   }
 
   logMessage() {

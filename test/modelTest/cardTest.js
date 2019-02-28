@@ -389,30 +389,32 @@ describe('ReverseCard', function() {
 
 describe('WildDrawFour', function() {
   let card;
+  const turnDirection = null;
 
   beforeEach(function() {
     card = new WildDrawFour();
   });
 
   describe('action', function() {
-    it('should update the player index by one', function() {
+    it('should not update the player index', function() {
       const currentIndex = 1;
-      const actualOutput = card.action(currentIndex);
-      const expectedOutput = { updatedIndex: 2 };
+      const actualOutput = card.action(turnDirection, currentIndex);
+      const expectedOutput = { updatedIndex: 1 };
       chai.assert.deepEqual(actualOutput, expectedOutput);
     });
 
     it('should set the property isColorDeclared as false if it is true', function() {
       const currentIndex = 0;
       card.isColorDeclared = true;
-      card.action(currentIndex);
+      card.action(turnDirection, currentIndex);
       const actualOutput = card.isColorDeclared;
       const expectedOutput = false;
       chai.assert.equal(actualOutput, expectedOutput);
     });
+    
     it('should set the property isColorDeclared as false if it is false', function() {
       const currentIndex = 0;
-      card.action(currentIndex);
+      card.action(turnDirection, currentIndex);
       const actualOutput = card.isColorDeclared;
       const expectedOutput = false;
       chai.assert.equal(actualOutput, expectedOutput);
@@ -456,7 +458,7 @@ describe('WildDrawFour', function() {
       chai.assert.deepEqual(actualOutput, expectedOutput);
     });
 
-    it('should return false if playable cards are available and hasDrawnTwo status is true', function() {
+    it.skip('should return false if playable cards are available and hasDrawnTwo status is true', function() {
       const hasDrawnTwo = true;
       const playableCards = [1];
       const actualOutput = card.canPlayOnTopOf(
