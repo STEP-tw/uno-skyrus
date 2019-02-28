@@ -5,6 +5,7 @@ class Player {
     this.id = id;
     this.playableCards = [];
     this.canDrawCard = true;
+    this.unoCallStatus = false;
   }
   getCards() {
     return this.cards;
@@ -58,6 +59,16 @@ class Player {
 
   getPlayableCards() {
     return this.playableCards;
+  }
+
+  setUnoCall(hasCalledUno) {
+    if (hasCalledUno && this.cards.length == 1) {
+      this.unoCallStatus = true;
+    }
+  }
+
+  getUnoCallStatus() {
+    return this.unoCallStatus;
   }
 }
 

@@ -156,6 +156,10 @@ describe('Game Class', () => {
         },
         getCards() {
           return player.cards;
+        },
+        setUnoCall: () => {},
+        getUnoCallStatus: () => {
+          return true;
         }
       };
       const players = {

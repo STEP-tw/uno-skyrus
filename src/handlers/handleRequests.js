@@ -111,10 +111,10 @@ const serveLobby = function(req, res) {
 
 const handleThrowCard = function(req, res) {
   const { gameKey, id } = req.cookies;
-  const { cardId } = req.body;
+  const { cardId, calledUno } = req.body;
 
   const game = req.app.games.getGame(gameKey);
-  game.throwCard(id, cardId);
+  game.throwCard(id, cardId, calledUno);
   res.end();
 };
 

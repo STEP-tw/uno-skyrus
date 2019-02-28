@@ -2,6 +2,7 @@
 /*eslint no-unused-vars: "off"*/
 
 const OTHERS_CARDS_LIMIT = 3;
+let calledUno = false;
 
 const removePass = function(document) {
   const pass = document.getElementById('passTurn');
@@ -81,10 +82,13 @@ const initializeHand = function(document, { cards, playableCards }) {
   hand.innerHTML = '';
   cards.forEach((card, cardId) => {
     let cardView = createCard(document, card, cardId);
-    // console.log(playableCards);
     const styledCard = setCardAttributes(cardView, playableCards, card);
     hand.append(styledCard);
   });
+};
+
+const setUno = function() {
+  calledUno = true;
 };
 
 const allowDrop = function(event) {
@@ -109,7 +113,7 @@ const throwCard = function(document, cardId) {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ cardId })
+    body: JSON.stringify({ cardId, calledUno })
   }).then(() => {
     fetchCards(document);
   });

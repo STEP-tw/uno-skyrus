@@ -2,11 +2,11 @@ const getCardId = function(cardId) {
   return +cardId.match(/[0-9]+/)[0];
 };
 
-const canNotThrow = (playerId, id, isThrowable) =>
-  !(+playerId == id && isThrowable);
+const canNotThrow = (isCurrentPlayer, isThrowable) =>
+  !(isCurrentPlayer && isThrowable);
 
-const canNotDraw = (playerId, id, drawCardStatus) =>
-  !(+playerId == id && drawCardStatus);
+const canNotDraw = (isCurrentPlayer, drawCardStatus) =>
+  !(isCurrentPlayer && drawCardStatus);
 
 const increaseGain = cardsToDraw => {
   if (cardsToDraw === 1) {
@@ -34,13 +34,13 @@ class Game {
     return this.players;
   }
 
-  throwCard(playerId, id) {
-    const currentPlayer = this.players.getCurrentPlayer();
+  throwCard(playerId, id, unoCallStatus) {
     const player = this.players.getPlayer(playerId);
     const cardId = getCardId(id);
     const playerCards = player.getCards();
     const thrownCard = playerCards[cardId];
     this.runningColor = thrownCard.color;
+
     const isThrowable = thrownCard.canPlayOnTopOf(
       this.getTopDiscard(),
       this.runningColor,
@@ -48,7 +48,7 @@ class Game {
     );
     const name = player.getName();
 
-    if (canNotThrow(playerId, currentPlayer.getId(), isThrowable)) {
+    if (canNotThrow(this.isCurrentPlayer(playerId), isThrowable)) {
       return;
     }
 
@@ -60,7 +60,12 @@ class Game {
 
     player.removeCard(cardId);
     this.pile.push(thrownCard);
+    player.setUnoCall(unoCallStatus);
     this.log(name, ' has thrown ', thrownCard.logMessage());
+    if (player.getUnoCallStatus()) {
+      this.log(name, ' has called ', 'UNO');
+    }
+
     this.updatePlayer(thrownCard);
   }
 
@@ -95,10 +100,9 @@ class Game {
 
   drawCards(playerId) {
     const currentPlayer = this.players.getCurrentPlayer();
-    const currentPlayerId = currentPlayer.getId();
     const drawCardStatus = currentPlayer.getDrawCardStatus();
 
-    if (canNotDraw(playerId, currentPlayerId, drawCardStatus)) {
+    if (canNotDraw(this.isCurrentPlayer(playerId), drawCardStatus)) {
       return;
     }
 

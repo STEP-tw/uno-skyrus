@@ -136,4 +136,25 @@ describe('Player class', () => {
       chai.assert.deepEqual(actualOutput, expectedOutput);
     });
   });
+
+  describe('setUnoCall', function() {
+    it('should set unoCallStatus to true if the player has only one card', function() {
+      const player = new Player('Player', 1234);
+      player.addCard({ number: 4, color: 'red' });
+      player.setUnoCall(true);
+      const expectedOutput = true;
+      const actualOutput = player.unoCallStatus;
+      chai.assert.deepEqual(actualOutput, expectedOutput);
+    });
+
+    it('should set unoCallStatus to false if the player has more than one card', function() {
+      const player = new Player('Player', 1234);
+      player.addCard({ number: 4, color: 'red' });
+      player.addCard({ number: 9, color: 'green' });
+      player.setUnoCall(true);
+      const expectedOutput = false;
+      const actualOutput = player.unoCallStatus;
+      chai.assert.deepEqual(actualOutput, expectedOutput);
+    });
+  });
 });
