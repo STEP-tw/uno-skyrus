@@ -7,9 +7,10 @@ class NumberedCard extends Card {
     this.color = color;
   }
 
-  canPlayOnTopOf(otherCard, runningColor, hasDrawnTwo) {
+  canPlayOnTopOf(otherCard, runningColor, hasDrawnTwo, hasDrawnFour) {
     return (
-      hasDrawnTwo && 
+      hasDrawnTwo &&
+      hasDrawnFour &&
       (runningColor == this.color || otherCard.number == this.number)
     );
   }
@@ -40,8 +41,8 @@ class WildCard extends Card {
     return { updatedIndex: currentPlayerIndex };
   }
 
-  canPlayOnTopOf(topDiscard, runningColor, hasDrawnTwo) {
-    return hasDrawnTwo;
+  canPlayOnTopOf(topDiscard, runningColor, hasDrawnTwo, hasDrawnFour) {
+    return hasDrawnTwo && hasDrawnFour;
   }
 
   logMessage() {
@@ -66,8 +67,11 @@ class DrawTwo extends Card {
     return { updatedIndex: currentPlayerIndex };
   }
 
-  canPlayOnTopOf(otherCard, runningColor) {
-    return runningColor == this.color || otherCard.symbol == this.symbol;
+  canPlayOnTopOf(otherCard, runningColor, hasDrawnTwo, hasDrawnFour) {
+    return (
+      hasDrawnFour &&
+      (runningColor == this.color || otherCard.symbol == this.symbol)
+    );
   }
 
   getColor() {
@@ -92,8 +96,12 @@ class SkipCard extends Card {
     return { updatedIndex: currentPlayerIndex };
   }
 
-  canPlayOnTopOf(topDiscard, runningColor, hasDrawnTwo) {
-    return hasDrawnTwo && (runningColor == this.color || topDiscard.isSkipCard);
+  canPlayOnTopOf(topDiscard, runningColor, hasDrawnTwo, hasDrawnFour) {
+    return (
+      hasDrawnTwo &&
+      hasDrawnFour &&
+      (runningColor == this.color || topDiscard.isSkipCard)
+    );
   }
 
   logMessage() {
@@ -127,9 +135,11 @@ class ReverseCard extends Card {
     return `Reverse ${this.color}`;
   }
 
-  canPlayOnTopOf(topDiscard, runningColor, hasDrawnTwo) {
+  canPlayOnTopOf(topDiscard, runningColor, hasDrawnTwo, hasDrawnFour) {
     const status =
-      hasDrawnTwo && (runningColor == this.color || topDiscard.isReverseCard);
+      hasDrawnTwo &&
+      hasDrawnFour &&
+      (runningColor == this.color || topDiscard.isReverseCard);
     return status;
   }
 }
@@ -143,13 +153,13 @@ class WildDrawFour extends Card {
     this.isColorDeclared = false;
   }
 
-  action(turnDirection,currentPlayerIndex) {
+  action(turnDirection, currentPlayerIndex) {
     this.isColorDeclared = false;
     return { updatedIndex: currentPlayerIndex };
   }
 
-  canPlayOnTopOf(topDiscard, runningColor, hasDrawnTwo) {
-    return hasDrawnTwo;
+  canPlayOnTopOf(topDiscard, runningColor, hasDrawnTwo, hasDrawnFour) {
+    return hasDrawnTwo && hasDrawnFour;
   }
 
   logMessage() {

@@ -9,14 +9,17 @@ const {
 const chai = require('chai');
 
 describe('NumberedCard', function() {
+  const hasDrawnTwo = true;
+  const hasDrawnFour = true;
+
   describe('canPlayOnTopOf', function() {
     it('should return true for a matching color', function() {
       const card = new NumberedCard(4, 'red');
-      const hasDrawnTwo = true;
       const actualOutput = card.canPlayOnTopOf(
         { number: 7, color: 'red' },
         'red',
-        hasDrawnTwo
+        hasDrawnTwo,
+        hasDrawnFour
       );
       const expectedOutput = true;
       chai.assert.deepEqual(actualOutput, expectedOutput);
@@ -24,11 +27,11 @@ describe('NumberedCard', function() {
 
     it('should return false for a non-matching color', function() {
       const card = new NumberedCard(4, 'red');
-      const hasDrawnTwo = true;
       const actualOutput = card.canPlayOnTopOf(
         { number: 7, color: 'green' },
         'green',
-        hasDrawnTwo
+        hasDrawnTwo,
+        hasDrawnFour
       );
       const expectedOutput = false;
       chai.assert.deepEqual(actualOutput, expectedOutput);
@@ -36,14 +39,14 @@ describe('NumberedCard', function() {
 
     it('should return false for a draw two card', function() {
       const card = new NumberedCard(4, 'red');
-      const hasDrawnTwo = true;
       const actualOutput = card.canPlayOnTopOf(
         {
           symbol: '+2',
           color: 'green'
         },
         'green',
-        hasDrawnTwo
+        hasDrawnTwo,
+        hasDrawnFour
       );
       const expectedOutput = false;
       chai.assert.deepEqual(actualOutput, expectedOutput);
@@ -59,7 +62,8 @@ describe('NumberedCard', function() {
           isDrawTwo: true
         },
         'green',
-        hasDrawnTwo
+        hasDrawnTwo,
+        hasDrawnFour
       );
       const expectedOutput = false;
       chai.assert.deepEqual(actualOutput, expectedOutput);
@@ -67,7 +71,6 @@ describe('NumberedCard', function() {
 
     it('should return true for a draw tow card if hasDrawnTwo is true', function() {
       const card = new NumberedCard(4, 'red');
-      const hasDrawnTwo = true;
       const runningColor = 'red';
       const actualOutput = card.canPlayOnTopOf(
         {
@@ -75,7 +78,8 @@ describe('NumberedCard', function() {
           color: 'green'
         },
         runningColor,
-        hasDrawnTwo
+        hasDrawnTwo,
+        hasDrawnFour
       );
       const expectedOutput = true;
       chai.assert.deepEqual(actualOutput, expectedOutput);
@@ -112,6 +116,9 @@ describe('NumberedCard', function() {
 });
 
 describe('WildCard', function() {
+  const hasDrawnFour = true;
+  const hasDrawnTwo = true;
+
   describe('canPlayOnTopOf', function() {
     it('should return false when hasDrawnTwo status is false', function() {
       const otherCard = {};
@@ -121,7 +128,8 @@ describe('WildCard', function() {
       const actualOutput = card.canPlayOnTopOf(
         otherCard,
         runningColor,
-        hasDrawnTwo
+        hasDrawnTwo,
+        hasDrawnFour
       );
       const expectedOutput = false;
       chai.assert.deepEqual(actualOutput, expectedOutput);
@@ -130,12 +138,12 @@ describe('WildCard', function() {
     it('should return true when hasDrawnTwo status is true', function() {
       const otherCard = {};
       const runningColor = 'red';
-      const hasDrawnTwo = true;
       const card = new WildCard();
       const actualOutput = card.canPlayOnTopOf(
         otherCard,
         runningColor,
-        hasDrawnTwo
+        hasDrawnTwo,
+        hasDrawnFour
       );
       const expectedOutput = true;
       chai.assert.deepEqual(actualOutput, expectedOutput);
@@ -173,12 +181,17 @@ describe('WildCard', function() {
 });
 
 describe('DrawTwoCard', function() {
+  const hasDrawnFour = true;
+  const hasDrawnTwo = true;
+
   describe('canPlayOnTopOf', function() {
     it('should return true when color is same', function() {
       const card = new DrawTwo('red');
       const actualOutput = card.canPlayOnTopOf(
         { number: 2, color: 'red' },
-        'red'
+        'red',
+        hasDrawnTwo,
+        hasDrawnFour
       );
       const expectedOutput = true;
       chai.assert.deepEqual(actualOutput, expectedOutput);
@@ -188,7 +201,9 @@ describe('DrawTwoCard', function() {
       const card = new DrawTwo('red');
       const actualOutput = card.canPlayOnTopOf(
         { symbol: '+2', color: 'blue' },
-        'blue'
+        'blue',
+        hasDrawnTwo,
+        hasDrawnFour
       );
       const expectedOutput = true;
       chai.assert.deepEqual(actualOutput, expectedOutput);
@@ -198,12 +213,15 @@ describe('DrawTwoCard', function() {
       const card = new DrawTwo('red');
       const actualOutput = card.canPlayOnTopOf(
         { number: 2, color: 'blue' },
-        'blue'
+        'blue',
+        hasDrawnTwo,
+        hasDrawnFour
       );
       const expectedOutput = false;
       chai.assert.deepEqual(actualOutput, expectedOutput);
     });
   });
+
   describe('action', function() {
     it('should update current player index by 1', function() {
       const card = new DrawTwo('red');
@@ -213,6 +231,7 @@ describe('DrawTwoCard', function() {
       chai.assert.deepEqual(actualOutput, expectedOutput);
     });
   });
+
   describe('logMessage', function() {
     it('should return the log Message', function() {
       const card = new DrawTwo('blue');
@@ -234,6 +253,8 @@ describe('DrawTwoCard', function() {
 
 describe('SkipCard', function() {
   let card;
+  const hasDrawnTwo = true;
+  const hasDrawnFour = true;
 
   beforeEach(function() {
     const symbol = 'SKIP';
@@ -244,8 +265,12 @@ describe('SkipCard', function() {
   describe('canPlayOnTopOf', function() {
     it('should return true for a matching color regardless of the symbol', function() {
       const topDiscard = { number: 7, color: 'red', isSkipCard: false };
-      const hasDrawnTwo = true;
-      const actualOutput = card.canPlayOnTopOf(topDiscard, 'red', hasDrawnTwo);
+      const actualOutput = card.canPlayOnTopOf(
+        topDiscard,
+        'red',
+        hasDrawnTwo,
+        hasDrawnFour
+      );
       const expectedOutput = true;
       chai.assert.equal(actualOutput, expectedOutput);
     });
@@ -260,23 +285,21 @@ describe('SkipCard', function() {
       const actualOutput = card.canPlayOnTopOf(
         topDiscard,
         'green',
-        hasDrawnTwo
+        hasDrawnTwo,
+        hasDrawnFour
       );
-
       const expectedOutput = false;
       chai.assert.equal(actualOutput, expectedOutput);
     });
 
     it('should return true for a matching symbol regardless of the color', function() {
-      const topDiscard = {
-        isSkipCard: true,
-        color: 'green'
-      };
+      const topDiscard = { isSkipCard: true, color: 'green' };
       const hasDrawnTwo = true;
       const actualOutput = card.canPlayOnTopOf(
         topDiscard,
         'green',
-        hasDrawnTwo
+        hasDrawnTwo,
+        hasDrawnFour
       );
       const expectedOutput = true;
       chai.assert.equal(actualOutput, expectedOutput);
@@ -311,6 +334,8 @@ describe('SkipCard', function() {
 
 describe('ReverseCard', function() {
   let card;
+  const hasDrawnFour = true;
+  const hasDrawnTwo = true;
 
   beforeEach(function() {
     const symbol = 'REVERSE';
@@ -321,39 +346,37 @@ describe('ReverseCard', function() {
   describe('canPlayOnTopOf', function() {
     it('should return true for a matching color regardless of the symbol', function() {
       const topDiscard = { number: 7, color: 'red', isReverseCard: false };
-      const hasDrawnTwo = true;
-      const actualOutput = card.canPlayOnTopOf(topDiscard, 'red', hasDrawnTwo);
+      const actualOutput = card.canPlayOnTopOf(
+        topDiscard,
+        'red',
+        hasDrawnTwo,
+        hasDrawnFour
+      );
       const expectedOutput = true;
       chai.assert.equal(actualOutput, expectedOutput);
     });
 
     it('should return false for a non-matching color and symbol', function() {
-      const topDiscard = {
-        number: 7,
-        color: 'green',
-        isReverseCard: false
-      };
+      const topDiscard = { number: 7, color: 'green', isReverseCard: false };
       const hasDrawnTwo = true;
       const actualOutput = card.canPlayOnTopOf(
         topDiscard,
         'green',
-        hasDrawnTwo
+        hasDrawnTwo,
+        hasDrawnFour
       );
-
       const expectedOutput = false;
       chai.assert.equal(actualOutput, expectedOutput);
     });
 
     it('should return true for a matching symbol regardless of the color', function() {
-      const topDiscard = {
-        isReverseCard: true,
-        color: 'green'
-      };
+      const topDiscard = { isReverseCard: true, color: 'green' };
       const hasDrawnTwo = true;
       const actualOutput = card.canPlayOnTopOf(
         topDiscard,
         'green',
-        hasDrawnTwo
+        hasDrawnTwo,
+        hasDrawnFour
       );
       const expectedOutput = true;
       chai.assert.equal(actualOutput, expectedOutput);
@@ -390,6 +413,8 @@ describe('ReverseCard', function() {
 describe('WildDrawFour', function() {
   let card;
   const turnDirection = null;
+  const hasDrawnTwo = true;
+  const hasDrawnFour = true;
 
   beforeEach(function() {
     card = new WildDrawFour();
@@ -432,14 +457,13 @@ describe('WildDrawFour', function() {
   describe('canPlayOnTopOf', function() {
     const topDiscard = null;
     const runningColor = null;
+
     it('should return true if no playable cards are available and hasDrawnTwo status is true', function() {
-      const hasDrawnTwo = true;
-      const playableCards = [];
       const actualOutput = card.canPlayOnTopOf(
         topDiscard,
         runningColor,
         hasDrawnTwo,
-        playableCards
+        hasDrawnFour
       );
       const expectedOutput = true;
       chai.assert.deepEqual(actualOutput, expectedOutput);
@@ -447,25 +471,11 @@ describe('WildDrawFour', function() {
 
     it('should reuturn false if no playable cards are available but hasDrawnTwo status is false', function() {
       const hasDrawnTwo = false;
-      const playableCards = [];
       const actualOutput = card.canPlayOnTopOf(
         topDiscard,
         runningColor,
         hasDrawnTwo,
-        playableCards
-      );
-      const expectedOutput = false;
-      chai.assert.deepEqual(actualOutput, expectedOutput);
-    });
-
-    it.skip('should return false if playable cards are available and hasDrawnTwo status is true', function() {
-      const hasDrawnTwo = true;
-      const playableCards = [1];
-      const actualOutput = card.canPlayOnTopOf(
-        topDiscard,
-        runningColor,
-        hasDrawnTwo,
-        playableCards
+        hasDrawnFour
       );
       const expectedOutput = false;
       chai.assert.deepEqual(actualOutput, expectedOutput);
@@ -473,12 +483,11 @@ describe('WildDrawFour', function() {
 
     it('should return false if playable cards are available and hasDrawnTwo status is false', function() {
       const hasDrawnTwo = false;
-      const playableCards = [1];
       const actualOutput = card.canPlayOnTopOf(
         topDiscard,
         runningColor,
         hasDrawnTwo,
-        playableCards
+        hasDrawnFour
       );
       const expectedOutput = false;
       chai.assert.deepEqual(actualOutput, expectedOutput);

@@ -28,6 +28,7 @@ class Game {
     this.runningColor = '';
     this.cardsToDraw = 1;
     this.hasDrawnTwo = true;
+    this.hasDrawnFour = true;
   }
 
   getPlayers() {
@@ -44,7 +45,8 @@ class Game {
     const isThrowable = thrownCard.canPlayOnTopOf(
       this.getTopDiscard(),
       this.runningColor,
-      this.hasDrawnTwo
+      this.hasDrawnTwo,
+      this.hasDrawnFour
     );
     const name = player.getName();
 
@@ -59,6 +61,7 @@ class Game {
     }
 
     if (thrownCard.isDrawFour){
+      this.hasDrawnFour = false;
       this.cardsToDraw = 4;
     }
 
@@ -88,7 +91,8 @@ class Game {
       player.calculatePlayableCards(
         this.getTopDiscard(),
         this.getRunningColor(),
-        this.hasDrawnTwo
+        this.hasDrawnTwo,
+        this.hasDrawnFour
       );
     });
   }
@@ -127,6 +131,7 @@ class Game {
       this.activityLog.addLog(playerName, action, subject);
       this.cardsToDraw = 1;
       this.hasDrawnTwo = true;
+      this.hasDrawnFour = true;
       this.getPlayers().changeTurn();
       this.updatePlayableCards();
       return [];
@@ -134,7 +139,8 @@ class Game {
     const isPlayable = drawnCards[0].canPlayOnTopOf(
       this.getTopDiscard(),
       this.runningColor,
-      this.hasDrawnTwo
+      this.hasDrawnTwo,
+      this.hasDrawnFour
     );
 
     this.activityLog.addLog(playerName, action, subject);

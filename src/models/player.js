@@ -42,9 +42,9 @@ class Player {
     return this.name;
   }
 
-  calculatePlayableCards(otherCard, runningColor, hasDrawnTwo) {
+  calculatePlayableCards(otherCard, runningColor, hasDrawnTwo, hasDrawnFour) {
     this.playableCards = this.cards.filter(card => {
-      return card.canPlayOnTopOf(otherCard, runningColor, hasDrawnTwo);
+      return card.canPlayOnTopOf(otherCard, runningColor, hasDrawnTwo, hasDrawnFour);
     });
   }
 
