@@ -8,19 +8,19 @@
 
   <body>
     <main>
-    <div id="wildCardOverlay" class="overlay hidden">
-      <div class=" color-container ">
-        <span class="color-header">Choose Running Color</span>
-        <div class="color-row">
-          <div class="red color-div" onclick="declareRunningColor()"></div>
-          <div class="blue color-div" onclick="declareRunningColor()"></div>
-        </div>
-        <div class="color-row">
-          <div class="green color-div" onclick="declareRunningColor()"></div>
-          <div class="yellow color-div" onclick="declareRunningColor()"></div>
+      <div id="wildCardOverlay" class="overlay hidden">
+        <div class=" color-container ">
+          <span class="color-header">Choose Running Color</span>
+          <div class="color-row">
+            <div class="red color-div" onclick="declareRunningColor()"></div>
+            <div class="blue color-div" onclick="declareRunningColor()"></div>
+          </div>
+          <div class="color-row">
+            <div class="green color-div" onclick="declareRunningColor()"></div>
+            <div class="yellow color-div" onclick="declareRunningColor()"></div>
+          </div>
         </div>
       </div>
-    </div>
       <div class="play-table">
         <div class="middle-table">
           <div class="center-left-table">
@@ -61,8 +61,6 @@
           <div class="center-table">
             <div class="status-bar" id="statusBar"></div>
             <div class="cards-on-table">
-
-
               <div class="pile-stack stack-of-cards">
                 <div class="uno-card theme-uno-card first-uno-card">
                   <div class="theme-uno-card-inner black">
@@ -86,7 +84,7 @@
                   </div>
                 </div>
               </div>
-              
+
               <div class="running-color" id="runningColorDiv"></div>
 
               <div class="pile-stack">
@@ -110,7 +108,11 @@
                 ></div>
               </div>
             </div>
-            <div class="action-btns" id="action-btns"></div>
+            <div class="action-btns" id="action-btns">
+              <span class="pass" id="unoCall" onclick="setUno()">UNO</span>
+              <span class="pass" id="passTurn" onclick="pass()">PASS</span>
+              <span class="pass" id="catch" onclick="catchPlayer()">Catch</span>
+            </div>
           </div>
           <div class="center-right-table">
             <div class="vertical-player">

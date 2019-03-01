@@ -6,8 +6,7 @@ let calledUno = false;
 
 const removePass = function(document) {
   const pass = document.getElementById('passTurn');
-  const container = document.getElementById('action-btns');
-  container.removeChild(pass);
+  pass.style.visibility = 'hidden';
 };
 
 const pass = function() {
@@ -15,14 +14,8 @@ const pass = function() {
 };
 
 const displayPass = function(document) {
-  const container = document.getElementById('action-btns');
-  const pass = document.createElement('span');
-  pass.className = 'pass';
-  pass.id = 'passTurn';
-  container.appendChild(pass);
-  pass.innerText = 'PASS';
-  pass.setAttribute('onclick', 'pass()');
-  return;
+  const pass = document.getElementById('passTurn');
+  pass.style.visibility = 'visible';
 };
 
 const drawCard = function(document) {
@@ -281,5 +274,6 @@ const initialize = function(document) {
     pile.setAttribute('ondragover', 'allowDrop(event)');
     getPlayerDetails(document);
   }, 1000);
+  removePass(document);
 };
 window.onload = initialize.bind(null, document);
