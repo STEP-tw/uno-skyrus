@@ -567,3 +567,20 @@ describe('/catch', function() {
       .end(done);
   });
 });
+
+describe('/loadGame', function() {
+  beforeEach(() => {
+    const games = {
+      loadGame: () => {}
+    };
+
+    app.games = games;
+  });
+  it('should load the game, when gamekey and player id is provided', function(done) {
+    request(app)
+      .post('/loadGame')
+      .send({ gameKey: '1234', id: '5678' })
+      .expect(200)
+      .end(done);
+  });
+});

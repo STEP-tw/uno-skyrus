@@ -19,7 +19,8 @@ const {
   passTurn,
   updateRunningColor,
   saveGame,
-  catchPlayer
+  catchPlayer,
+  loadGame
 } = require('./handlers/handleRequests');
 
 const app = express();
@@ -37,6 +38,7 @@ app.post('/hostGame', hostGame);
 app.post('/validateGameKey', validateGameKey);
 app.post('/joinGame', joinGame);
 app.get('/saveGame', saveGame);
+app.post('/loadGame', loadGame);
 app.post('/updateRunningColor', updateRunningColor);
 app.get('/getPlayerNames', getPlayerNames);
 app.get('/playersStatus', handleGame);

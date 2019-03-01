@@ -1,11 +1,22 @@
 class Players {
-  constructor(hostPlayer) {
+  constructor(
+    hostPlayer,
+    currentPlayer = {},
+    currentPlayerIndex = 1,
+    turnDirection = 1
+  ) {
     this.host = hostPlayer;
     this.players = [hostPlayer];
-    this.currentPlayer = {};
     this.lastPlayer = hostPlayer;
-    this.currentPlayerIndex = 1;
-    this.turnDirection = 1;
+    this.currentPlayer = currentPlayer;
+    this.currentPlayerIndex = currentPlayerIndex;
+    this.turnDirection = turnDirection;
+  }
+  loadData(lastPlayer) {
+    this.lastPlayer = lastPlayer;
+  }
+  loadLastPlayer(lastPlayer) {
+    this.lastPlayer = lastPlayer;
   }
   getCurrentPlayer() {
     return this.currentPlayer;
@@ -62,6 +73,9 @@ class Players {
 
   getLastPlayer() {
     return this.lastPlayer;
+  }
+  setPlayers(players) {
+    this.players = players;
   }
 }
 

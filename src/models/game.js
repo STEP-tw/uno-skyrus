@@ -31,6 +31,15 @@ class Game {
     this.hasDrawnFour = true;
   }
 
+  loadData(stack, pile, status, runningColor, cardsToDraw, hasDrawnTwo) {
+    this.stack = stack;
+    this.pile = pile;
+    this.status = status;
+    this.runningColor = runningColor;
+    this.cardsToDraw = cardsToDraw;
+    this.hasDrawnTwo = hasDrawnTwo;
+  }
+
   getPlayers() {
     return this.players;
   }

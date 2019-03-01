@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const { generateGameKey, writeData } = require('../utils/util.js');
+const { generateGameKey, writeData, loadData } = require('../utils/util.js');
 const { Player } = require('../models/player');
 const { Game } = require('../models/game');
 const { createDeck } = require('../models/deck');
@@ -18,7 +18,7 @@ const hostGame = function(req, res) {
   const host = new Player(hostName, id);
   const players = new Players(host);
   const deck = createDeck(SYMBOLS.skipCard);
-  const activityLog = new ActivityLog(gameKey, hostName);
+  const activityLog = new ActivityLog([]); //gameKey, hostName);
   const game = new Game(deck, totalPlayers, gameKey, players, activityLog);
 
   req.app.games.addGame(game, gameKey);
@@ -81,6 +81,7 @@ const haveAllPlayersJoined = function(game) {
 const handleGame = function(req, res) {
   const { gameKey } = req.cookies;
   const game = req.app.games.getGame(gameKey);
+  console.log(game, 'this is game class');
   const playersCount = game.playersCount;
 
   if (haveAllPlayersJoined(game)) {
@@ -150,6 +151,7 @@ const getPlayerNames = (req, res) => {
 const renderGamePage = function(req, res) {
   const { gameKey } = req.cookies;
   const game = req.app.games.getGame(gameKey);
+  console.log(req.app.games);
   const playersCount = game.playersCount;
 
   const gamePage = fs.readFileSync(
@@ -228,6 +230,15 @@ const catchPlayer = function(req, res) {
   res.end();
 };
 
+const loadGame = function(req, res) {
+  const { gameKey, id } = req.body;
+  const games = req.app.games;
+  loadData(fs, gameKey, games.loadGame.bind(games));
+  res.cookie('gameKey', gameKey);
+  res.cookie('id', id);
+  res.end();
+};
+
 module.exports = {
   hostGame,
   validateGameKey,
@@ -243,5 +254,6 @@ module.exports = {
   passTurn,
   updateRunningColor,
   saveGame,
-  catchPlayer
+  catchPlayer,
+  loadGame
 };

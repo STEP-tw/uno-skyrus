@@ -1,12 +1,20 @@
 class Player {
-  constructor(name, id) {
+  constructor(
+    name,
+    id,
+    cards = [],
+    playableCards = [],
+    canDrawCard = true,
+    unoCallStatus = false,
+    hasCaught = false
+  ) {
     this.name = name;
-    this.cards = [];
+    this.cards = cards;
     this.id = id;
-    this.playableCards = [];
-    this.canDrawCard = true;
-    this.unoCallStatus = false;
-    this.hasCaught = false;
+    this.hasCaught = hasCaught;
+    this.playableCards = playableCards;
+    this.canDrawCard = canDrawCard;
+    this.unoCallStatus = unoCallStatus;
   }
   getCards() {
     return this.cards;
@@ -44,7 +52,12 @@ class Player {
 
   calculatePlayableCards(otherCard, runningColor, hasDrawnTwo, hasDrawnFour) {
     this.playableCards = this.cards.filter(card => {
-      return card.canPlayOnTopOf(otherCard, runningColor, hasDrawnTwo, hasDrawnFour);
+      return card.canPlayOnTopOf(
+        otherCard,
+        runningColor,
+        hasDrawnTwo,
+        hasDrawnFour
+      );
     });
   }
 

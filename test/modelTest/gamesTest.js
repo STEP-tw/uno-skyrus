@@ -1,5 +1,6 @@
 const chai = require('chai');
 const { Games } = require('../../src/models/games.js');
+const { gameData } = require('./../testHelpers/testHelpers');
 
 describe('games', function() {
   const games = new Games();
@@ -51,5 +52,15 @@ describe('saveGame', function() {
       chai.assert.equal(gameKey, '1234');
     };
     games.saveGame(writeData, '1234');
+  });
+});
+
+describe('loadGame', () => {
+  it('should load the game to the games class', () => {
+    const games = new Games();
+    games.loadGame(1234, gameData);
+    chai.expect(games.games[0]).to.haveOwnProperty('players');
+    games.loadGame(1234, gameData);
+    chai.expect(games.games.length, 1);
   });
 });

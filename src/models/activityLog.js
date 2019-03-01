@@ -1,6 +1,6 @@
 class ActivityLog {
-  constructor(gameId, hostName) {
-    this.logs = [`${hostName} started game with id ${gameId}`];
+  constructor(logs = []) {
+    this.logs = logs;
   }
   addLog(subject, action, object) {
     this.logs.push(subject + action + object);
