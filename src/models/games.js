@@ -1,14 +1,6 @@
 const { Game } = require('./../models/game');
 const { Players } = require('./../models/players');
 const { ActivityLog } = require('./../models/activityLog');
-// const {
-//   WildCard,
-//   WildDrawFour,
-//   DrawTwo,
-//   NumberedCard,
-//   SkipCard,
-//   ReverseCard
-// } = require('./../models/card');
 const { parseCards, parsePlayer } = require('./../utils/util');
 
 class Games {

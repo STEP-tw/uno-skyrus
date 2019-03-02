@@ -69,7 +69,7 @@ class Game {
     this.runningColor = thrownCard.color;
 
     const playableCards = player.getPlayableCards();
-    const normalPlayableCards = playableCards.filter( card => !card.isDrawFour );
+    const normalPlayableCards = playableCards.filter(card => !card.isDrawFour);
     const hasNoNormalPlayableCards = normalPlayableCards.length === 0;
 
     const isThrowable = thrownCard.canPlayOnTopOf(
@@ -160,6 +160,7 @@ class Game {
   drawCards(playerId) {
     const currentPlayer = this.players.getCurrentPlayer();
     const drawCardStatus = currentPlayer.getDrawCardStatus();
+    console.log('drawCardStatus -------------', drawCardStatus);
 
     if (canNotDraw(this.isCurrentPlayer(playerId), drawCardStatus)) {
       return;
@@ -186,11 +187,20 @@ class Game {
       this.updatePlayableCards();
       return [];
     }
+    console.log('drawnCards--------------', drawnCards);
+
+    const playableCards = currentPlayer.getPlayableCards();
+    console.log('playableCards-----------', playableCards);
+
+    const normalPlayableCards = playableCards.filter(card => !card.isDrawFour);
+    const hasNoNormalPlayableCards = normalPlayableCards.length === 0;
+
     const isPlayable = drawnCards[0].canPlayOnTopOf(
       this.getTopDiscard(),
       this.runningColor,
       this.hasDrawnTwo,
-      this.hasDrawnFour
+      this.hasDrawnFour,
+      hasNoNormalPlayableCards
     );
 
     this.activityLog.addLog(playerName, action, subject);

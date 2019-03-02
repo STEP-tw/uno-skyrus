@@ -299,6 +299,7 @@ describe('Game Class', () => {
         getId: () => 234,
         getName: () => 'Aftab',
         getDrawCardStatus: () => true,
+        getPlayableCards: () => [],
         id: 234
       };
       const players = {
@@ -336,7 +337,8 @@ describe('Game Class', () => {
         setPlayableCards: () => {},
         id: 234,
         resetHasCaught: () => {},
-        resetUnoCall: () => {}
+        resetUnoCall: () => {},
+        getPlayableCards: () => []
       };
       const players = {
         getCurrentPlayer: () => player,
@@ -381,7 +383,8 @@ describe('Game Class', () => {
         setPlayableCards: () => {},
         id: 234,
         resetHasCaught: () => {},
-        resetUnoCall: () => {}
+        resetUnoCall: () => {},
+        getPlayableCards: () => []
       };
       const players = {
         getCurrentPlayer: () => player,
