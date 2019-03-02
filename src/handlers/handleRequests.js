@@ -18,7 +18,7 @@ const hostGame = function(req, res) {
   const host = new Player(hostName, id);
   const players = new Players(host);
   const deck = createDeck(SYMBOLS.skipCard);
-  const activityLog = new ActivityLog([]);
+  const activityLog = new ActivityLog([`Game created by ${hostName}`]);
   // gameKey, hostName);
   const game = new Game(deck, totalPlayers, gameKey, players, activityLog);
 

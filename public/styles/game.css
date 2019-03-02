@@ -347,7 +347,9 @@
 .running-color {
   width: 20%;
   height: 20%;
-  border: 1px solid black;
+  border-radius: 10px;
+  
+  box-shadow:2px 2px 10px 1px rgba(43, 48, 48, 0.75)
 }
 
 .color-container {
