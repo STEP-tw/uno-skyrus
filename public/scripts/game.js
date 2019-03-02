@@ -55,7 +55,7 @@ const isSkipCardSimilar = (card1, card2) =>
   card1.isSkipCard && card2.isSkipCard && hasSameColor(card1, card2);
 
 const isWildCardSimilar = (card1, card2) =>
-  card1.isWildCard && card2.isWildCard;
+  card1.isWildCard && card2.isWildCard && (card1.isDrawFour == card2.isDrawFour);
 
 const isSimilarCards = function(card1, card2) {
   console.log(

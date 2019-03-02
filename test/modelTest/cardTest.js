@@ -463,7 +463,8 @@ describe('WildDrawFour', function() {
         topDiscard,
         runningColor,
         hasDrawnTwo,
-        hasDrawnFour
+        hasDrawnFour,
+        true
       );
       const expectedOutput = true;
       chai.assert.deepEqual(actualOutput, expectedOutput);

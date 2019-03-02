@@ -68,11 +68,16 @@ class Game {
     const thrownCard = playerCards[cardId];
     this.runningColor = thrownCard.color;
 
+    const playableCards = player.getPlayableCards();
+    const normalPlayableCards = playableCards.filter( card => !card.isDrawFour );
+    const hasNoNormalPlayableCards = normalPlayableCards.length === 0;
+
     const isThrowable = thrownCard.canPlayOnTopOf(
       this.getTopDiscard(),
       this.runningColor,
       this.hasDrawnTwo,
-      this.hasDrawnFour
+      this.hasDrawnFour,
+      hasNoNormalPlayableCards
     );
     const name = player.getName();
 

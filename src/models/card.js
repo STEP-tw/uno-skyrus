@@ -158,8 +158,8 @@ class WildDrawFour extends Card {
     return { updatedIndex: currentPlayerIndex };
   }
 
-  canPlayOnTopOf(topDiscard, runningColor, hasDrawnTwo, hasDrawnFour) {
-    return hasDrawnTwo && hasDrawnFour;
+  canPlayOnTopOf(topDiscard, runningColor, hasDrawnTwo, hasDrawnFour, hasNoPlayableCard ){
+    return hasDrawnTwo && hasDrawnFour && hasNoPlayableCard;
   }
 
   logMessage() {

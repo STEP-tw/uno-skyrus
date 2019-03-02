@@ -56,10 +56,24 @@ class Player {
         otherCard,
         runningColor,
         hasDrawnTwo,
-        hasDrawnFour
+        hasDrawnFour,
+        false
+      );
+    });
+
+    const hasNoPlayableCard = this.playableCards.length === 0;
+
+    this.playableCards = this.cards.filter(card => {
+      return card.canPlayOnTopOf(
+        otherCard,
+        runningColor,
+        hasDrawnTwo,
+        hasDrawnFour,
+        hasNoPlayableCard
       );
     });
   }
+
 
   hasWon() {
     if (!this.cards.length) {
