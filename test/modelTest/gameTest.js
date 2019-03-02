@@ -747,3 +747,22 @@ describe('Game Class', () => {
     });
   });
 });
+
+describe('updateSaveStatus', () => {
+  let game = new Game([], 1, '1234', [], []);
+  it('should save the game status', () => {
+    game.updateSaveStatus();
+    const actual = game.saveStatus.status;
+    const expected = true;
+    chai.assert.equal(actual, expected);
+  });
+});
+
+describe('getSaveStatus', () => {
+  let game = new Game([], 1, '1234', [], []);
+  it('should return the save status', () => {
+    const actual = game.getSaveStatus();
+    const expected = { status: false };
+    chai.assert.deepEqual(actual, expected);
+  });
+});

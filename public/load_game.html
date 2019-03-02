@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>SKYRUS-UNO</title>
+    <link rel="stylesheet" type="text/css" href="styles/main.css" />
+    <script src="scripts/joinGame.js"></script>
+  </head>
+  <body>
+    <main>
+      <header>
+        JOIN GAME
+        <p id="invalidGameKey" class="invalid-input"></p>
+      </header>
+      <div class="table">
+        <form action="/loadGame" method="POST">
+          <div class="host-room">
+            <div class=" theme-uno-card big-theme-card">
+              <div class="theme-uno-card-inner black">
+                <div class="theme-uno-design-inner red">
+                  <div class="inner-container">
+                    <input
+                      type="text"
+                      class="host-input"
+                      name="gameKey"
+                      id="gameKey"
+                      placeholder="Game Key"
+                      autocomplete="off"
+                    />
+                    <input
+                      type="text"
+                      class="host-input"
+                      name="id"
+                      id="playerId"
+                      placeholder="Player Id"
+                      autocomplete="off"
+                    />
+                    <button
+                      type="submit"
+                      id="joinGameButton"
+                      class="single-btn"
+                    >
+                      Load game
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </main>
+  </body>
+</html>

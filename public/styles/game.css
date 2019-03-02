@@ -372,3 +372,43 @@
 .color-header {
   margin: 5%;
 }
+
+.header-game {
+  width: 100%;
+  height: 6%;
+  font-size: 14px;
+}
+.save-game {
+  /* float: right; */
+  /* margin-right: 10%;
+  margin-top: 1%; */
+  border: 2px solid red;
+  color: #ffff90;
+  background-color: #d33e32;
+}
+#save-game-overlay {
+  color: white;
+  border: 2px solid black;
+}
+#save-game-status-container {
+  border-radius: 10px;
+  width: 30%;
+  height: 50%;
+  justify-content: center;
+  align-content: center;
+  display: flex;
+  flex-direction: column;
+  color: white;
+  text-align: center;
+  font-size: 24px;
+  border: 1px solid black;
+  background-color: black;
+}
+
+.save-view {
+  width: 80%;
+}
+
+.save-details {
+  font-size: 20px;
+}

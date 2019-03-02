@@ -54,7 +54,8 @@ class Games {
       playersData.players.length,
       gameKey,
       players,
-      activityLog
+      activityLog,
+      gameData.saveStatus
     );
     game.loadData(
       parseCards(gameData.stack),

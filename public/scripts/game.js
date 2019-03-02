@@ -238,7 +238,19 @@ const getGameStatus = function(document) {
       displayTopDiscard(document, gameStatus.topDiscard);
       displayVictory(document, gameStatus.victoryStatus);
       updateRunningColor(document, gameStatus.runningColor);
+      updateSaveStatus(document, gameStatus.saveStatus);
     });
+};
+
+const updateSaveStatus = function(document, saveStatus) {
+  if (saveStatus.status) {
+    const saveDetailsView = document.getElementById('saveDetails');
+
+    const saveData = `The game was saved by Game Id ${
+      saveStatus.gameKey
+    } and Player Id ${saveStatus.playerId} at ${saveStatus.lastSaved}`;
+    saveDetailsView.innerText = saveData;
+  }
 };
 
 const updateRunningColor = function(document, color) {
@@ -276,4 +288,9 @@ const initialize = function(document) {
   }, 1000);
   removePass(document);
 };
+
+const saveGame = function() {
+  fetch('/saveGame');
+};
+
 window.onload = initialize.bind(null, document);

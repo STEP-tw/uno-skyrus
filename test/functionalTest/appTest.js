@@ -9,7 +9,7 @@ describe('homepage', function() {
       .get('/')
       .expect(200)
       .expect('content-type', 'text/html; charset=UTF-8')
-      .expect(/Host Game/)
+      .expect(/Start Game/)
       .end(done);
   });
 });
@@ -415,6 +415,9 @@ describe('gameStatus', function() {
             return 'latest log';
           }
         },
+        getSaveStatus: () => {
+          return { status: false };
+        },
         getRunningColor: () => {
           return 'red';
         },
@@ -422,6 +425,40 @@ describe('gameStatus', function() {
           return { number: 9, color: 'red' };
         },
         victoryStatus: () => {}
+      },
+      getGame: () => {
+        return games['1234'];
+      }
+    };
+
+    app.games = games;
+    request(app)
+      .get('/gameStatus')
+      .set('Cookie', 'gameKey=1234')
+      .expect(200)
+      .expect('content-type', 'application/json; charset=utf-8')
+      .end(done);
+  });
+
+  it('should return gameStatus for the game', function(done) {
+    const games = {
+      1234: {
+        getKey : () => '1234',
+        activityLog: {
+          getLatestLog: () => {
+            return 'latest log';
+          }
+        },
+        getSaveStatus: () => {
+          return { status: true, lastSaved: '2019-10-05 13:23:23' };
+        },
+        getRunningColor: () => {
+          return 'red';
+        },
+        getTopDiscard: () => {
+          return { number: 9, color: 'red' };
+        },
+        victoryStatus: () => {},
       },
       getGame: () => {
         return games['1234'];
@@ -533,10 +570,14 @@ describe('/updateRunningColor', function() {
 
 describe('/saveGame', function() {
   beforeEach(() => {
+    const game = {
+      updateSaveStatus: () => {}
+    };
     const games = {
       saveGame: (writeFun, gameKey) => {
         chai.assert.equal(gameKey, '1234');
-      }
+      },
+      getGame: () => game
     };
     app.games = games;
   });
@@ -580,7 +621,7 @@ describe('/loadGame', function() {
     request(app)
       .post('/loadGame')
       .send({ gameKey: '1234', id: '5678' })
-      .expect(200)
+      .expect(302)
       .end(done);
   });
 });

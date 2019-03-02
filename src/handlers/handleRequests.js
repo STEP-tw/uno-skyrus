@@ -197,14 +197,15 @@ const getRunningColor = function(game) {
 };
 
 const serveGameStatus = function(req, res) {
-  const { gameKey } = req.cookies;
+  const { gameKey, id } = req.cookies;
   const game = res.app.games.getGame(gameKey);
 
   const gameLog = serveGameLog(game);
   const topDiscard = getTopDiscard(game);
   const victoryStatus = game.victoryStatus();
   const runningColor = getRunningColor(game);
-  res.send({ gameLog, topDiscard, runningColor, victoryStatus });
+  const saveStatus = getSaveStatus(game, id);
+  res.send({ gameLog, topDiscard, runningColor, victoryStatus, saveStatus });
 };
 
 const updateRunningColor = function(req, res) {
@@ -220,6 +221,7 @@ const saveGame = function(req, res) {
   const { gameKey } = req.cookies;
   const games = res.app.games;
   games.saveGame(writeData.bind(null, fs), gameKey);
+  games.getGame(gameKey).updateSaveStatus();
   res.end();
 };
 
@@ -236,7 +238,19 @@ const loadGame = function(req, res) {
   loadData(fs, gameKey, games.loadGame.bind(games));
   res.cookie('gameKey', gameKey);
   res.cookie('id', id);
+  res.redirect('/game');
   res.end();
+};
+
+const getSaveStatus = function(game, playerId) {
+  const { status, lastSaved } = game.getSaveStatus();
+  const saveStatus = { status: status };
+  if (status) {
+    saveStatus.lastSaved = lastSaved;
+    saveStatus.gameKey = game.getKey();
+    saveStatus.playerId = playerId;
+  }
+  return saveStatus;
 };
 
 module.exports = {

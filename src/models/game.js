@@ -16,7 +16,14 @@ const increaseGain = cardsToDraw => {
 };
 
 class Game {
-  constructor(deck, playersCount, gameKey, players, activityLog) {
+  constructor(
+    deck,
+    playersCount,
+    gameKey,
+    players,
+    activityLog,
+    saveStatus = { status: false }
+  ) {
     this.players = players;
     this.activityLog = activityLog;
     this.deck = [...deck];
@@ -24,11 +31,21 @@ class Game {
     this.pile = [];
     this.playersCount = playersCount;
     this.gameKey = gameKey;
+    this.saveStatus = saveStatus;
     this.status = false;
     this.runningColor = '';
     this.cardsToDraw = 1;
     this.hasDrawnTwo = true;
     this.hasDrawnFour = true;
+  }
+
+  updateSaveStatus() {
+    this.saveStatus.status = true;
+    this.saveStatus.lastSaved = new Date().toLocaleString();
+  }
+
+  getSaveStatus() {
+    return this.saveStatus;
   }
 
   loadData(stack, pile, status, runningColor, cardsToDraw, hasDrawnTwo) {
@@ -69,7 +86,7 @@ class Game {
       this.cardsToDraw = this.cardsToDraw + gain;
     }
 
-    if (thrownCard.isDrawFour){
+    if (thrownCard.isDrawFour) {
       this.hasDrawnFour = false;
       this.cardsToDraw = 4;
     }
