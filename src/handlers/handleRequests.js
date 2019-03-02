@@ -18,7 +18,8 @@ const hostGame = function(req, res) {
   const host = new Player(hostName, id);
   const players = new Players(host);
   const deck = createDeck(SYMBOLS.skipCard);
-  const activityLog = new ActivityLog([]); //gameKey, hostName);
+  const activityLog = new ActivityLog([]);
+  // gameKey, hostName);
   const game = new Game(deck, totalPlayers, gameKey, players, activityLog);
 
   req.app.games.addGame(game, gameKey);
@@ -67,6 +68,7 @@ const servePlayerCards = function(req, res) {
       .getId() == id
   ) {
     playableCards = player.getPlayableCards();
+    console.log(`-------------------${playableCards}---------------------`);
   }
   res.send({ cards, playableCards });
 };
@@ -81,7 +83,6 @@ const haveAllPlayersJoined = function(game) {
 const handleGame = function(req, res) {
   const { gameKey } = req.cookies;
   const game = req.app.games.getGame(gameKey);
-  console.log(game, 'this is game class');
   const playersCount = game.playersCount;
 
   if (haveAllPlayersJoined(game)) {
@@ -151,7 +152,6 @@ const getPlayerNames = (req, res) => {
 const renderGamePage = function(req, res) {
   const { gameKey } = req.cookies;
   const game = req.app.games.getGame(gameKey);
-  console.log(req.app.games);
   const playersCount = game.playersCount;
 
   const gamePage = fs.readFileSync(

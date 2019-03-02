@@ -38,17 +38,46 @@ const displayTopDiscard = function(document, card) {
   pile.append(createCard(document, card));
 };
 
+const hasSameColor = (card1, card2) => card1.color == card2.color;
+
 const isNumberCardSimilar = (card1, card2) =>
-  card1.number == card2.number && card1.color == card2.color;
+  !isNaN(card1.number) &&
+  !isNaN(card2.number) &&
+  (card1.number == card2.number && hasSameColor(card1, card2));
+
+const isReverseCardSimilar = (card1, card2) =>
+  card1.isReverseCard && card2.isReverseCard && hasSameColor(card1, card2);
+
+const isDrawTwoCardSimilar = (card1, card2) =>
+  card1.isDrawTwo && card2.isDrawTwo && hasSameColor(card1, card2);
+
+const isSkipCardSimilar = (card1, card2) =>
+  card1.isSkipCard && card2.isSkipCard && hasSameColor(card1, card2);
+
+const isWildCardSimilar = (card1, card2) =>
+  card1.isWildCard && card2.isWildCard;
 
 const isSimilarCards = function(card1, card2) {
+  console.log(
+    card2,
+    isWildCardSimilar(card1, card2),
+    isReverseCardSimilar(card1, card2),
+    isDrawTwoCardSimilar(card1, card2),
+    isSkipCardSimilar(card1, card2),
+    isNumberCardSimilar(card1, card2)
+  );
   return (
-    (card1.isWildCard && card2.isWildCard) || isNumberCardSimilar(card1, card2)
+    isWildCardSimilar(card1, card2) ||
+    isReverseCardSimilar(card1, card2) ||
+    isDrawTwoCardSimilar(card1, card2) ||
+    isSkipCardSimilar(card1, card2) ||
+    isNumberCardSimilar(card1, card2)
   );
 };
 
 const hasCard = (playableCards, card) => {
   return playableCards.some(playableCard => {
+    console.log('this is a card', card, isSimilarCards(playableCard, card));
     return isSimilarCards(playableCard, card);
   });
 };

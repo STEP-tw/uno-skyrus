@@ -123,10 +123,21 @@ class Game {
     });
   }
 
+  initializePile() {
+    const topDiscard = this.stack.pop();
+
+    if (topDiscard.isDrawTwo) {
+      this.hasDrawnTwo = false;
+      this.cardsToDraw = 2;
+    }
+
+    this.pile.push(topDiscard);
+  }
+
   startGame(shuffle) {
     this.stack = shuffle(this.deck);
     this.dealCards();
-    this.pile.push(this.stack.pop());
+    this.initializePile();
     this.runningColor = this.getTopDiscard().getColor();
     this.status = true;
     this.players.setCurrentPlayer();

@@ -68,7 +68,6 @@ const parsePlayer = function(playerData) {
     playerData.canDrawCard,
     playerData.unoCallStatus
   );
-  console.log(player, 'this is a player');
   return player;
 };
 
