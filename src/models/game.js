@@ -136,6 +136,14 @@ class Game {
       this.cardsToDraw = 2;
     }
 
+    if (topDiscard.isReverseCard) {
+      this.players.updateCurrentPlayer(topDiscard);
+    }
+
+    if (topDiscard.isSkipCard) {
+      this.players.changeTurn();
+    }
+
     this.pile.push(topDiscard);
   }
 

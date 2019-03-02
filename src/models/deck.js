@@ -65,9 +65,9 @@ const createDeck = function(skipCardSymbol) {
   return deck.concat(
     numberCards,
     wildCards,
-    skipCards,
-    drawTwoCards,
     reverseCards,
+    drawTwoCards,
+    skipCards,
     wildDrawFourCards
   );
 };
