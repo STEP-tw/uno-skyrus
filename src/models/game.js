@@ -1,4 +1,4 @@
-const getCardId = function(cardId) {
+const getCardId = function (cardId) {
   return +cardId.match(/[0-9]+/)[0];
 };
 
@@ -22,7 +22,9 @@ class Game {
     gameKey,
     players,
     activityLog,
-    saveStatus = { status: false }
+    saveStatus = {
+      status: false
+    }
   ) {
     this.players = players;
     this.activityLog = activityLog;
@@ -128,12 +130,18 @@ class Game {
     });
   }
 
-  initializePile() {
-    const topDiscard = this.stack.pop();
+  initializePile(shuffle) {
+    let topDiscard = this.stack.pop();
 
     if (topDiscard.isDrawTwo) {
       this.hasDrawnTwo = false;
       this.cardsToDraw = 2;
+    }
+
+    if (topDiscard.isDrawFour) {
+      this.stack.unshift(topDiscard);
+      this.stack = shuffle(this.stack);
+      topDiscard = this.stack.pop();
     }
 
     if (topDiscard.isReverseCard) {
@@ -150,7 +158,7 @@ class Game {
   startGame(shuffle) {
     this.stack = shuffle(this.deck);
     this.dealCards();
-    this.initializePile();
+    this.initializePile(shuffle);
     this.runningColor = this.getTopDiscard().getColor();
     this.status = true;
     this.players.setCurrentPlayer();
@@ -249,9 +257,14 @@ class Game {
     const winner = this.players.getPlayers().find(player => player.hasWon());
     if (winner) {
       this.activityLog.addLog(winner.getName(), ' has won ', 'the game');
-      return { name: winner.getName(), hasWon: true };
+      return {
+        name: winner.getName(),
+        hasWon: true
+      };
     }
-    return { hasWon: false };
+    return {
+      hasWon: false
+    };
   }
 
   getRunningColor() {
@@ -274,7 +287,7 @@ class Game {
 
   updateRunningColor(playerId, color) {
     const topDiscard = this.getTopDiscard();
-    const validateCredentials = function() {
+    const validateCredentials = function () {
       return topDiscard.isWildCard && !topDiscard.isColorDeclared;
     };
     if (this.isCurrentPlayer(playerId) && validateCredentials()) {
@@ -309,4 +322,6 @@ class Game {
   }
 }
 
-module.exports = { Game };
+module.exports = {
+  Game
+};
