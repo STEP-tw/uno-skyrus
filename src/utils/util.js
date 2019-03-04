@@ -21,7 +21,11 @@ const writeData = function(fs, gameKey, game) {
     }
     const games = JSON.parse(gamesData);
     games[gameKey] = game;
-    fs.writeFile(GAMES_FILE, JSON.stringify(games));
+    fs.writeFile(GAMES_FILE, JSON.stringify(games), err => {
+      if (err) {
+        console.log(err);
+      }
+    });
   });
 };
 
