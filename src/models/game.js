@@ -318,7 +318,10 @@ class Game {
   }
 
   leaveGame(playerId) {
+    const playerName = this.players.getPlayer(playerId).getName();
     this.players.removePlayer(playerId);
+    this.playersCount = this.players.getPlayersCount();
+    this.activityLog.addLog(playerName, ' left the ', 'game');
   }
 }
 

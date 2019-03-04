@@ -21,7 +21,8 @@ const {
   saveGame,
   catchPlayer,
   loadGame,
-  leaveGame
+  leaveGame,
+  servePlayersCount
 } = require('./handlers/handleRequests');
 
 const app = express();
@@ -49,6 +50,7 @@ app.get('/drawCard', drawCard);
 app.get('/passTurn', passTurn);
 app.get('/catch', catchPlayer);
 app.get('/leaveGame', leaveGame);
+app.get('/playersCount', servePlayersCount);
 app.use(express.static('public', options));
 
 module.exports = { app };

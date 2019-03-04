@@ -424,7 +424,8 @@ describe('gameStatus', function() {
         getTopDiscard: () => {
           return { number: 9, color: 'red' };
         },
-        victoryStatus: () => {}
+        victoryStatus: () => {},
+        getPlayersCount: () => {}
       },
       getGame: () => {
         return games['1234'];
@@ -458,7 +459,8 @@ describe('gameStatus', function() {
         getTopDiscard: () => {
           return { number: 9, color: 'red' };
         },
-        victoryStatus: () => {}
+        victoryStatus: () => {},
+        getPlayersCount: () => {}
       },
       getGame: () => {
         return games['1234'];
@@ -640,6 +642,26 @@ describe('/leaveGame', function() {
   it('should remove the player from the players and respond with 200 status code', function(done) {
     request(app)
       .get('/leaveGame')
+      .expect(200)
+      .end(done);
+  });
+});
+
+describe('/playersCount', function() {
+  beforeEach(function() {
+    const games = {};
+    const game = {
+      leaveGame: () => {},
+      getPlayersCount: () => 1
+    };
+
+    games.getGame = sinon.stub();
+    games.getGame.returns(game);
+    app.games = games;
+  });
+  it('should return the players count with status code 200', function(done) {
+    request(app)
+      .get('/playersCount')
       .expect(200)
       .end(done);
   });

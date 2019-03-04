@@ -816,17 +816,25 @@ describe('Game Class', () => {
     let game;
 
     beforeEach(function() {
+      const activityLog = { addLog: () => {} };
       const players = {
         players: [
           {
-            '12': {}
+            '12': {},
+            getName: () => 'reshmi'
           }
         ],
         removePlayer: function() {
           this.players = [];
+        },
+        getPlayer: function() {
+          return this.players[0];
+        },
+        getPlayersCount: function() {
+          return this.players.length;
         }
       };
-      game = new Game([], 1, '1', players, {});
+      game = new Game([], 1, '1', players, activityLog);
     });
 
     it('should remove the requested player from players', function() {

@@ -31,6 +31,10 @@ class Players {
     return this.players;
   }
 
+  getPlayersCount() {
+    return this.players.length;
+  }
+
   getPlayer(playerId) {
     return this.players.find(player => {
       return player.id == playerId;

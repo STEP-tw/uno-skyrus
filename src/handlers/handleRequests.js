@@ -203,7 +203,15 @@ const serveGameStatus = function(req, res) {
   const victoryStatus = game.victoryStatus();
   const runningColor = getRunningColor(game);
   const saveStatus = getSaveStatus(game, id);
-  res.send({ gameLog, topDiscard, runningColor, victoryStatus, saveStatus });
+  const playersCount = game.getPlayersCount();
+  res.send({
+    gameLog,
+    topDiscard,
+    runningColor,
+    victoryStatus,
+    saveStatus,
+    playersCount
+  });
 };
 
 const updateRunningColor = function(req, res) {
@@ -258,6 +266,13 @@ const leaveGame = function(req, res) {
   res.end();
 };
 
+const servePlayersCount = function(req, res) {
+  const { gameKey } = req.cookies;
+  const game = req.app.games.getGame(gameKey);
+  const playersCount = game.getPlayersCount();
+  res.send({ playersCount });
+};
+
 module.exports = {
   hostGame,
   validateGameKey,
@@ -275,5 +290,6 @@ module.exports = {
   saveGame,
   catchPlayer,
   loadGame,
-  leaveGame
+  leaveGame,
+  servePlayersCount
 };

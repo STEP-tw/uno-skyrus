@@ -3,9 +3,12 @@
 
 const OTHERS_CARDS_LIMIT = 3;
 let calledUno = false;
+let numberOfPlayers;
 
 const leaveGame = function() {
-  fetch('/leaveGame');
+  fetch('/leaveGame').then(res => {
+    window.location.href = '/';
+  });
 };
 
 const removePass = function(document) {
@@ -254,6 +257,13 @@ const displayVictory = function(document, status) {
   }
 };
 
+const changeGamePage = function(document, playersCount) {
+  if (numberOfPlayers != playersCount) {
+    numberOfPlayers = playersCount;
+    window.location.href = '/game';
+  }
+};
+
 const getGameStatus = function(document) {
   fetch('/gameStatus')
     .then(response => response.json())
@@ -263,6 +273,7 @@ const getGameStatus = function(document) {
       displayVictory(document, gameStatus.victoryStatus);
       updateRunningColor(document, gameStatus.runningColor);
       updateSaveStatus(document, gameStatus.saveStatus);
+      changeGamePage(document, gameStatus.playersCount);
     });
 };
 
@@ -310,6 +321,11 @@ const initialize = function(document) {
     pile.setAttribute('ondragover', 'allowDrop(event)');
     getPlayerDetails(document);
   }, 1000);
+  fetch('/playersCount')
+    .then(res => res.json())
+    .then(json => {
+      numberOfPlayers = json.playersCount;
+    });
   removePass(document);
 };
 

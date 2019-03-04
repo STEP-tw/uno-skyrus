@@ -74,6 +74,15 @@ describe('getPlayers', function() {
     chai.assert.deepEqual(expectedOutput, actualOutput);
   });
 });
+describe('getPlayersCount', function() {
+  it('should return number of players', function() {
+    const players = new Players({ name: 'hostName', cards: [], id: 1234 });
+    const actualOutput = players.getPlayersCount();
+    const expectedOutput = 1;
+
+    chai.assert.deepEqual(expectedOutput, actualOutput);
+  });
+});
 
 describe('setCurrentPlayer', function() {
   it('should set the current player as first joined player', function() {
@@ -246,7 +255,12 @@ describe('changeTurn', function() {
 
 describe('removePlayer', function() {
   it('should remove the player with the given player id', function() {
-    const players = new Players({ name: 'hostName', id: 12, cards: [], getId: () => 12 });
+    const players = new Players({
+      name: 'hostName',
+      id: 12,
+      cards: [],
+      getId: () => 12
+    });
     players.removePlayer(12);
     const actualOutput = players.getPlayers();
     const expectedOutput = [];
