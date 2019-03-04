@@ -4,6 +4,10 @@
 const OTHERS_CARDS_LIMIT = 3;
 let calledUno = false;
 
+const leaveGame = function() {
+  fetch('/leaveGame');
+};
+
 const removePass = function(document) {
   const pass = document.getElementById('passTurn');
   pass.style.visibility = 'hidden';
@@ -55,17 +59,9 @@ const isSkipCardSimilar = (card1, card2) =>
   card1.isSkipCard && card2.isSkipCard && hasSameColor(card1, card2);
 
 const isWildCardSimilar = (card1, card2) =>
-  card1.isWildCard && card2.isWildCard && (card1.isDrawFour == card2.isDrawFour);
+  card1.isWildCard && card2.isWildCard && card1.isDrawFour == card2.isDrawFour;
 
 const isSimilarCards = function(card1, card2) {
-  console.log(
-    card2,
-    isWildCardSimilar(card1, card2),
-    isReverseCardSimilar(card1, card2),
-    isDrawTwoCardSimilar(card1, card2),
-    isSkipCardSimilar(card1, card2),
-    isNumberCardSimilar(card1, card2)
-  );
   return (
     isWildCardSimilar(card1, card2) ||
     isReverseCardSimilar(card1, card2) ||
@@ -77,7 +73,6 @@ const isSimilarCards = function(card1, card2) {
 
 const hasCard = (playableCards, card) => {
   return playableCards.some(playableCard => {
-    console.log('this is a card', card, isSimilarCards(playableCard, card));
     return isSimilarCards(playableCard, card);
   });
 };

@@ -243,3 +243,13 @@ describe('changeTurn', function() {
     chai.assert.deepEqual(0, actualOutput);
   });
 });
+
+describe('removePlayer', function() {
+  it('should remove the player with the given player id', function() {
+    const players = new Players({ name: 'hostName', id: 12, cards: [], getId: () => 12 });
+    players.removePlayer(12);
+    const actualOutput = players.getPlayers();
+    const expectedOutput = [];
+    chai.assert.deepEqual(actualOutput, expectedOutput);
+  });
+});

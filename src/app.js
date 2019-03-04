@@ -20,7 +20,8 @@ const {
   updateRunningColor,
   saveGame,
   catchPlayer,
-  loadGame
+  loadGame,
+  leaveGame
 } = require('./handlers/handleRequests');
 
 const app = express();
@@ -47,6 +48,7 @@ app.get('/lobby', serveLobby);
 app.get('/drawCard', drawCard);
 app.get('/passTurn', passTurn);
 app.get('/catch', catchPlayer);
+app.get('/leaveGame', leaveGame);
 app.use(express.static('public', options));
 
 module.exports = { app };

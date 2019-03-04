@@ -160,7 +160,6 @@ class Game {
   drawCards(playerId) {
     const currentPlayer = this.players.getCurrentPlayer();
     const drawCardStatus = currentPlayer.getDrawCardStatus();
-    console.log('drawCardStatus -------------', drawCardStatus);
 
     if (canNotDraw(this.isCurrentPlayer(playerId), drawCardStatus)) {
       return;
@@ -187,10 +186,8 @@ class Game {
       this.updatePlayableCards();
       return [];
     }
-    console.log('drawnCards--------------', drawnCards);
 
     const playableCards = currentPlayer.getPlayableCards();
-    console.log('playableCards-----------', playableCards);
 
     const normalPlayableCards = playableCards.filter(card => !card.isDrawFour);
     const hasNoNormalPlayableCards = normalPlayableCards.length === 0;
@@ -305,6 +302,10 @@ class Game {
       lastPlayer.addCards(penaltyCards);
       this.log(catchingPlayer, ' has caught ', lastPlayer.getName());
     }
+  }
+
+  leaveGame(playerId) {
+    this.players.removePlayer(playerId);
   }
 }
 

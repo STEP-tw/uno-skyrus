@@ -19,7 +19,6 @@ const hostGame = function(req, res) {
   const players = new Players(host);
   const deck = createDeck(SYMBOLS.skipCard);
   const activityLog = new ActivityLog([`Game created by ${hostName}`]);
-  // gameKey, hostName);
   const game = new Game(deck, totalPlayers, gameKey, players, activityLog);
 
   req.app.games.addGame(game, gameKey);
@@ -68,7 +67,6 @@ const servePlayerCards = function(req, res) {
       .getId() == id
   ) {
     playableCards = player.getPlayableCards();
-    console.log(`-------------------${playableCards}---------------------`);
   }
   res.send({ cards, playableCards });
 };
@@ -253,6 +251,13 @@ const getSaveStatus = function(game, playerId) {
   return saveStatus;
 };
 
+const leaveGame = function(req, res) {
+  const { gameKey, id } = req.cookies;
+  const game = res.app.games.getGame(gameKey);
+  game.leaveGame(id);
+  res.end();
+};
+
 module.exports = {
   hostGame,
   validateGameKey,
@@ -269,5 +274,6 @@ module.exports = {
   updateRunningColor,
   saveGame,
   catchPlayer,
-  loadGame
+  loadGame,
+  leaveGame
 };

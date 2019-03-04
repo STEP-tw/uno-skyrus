@@ -749,6 +749,32 @@ describe('Game Class', () => {
       chai.assert.deepEqual(actual, expected);
     });
   });
+
+  describe('leaveGame', function() {
+    let game;
+
+    beforeEach(function() {
+      const players = {
+        players: [
+          {
+            '12': {}
+          }
+        ],
+        removePlayer: function() {
+          this.players = [];
+        }
+      };
+      game = new Game([], 1, '1', players, {});
+    });
+
+    it('should remove the requested player from players', function() {
+      game.leaveGame('12');
+      const actualOutput = game.players.players;
+      const expectedOutput = [];
+
+      chai.assert.deepEqual(actualOutput, expectedOutput);
+    });
+  });
 });
 
 describe('updateSaveStatus', () => {

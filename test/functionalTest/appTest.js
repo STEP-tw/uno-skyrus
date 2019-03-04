@@ -443,7 +443,7 @@ describe('gameStatus', function() {
   it('should return gameStatus for the game', function(done) {
     const games = {
       1234: {
-        getKey : () => '1234',
+        getKey: () => '1234',
         activityLog: {
           getLatestLog: () => {
             return 'latest log';
@@ -458,7 +458,7 @@ describe('gameStatus', function() {
         getTopDiscard: () => {
           return { number: 9, color: 'red' };
         },
-        victoryStatus: () => {},
+        victoryStatus: () => {}
       },
       getGame: () => {
         return games['1234'];
@@ -622,6 +622,25 @@ describe('/loadGame', function() {
       .post('/loadGame')
       .send({ gameKey: '1234', id: '5678' })
       .expect(302)
+      .end(done);
+  });
+});
+
+describe('/leaveGame', function() {
+  beforeEach(function() {
+    const games = {};
+    const game = {
+      leaveGame: () => {}
+    };
+
+    games.getGame = sinon.stub();
+    games.getGame.returns(game);
+    app.games = games;
+  });
+  it('should remove the player from the players and respond with 200 status code', function(done) {
+    request(app)
+      .get('/leaveGame')
+      .expect(200)
       .end(done);
   });
 });
