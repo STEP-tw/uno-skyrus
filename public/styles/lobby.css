@@ -25,14 +25,14 @@
 }
 
 .gameKey {
-  border:none;
+  border: none;
   font-size: 20px;
   font-weight: bold;
 
   width: 170px;
-  
-  background:transparent;
-  color:black;
+
+  background: transparent;
+  color: black;
 
   transform: rotate(0deg);
 }
@@ -91,7 +91,7 @@
 
 .lobby-uno-card {
   margin: 0% 5%;
-  height: 240px;
-  width: 165px;
+  height: 245px;
+  width: 175px;
   transition: margin-bottom 2s;
 }

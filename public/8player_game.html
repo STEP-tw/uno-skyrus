@@ -1,0 +1,343 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="/styles/main.css" />
+    <link rel="stylesheet" href="/styles/game.css" />
+    <script src="/scripts/game.js"></script>
+    <script src="/scripts/viewUtils.js"></script>
+  </head>
+
+  <body>
+    <main>
+      <header class="header-game">
+        <div class="save-view">
+          <p class="save-details" id="saveDetails">
+            Your game is not yet saved
+          </p>
+        </div>
+        <div class="header-btns">
+          <button class="save-game" onclick="saveGame()">Save Game</button>
+          <button class="leave-game" onclick="leaveGame()">Leave Game</button>
+        </div>
+      </header>
+      <div id="wildCardOverlay" class="overlay hidden">
+        <div class=" color-container ">
+          <span class="color-header">Choose Running Color</span>
+          <div class="color-row">
+            <div class="red color-div" onclick="declareRunningColor()"></div>
+            <div class="blue color-div" onclick="declareRunningColor()"></div>
+          </div>
+          <div class="color-row">
+            <div class="green color-div" onclick="declareRunningColor()"></div>
+            <div class="yellow color-div" onclick="declareRunningColor()"></div>
+          </div>
+        </div>
+      </div>
+      <div class="play-table">
+        <div class="top-table">
+          <div class="left-table">
+            <div class="player">
+              <div class="player-name-div">
+                <span class="arrow" id="player4-arrow">&#10145;</span>
+                <div class="player-name" id="player4">Player4</div>
+              </div>
+              <div class="other-hand" id="player4Hand">
+                <div class="uno-card theme-uno-card first-uno-card">
+                  <div class="theme-uno-card-inner black">
+                    <div class="theme-uno-design-inner red">
+                      <span class="theme-color">U</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="uno-card theme-uno-card others-uno-card">
+                  <div class="theme-uno-card-inner black">
+                    <div class="theme-uno-design-inner red">
+                      <span class="theme-color">U</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="uno-card theme-uno-card others-uno-card">
+                  <div class="theme-uno-card-inner black">
+                    <div class="theme-uno-design-inner red">
+                      <span class="theme-color">U</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="center-table">
+            <div class="player">
+              <div class="player-name-div">
+                <span class="arrow" id="player5-arrow">&#10145;</span>
+                <div class="player-name" id="player5">Player5</div>
+              </div>
+              <div class="other-hand" id="player5Hand">
+                <div class="uno-card theme-uno-card first-uno-card">
+                  <div class="theme-uno-card-inner black">
+                    <div class="theme-uno-design-inner red">
+                      <span class="theme-color">U</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="uno-card theme-uno-card others-uno-card">
+                  <div class="theme-uno-card-inner black">
+                    <div class="theme-uno-design-inner red">
+                      <span class="theme-color">U</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="uno-card theme-uno-card others-uno-card">
+                  <div class="theme-uno-card-inner black">
+                    <div class="theme-uno-design-inner red">
+                      <span class="theme-color">U</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="right-table">
+            <div class="player">
+              <div class="player-name-div">
+                <span class="arrow" id="player6-arrow">&#10145;</span>
+                <div class="player-name" id="player6">Player6</div>
+              </div>
+              <div class="other-hand" id="player6Hand">
+                <div class="uno-card theme-uno-card first-uno-card">
+                  <div class="theme-uno-card-inner black">
+                    <div class="theme-uno-design-inner red">
+                      <span class="theme-color">U</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="uno-card theme-uno-card others-uno-card">
+                  <div class="theme-uno-card-inner black">
+                    <div class="theme-uno-design-inner red">
+                      <span class="theme-color">U</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="uno-card theme-uno-card others-uno-card">
+                  <div class="theme-uno-card-inner black">
+                    <div class="theme-uno-design-inner red">
+                      <span class="theme-color">U</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="middle-table">
+          <div class="left-table">
+            <div class="player">
+              <div class="player-name-div">
+                <span class="arrow" id="player3-arrow">&#10145;</span>
+                <div class="player-name" id="player3">Player3</div>
+              </div>
+              <div class="other-hand" id="player3Hand">
+                <div class="uno-card theme-uno-card first-uno-card">
+                  <div class="theme-uno-card-inner black">
+                    <div class="theme-uno-design-inner red">
+                      <span class="theme-color">U</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="uno-card theme-uno-card others-uno-card">
+                  <div class="theme-uno-card-inner black">
+                    <div class="theme-uno-design-inner red">
+                      <span class="theme-color">U</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="uno-card theme-uno-card others-uno-card">
+                  <div class="theme-uno-card-inner black">
+                    <div class="theme-uno-design-inner red">
+                      <span class="theme-color">U</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="center-table">
+            <div class="status-bar" id="statusBar"></div>
+            <div class="cards-on-table">
+              <div class="pile-stack stack-of-cards">
+                <div class="uno-card theme-uno-card first-uno-card">
+                  <div class="theme-uno-card-inner black">
+                    <div class="theme-uno-design-inner red">
+                      <span class="theme-color">U</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="uno-card theme-uno-card pile-stack-card">
+                  <div class="theme-uno-card-inner black">
+                    <div class="theme-uno-design-inner red">
+                      <span class="theme-color">U</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="uno-card theme-uno-card pile-stack-card" id="stack">
+                  <div class="theme-uno-card-inner black">
+                    <div class="theme-uno-design-inner red">
+                      <span class="theme-color">U</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="running-color" id="runningColorDiv"></div>
+
+              <div class="pile-stack">
+                <div class="uno-card theme-uno-card first-uno-card">
+                  <div class="theme-uno-card-inner blue">
+                    <div class="theme-uno-design-inner white">
+                      <span class="theme-color">U</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="uno-card theme-uno-card pile-stack-card">
+                  <div class="theme-uno-card-inner yellow">
+                    <div class="theme-uno-design-inner white">
+                      <span class="theme-color">U</span>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="uno-card theme-uno-card pile-stack-card"
+                  id="pile"
+                ></div>
+              </div>
+            </div>
+            <div class="action-btns" id="action-btns"></div>
+          </div>
+          <div class="right-table">
+            <div class="player">
+              <div class="player-name-div">
+                <span class="arrow" id="player7-arrow">&#10145;</span>
+                <div class="player-name" id="player7">Player7</div>
+              </div>
+              <div class="other-hand" id="player7Hand">
+                <div class="uno-card theme-uno-card first-uno-card">
+                  <div class="theme-uno-card-inner black">
+                    <div class="theme-uno-design-inner red">
+                      <span class="theme-color">U</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="uno-card theme-uno-card others-uno-card">
+                  <div class="theme-uno-card-inner black">
+                    <div class="theme-uno-design-inner red">
+                      <span class="theme-color">U</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="uno-card theme-uno-card others-uno-card">
+                  <div class="theme-uno-card-inner black">
+                    <div class="theme-uno-design-inner red">
+                      <span class="theme-color">U</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="bottom-table">
+          <div class="left-table">
+            <div class="player">
+              <div class="player-name-div">
+                <span class="arrow" id="player2-arrow">&#10145;</span>
+                <div class="player-name" id="player2">Player2</div>
+              </div>
+              <div class="other-hand" id="player2Hand">
+                <div class="uno-card theme-uno-card first-uno-card">
+                  <div class="theme-uno-card-inner black">
+                    <div class="theme-uno-design-inner red">
+                      <span class="theme-color">U</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="uno-card theme-uno-card others-uno-card">
+                  <div class="theme-uno-card-inner black">
+                    <div class="theme-uno-design-inner red">
+                      <span class="theme-color">U</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="uno-card theme-uno-card others-uno-card">
+                  <div class="theme-uno-card-inner black">
+                    <div class="theme-uno-design-inner red">
+                      <span class="theme-color">U</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="center-table">
+            <div class="player">
+              <div class="player-name-div">
+                <span class="arrow" id="player1-arrow">&#10145;</span>
+                <div class="player-name" id="player1">Player1</div>
+              </div>
+              <div class="hand" id="myHand"></div>
+            </div>
+          </div>
+          <div class="right-table">
+            <div class="player">
+              <div class="player-name-div">
+                <span class="arrow" id="player8-arrow">&#10145;</span>
+                <div class="player-name" id="player8">Player4</div>
+              </div>
+              <div class="other-hand" id="player8Hand">
+                <div class="uno-card theme-uno-card first-uno-card">
+                  <div class="theme-uno-card-inner black">
+                    <div class="theme-uno-design-inner red">
+                      <span class="theme-color">U</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="uno-card theme-uno-card others-uno-card">
+                  <div class="theme-uno-card-inner black">
+                    <div class="theme-uno-design-inner red">
+                      <span class="theme-color">U</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="uno-card theme-uno-card others-uno-card">
+                  <div class="theme-uno-card-inner black">
+                    <div class="theme-uno-design-inner red">
+                      <span class="theme-color">U</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="overlay hidden" id="gameEnd">
+        <div class="win-message">
+          <span id="popupMessage" class="pop-up-message"></span>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
