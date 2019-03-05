@@ -141,7 +141,8 @@ class Game {
     if (topDiscard.isDrawFour) {
       this.stack.unshift(topDiscard);
       this.stack = shuffle(this.stack);
-      topDiscard = this.stack.pop();
+      this.initializePile(shuffle);
+      return;
     }
 
     if (topDiscard.isReverseCard) {
@@ -151,7 +152,6 @@ class Game {
     if (topDiscard.isSkipCard) {
       this.players.changeTurn();
     }
-
     this.pile.push(topDiscard);
   }
 
@@ -159,7 +159,9 @@ class Game {
     this.stack = shuffle(this.deck);
     this.dealCards();
     this.initializePile(shuffle);
-    this.runningColor = this.getTopDiscard().getColor();
+    if (!this.getTopDiscard().isWildCard) {
+      this.runningColor = this.getTopDiscard().getColor();
+    }
     this.status = true;
     this.players.setCurrentPlayer();
     this.updatePlayableCards();

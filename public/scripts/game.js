@@ -43,6 +43,12 @@ const displayTopDiscard = function(document, card) {
   const pile = document.getElementById('pile');
   pile.innerHTML = '';
   pile.append(createCard(document, card));
+  if (card.isWildCard && !card.isColorDeclared) {
+    document.getElementById('wildCardOverlay').className = 'overlay visible';
+  }
+  if(card.isWildCard && card.isColorDeclared){
+    document.getElementById('wildCardOverlay').className = 'overlay hidden';
+  }
 };
 
 const hasSameColor = (card1, card2) => card1.color == card2.color;

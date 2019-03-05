@@ -68,7 +68,7 @@ const createDeck = function(skipCardSymbol) {
     reverseCards,
     drawTwoCards,
     skipCards,
-    wildDrawFourCards
+    wildDrawFourCards,
   );
 };
 

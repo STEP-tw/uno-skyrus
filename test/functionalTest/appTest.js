@@ -523,7 +523,8 @@ describe('passTurn', function() {
     const games = {
       1234: {
         players: { changeTurn: () => {} },
-        getPlayers: () => players
+        getPlayers: () => players,
+        updatePlayableCards:()=>{}
       },
       getGame: () => {
         return games['1234'];

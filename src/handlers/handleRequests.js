@@ -9,7 +9,9 @@ const ld = require('lodash');
 const { ActivityLog } = require('./../models/activityLog');
 
 const LOBBY = fs.readFileSync('./public/lobby.html', 'utf8');
-const SYMBOLS = { skipCard: '&#8856;' };
+const SYMBOLS = {
+  skipCard: '&#8856;'
+};
 
 const hostGame = function(req, res) {
   const gameKey = generateGameKey();
@@ -33,10 +35,14 @@ const validateGameKey = function(req, res) {
   const { gameKey } = req.body;
   const games = req.app.games;
   if (!games.doesGameExist(gameKey)) {
-    res.send({ doesGameExist: false });
+    res.send({
+      doesGameExist: false
+    });
     return;
   }
-  res.send({ doesGameExist: true });
+  res.send({
+    doesGameExist: true
+  });
 };
 
 const joinGame = function(req, res) {
@@ -68,7 +74,10 @@ const servePlayerCards = function(req, res) {
   ) {
     playableCards = player.getPlayableCards();
   }
-  res.send({ cards, playableCards });
+  res.send({
+    cards,
+    playableCards
+  });
 };
 
 const haveAllPlayersJoined = function(game) {
@@ -97,7 +106,10 @@ const handleGame = function(req, res) {
     return players.map(player => player.getName());
   };
   const playersNames = extractPlayersNames(game);
-  const playersDetails = { playersCount, playersNames };
+  const playersDetails = {
+    playersCount,
+    playersNames
+  };
   res.send(playersDetails);
 };
 
@@ -126,7 +138,10 @@ const drawCard = function(req, res) {
     game.refillStack();
   }
   const cards = game.getPlayerCards(+id);
-  res.send({ cards, playableCards });
+  res.send({
+    cards,
+    playableCards
+  });
 };
 
 const getPlayerNames = (req, res) => {
@@ -144,7 +159,10 @@ const getPlayerNames = (req, res) => {
     };
   });
 
-  res.send({ playerDetails, playerPosition });
+  res.send({
+    playerDetails,
+    playerPosition
+  });
 };
 
 const renderGamePage = function(req, res) {
@@ -175,6 +193,7 @@ const passTurn = function(req, res) {
 
   if (hasDrawn(player) && isCurrentPlayer(game, player)) {
     game.getPlayers().changeTurn();
+    game.updatePlayableCards();
   }
   res.end();
 };
@@ -204,6 +223,7 @@ const serveGameStatus = function(req, res) {
   const runningColor = getRunningColor(game);
   const saveStatus = getSaveStatus(game, id);
   const playersCount = game.getPlayersCount();
+
   res.send({
     gameLog,
     topDiscard,
@@ -250,7 +270,9 @@ const loadGame = function(req, res) {
 
 const getSaveStatus = function(game, playerId) {
   const { status, lastSaved } = game.getSaveStatus();
-  const saveStatus = { status: status };
+  const saveStatus = {
+    status: status
+  };
   if (status) {
     saveStatus.lastSaved = lastSaved;
     saveStatus.gameKey = game.getKey();
@@ -270,7 +292,9 @@ const servePlayersCount = function(req, res) {
   const { gameKey } = req.cookies;
   const game = req.app.games.getGame(gameKey);
   const playersCount = game.getPlayersCount();
-  res.send({ playersCount });
+  res.send({
+    playersCount
+  });
 };
 
 module.exports = {
