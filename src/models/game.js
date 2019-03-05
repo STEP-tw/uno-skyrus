@@ -1,4 +1,4 @@
-const getCardId = function (cardId) {
+const getCardId = function(cardId) {
   return +cardId.match(/[0-9]+/)[0];
 };
 
@@ -32,6 +32,7 @@ class Game {
     this.stack = [];
     this.pile = [];
     this.playersCount = playersCount;
+    this.numberOfPlayersJoined = 1;
     this.gameKey = gameKey;
     this.saveStatus = saveStatus;
     this.status = false;
@@ -289,7 +290,7 @@ class Game {
 
   updateRunningColor(playerId, color) {
     const topDiscard = this.getTopDiscard();
-    const validateCredentials = function () {
+    const validateCredentials = function() {
       return topDiscard.isWildCard && !topDiscard.isColorDeclared;
     };
     if (this.isCurrentPlayer(playerId) && validateCredentials()) {
@@ -322,8 +323,13 @@ class Game {
   leaveGame(playerId) {
     const playerName = this.players.getPlayer(playerId).getName();
     this.players.removePlayer(playerId);
-    this.playersCount = this.players.getPlayersCount();
+    this.numberOfPlayersJoined--;
     this.activityLog.addLog(playerName, ' left the ', 'game');
+  }
+
+  addPlayer(player) {
+    this.players.addPlayer(player);
+    this.numberOfPlayersJoined++;
   }
 }
 

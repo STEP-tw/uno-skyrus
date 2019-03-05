@@ -52,7 +52,8 @@ const joinGame = function(req, res) {
   const id = generateGameKey();
   const player = new Player(playerName, id);
 
-  game.getPlayers().addPlayer(player);
+  // game.getPlayers().addPlayer(player);
+  game.addPlayer(player);
 
   res.cookie('gameKey', gameKey);
   res.cookie('id', id);
@@ -168,7 +169,7 @@ const getPlayerNames = (req, res) => {
 const renderGamePage = function(req, res) {
   const { gameKey } = req.cookies;
   const game = req.app.games.getGame(gameKey);
-  const playersCount = game.playersCount;
+  const playersCount = game.numberOfPlayersJoined;
 
   const gamePage = fs.readFileSync(
     `./public/${playersCount}player_game.html`,
@@ -222,8 +223,7 @@ const serveGameStatus = function(req, res) {
   const victoryStatus = game.victoryStatus();
   const runningColor = getRunningColor(game);
   const saveStatus = getSaveStatus(game, id);
-  const playersCount = game.getPlayersCount();
-
+  const playersCount = game.numberOfPlayersJoined;
   res.send({
     gameLog,
     topDiscard,
@@ -291,10 +291,8 @@ const leaveGame = function(req, res) {
 const servePlayersCount = function(req, res) {
   const { gameKey } = req.cookies;
   const game = req.app.games.getGame(gameKey);
-  const playersCount = game.getPlayersCount();
-  res.send({
-    playersCount
-  });
+  const playersCount = game.numberOfPlayersJoined;
+  res.send({ playersCount });
 };
 
 module.exports = {

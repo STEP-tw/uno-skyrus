@@ -1,4 +1,5 @@
 /* globals createPlayerCard */
+/*eslint no-unused-vars: "off"*/
 
 const copy = function() {
   const copyText = document.getElementById('gameKey');
@@ -36,6 +37,12 @@ const getPlayersStatus = function(document) {
         createPlayersView(document, json.playersCount, json.playersNames);
       });
   }, 1000);
+};
+
+const leaveGame = function() {
+  fetch('/leaveGame').then(res => {
+    window.location.href = '/';
+  });
 };
 
 window.onload = () => {

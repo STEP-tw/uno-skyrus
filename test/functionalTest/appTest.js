@@ -33,7 +33,7 @@ describe('gamepage', function() {
   beforeEach(function() {
     const games = {};
     const game = {
-      playersCount: 2
+      playersCount: 2,numberOfPlayersJoined:2
     };
     games.getGame = sinon.stub();
     games.getGame.withArgs('1234').returns(game);
@@ -138,6 +138,7 @@ describe('joinGame', function() {
     const game = {};
     game.getPlayers = sinon.stub();
     game.getPlayers.returns(players);
+    game.addPlayer = sinon.stub();
 
     games.doesGameExist = sinon.stub();
     games.doesGameExist.withArgs(1234).returns(true);
