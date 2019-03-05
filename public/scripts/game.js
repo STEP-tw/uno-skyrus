@@ -206,11 +206,16 @@ const getNamesInOrder = function(playerNames, playerPosition) {
 
 const updateNamesAndClasses = function(document, id, name, isCurrent) {
   document.getElementById(`player${id}`).innerText = name;
+
   let className = 'non-current-player';
+  let handClassName = 'other-hand';
   if (isCurrent) {
+    handClassName = 'other-hand current-hand';
     className = 'current-player';
   }
   document.getElementById(`player${id}-arrow`).className = className;
+  if (id !== 1)
+    document.getElementById(`player${id}Hand`).className = handClassName;
 };
 
 const updatePlayersDetails = function(document, playerDetails, playerPosition) {

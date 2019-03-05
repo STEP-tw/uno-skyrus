@@ -156,6 +156,8 @@
   align-items: center;
   justify-content: center;
 
+  opacity: 0.3;
+
   border-bottom: 2px solid black;
 }
 
@@ -413,4 +415,8 @@
 
 .save-details {
   font-size: 20px;
+}
+
+.current-hand {
+  opacity: 1;
 }
