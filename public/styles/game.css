@@ -241,13 +241,13 @@
 }
 
 .player-name {
-  width: 80%;
   height: 80%;
 
-  color: white;
+  /* color: white; */
   text-align: center;
-
-  background-color: #70a5c0;
+  display: flex;
+  align-items: center;
+  /* background-color: #70a5c0; */
   font-weight: 100;
   letter-spacing: 1.2;
   font-family: sans-serif;
@@ -267,13 +267,13 @@
 }
 
 .player-name-div {
-  width: 120px;
+  width: 140px;
   height: 10%;
 
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-evenly;
 }
 
 .pile-stack-card {
@@ -420,3 +420,28 @@
 .current-hand {
   opacity: 1;
 }
+
+.name-uno-card {
+  height: 21px;
+  width: 15px;
+}
+
+.name-card-border {
+  border-radius: 3px;
+  box-shadow: 2px 2px 4px rgb(104, 99, 99);
+}
+
+.name-first-card {
+  margin: 0;
+}
+
+.name-second-card {
+  margin-left: -10px;
+}
+
+.name-cards {
+  display: flex;
+  flex-direction: row;
+}
+
+
