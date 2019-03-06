@@ -338,6 +338,10 @@ class Game {
     this.players.addPlayer(player);
     this.numberOfPlayersJoined++;
   }
+
+  setNumberOfPlayersJoined(numberOfPlayersJoined) {
+    this.numberOfPlayersJoined = numberOfPlayersJoined;
+  }
 }
 
 module.exports = {

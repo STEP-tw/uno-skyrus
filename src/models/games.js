@@ -57,6 +57,7 @@ class Games {
       gameData.cardsToDraw,
       gameData.hasDrawnTwo
     );
+    game.setNumberOfPlayersJoined(gameData.numberOfPlayersJoined);
     if (!this.doesGameExist(gameKey)) {
       this.addGame(game);
     }
