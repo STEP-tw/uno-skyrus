@@ -303,20 +303,27 @@ class Game {
 
   catchPlayer(playerId) {
     const lastPlayer = this.players.getLastPlayer();
-    const catchingPlayer = this.players.getPlayer(playerId).getName();
+    const catchingPlayer = this.players.getPlayer(playerId);
+    const catchingPlayerName = catchingPlayer.getName();
+    if (this.stack.length < 2) {
+      this.refillStack();
+    }
+    const penaltyCards = this.stack.splice(-2);
 
     if (
       !lastPlayer.getUnoCallStatus() &&
       lastPlayer.getCardsCount() == 1 &&
       !lastPlayer.hasCaught
     ) {
-      if (this.stack.length < 2) {
-        this.refillStack();
-      }
       lastPlayer.setHasCaught();
-      const penaltyCards = this.stack.splice(-2);
       lastPlayer.addCards(penaltyCards);
-      this.log(catchingPlayer, ' has caught ', lastPlayer.getName());
+      this.log(catchingPlayerName, ' has caught ', lastPlayer.getName());
+      return;
+    }
+
+    if (lastPlayer.getCardsCount() > 1 || lastPlayer.getUnoCallStatus()) {
+      catchingPlayer.addCards(penaltyCards);
+      this.log(catchingPlayerName, ' has wrongly called uno ', '');
     }
   }
 
