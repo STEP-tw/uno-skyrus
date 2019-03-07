@@ -65,9 +65,9 @@ button {
   height: 92%;
 
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
 }
 
 .host-room {
@@ -164,6 +164,9 @@ input {
 /* ................................... */
 
 .invalid-input {
+  text-align: center;
+  height: 5%;
+  width: 100%;
   color: red;
   font-size: 25px;
   font-weight: 100;

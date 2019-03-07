@@ -50,14 +50,13 @@ const joinGame = function(req, res) {
   const games = req.app.games;
   const game = games.getGame(gameKey);
   const id = generateGameKey();
-  const player = new Player(playerName, id);
-
-  // game.getPlayers().addPlayer(player);
-  game.addPlayer(player);
-
+  if (!game.hasStarted()) {
+    const player = new Player(playerName, id);
+    game.addPlayer(player);
+  }
   res.cookie('gameKey', gameKey);
   res.cookie('id', id);
-  res.end();
+  res.send({ hasGameStarted: game.hasStarted() });
 };
 
 const servePlayerCards = function(req, res) {
@@ -92,6 +91,7 @@ const handleGame = function(req, res) {
   const { gameKey } = req.cookies;
   const game = req.app.games.getGame(gameKey);
   const playersCount = game.playersCount;
+  const status = game.activityLog.getLatestLog();
 
   if (haveAllPlayersJoined(game)) {
     if (!game.hasStarted()) {
@@ -111,7 +111,7 @@ const handleGame = function(req, res) {
     playersCount,
     playersNames
   };
-  res.send(playersDetails);
+  res.send({playersDetails, status});
 };
 
 const serveLobby = function(req, res) {

@@ -46,7 +46,7 @@ const displayTopDiscard = function(document, card) {
   if (card.isWildCard && !card.isColorDeclared) {
     document.getElementById('wildCardOverlay').className = 'overlay visible';
   }
-  if(card.isWildCard && card.isColorDeclared){
+  if (card.isWildCard && card.isColorDeclared) {
     document.getElementById('wildCardOverlay').className = 'overlay hidden';
   }
 };
@@ -207,13 +207,13 @@ const getNamesInOrder = function(playerNames, playerPosition) {
 const updateNamesAndClasses = function(document, id, name, isCurrent) {
   document.getElementById(`player${id}`).innerText = name;
 
-  let className = 'non-current-player';
+  //let className = 'non-current-player';
   let handClassName = 'other-hand';
   if (isCurrent) {
     handClassName = 'other-hand current-hand';
-    className = 'current-player';
+    //className = 'current-player';
   }
-  document.getElementById(`player${id}-arrow`).className = className;
+  //document.getElementById(`player${id}-arrow`).className = className;
   if (id !== 1)
     document.getElementById(`player${id}Hand`).className = handClassName;
 };

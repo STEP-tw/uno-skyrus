@@ -18,9 +18,17 @@ const joinGame = function() {
     headers: { 'Content-Type': 'application/json' }
   });
 
-  fetch(req).then(() => {
-    window.location.href = '/lobby';
-  });
+  fetch(req)
+    .then(res => res.json())
+    .then(({ hasGameStarted }) => {
+      console.log(hasGameStarted);
+      if (!hasGameStarted) {
+        window.location.href = '/lobby';
+      } else {
+        document.getElementById('invalidGameKey').innerText =
+          'Oops! This game has already been started';
+      }
+    });
 };
 
 const handleJoinGame = function(document, doesGameExist) {
