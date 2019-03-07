@@ -92,6 +92,7 @@ const handleGame = function(req, res) {
   const { gameKey } = req.cookies;
   const game = req.app.games.getGame(gameKey);
   const playersCount = game.playersCount;
+  const status = game.activityLog.getLatestLog();
 
   if (haveAllPlayersJoined(game)) {
     if (!game.hasStarted()) {
@@ -111,7 +112,7 @@ const handleGame = function(req, res) {
     playersCount,
     playersNames
   };
-  res.send(playersDetails);
+  res.send({playersDetails, status});
 };
 
 const serveLobby = function(req, res) {

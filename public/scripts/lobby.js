@@ -24,6 +24,10 @@ const createPlayersView = function(document, playersCount, playersNames) {
   }
 };
 
+const showStatus = function(document, status) {
+  document.getElementById('statusBar').innerText = status;
+};
+
 const getPlayersStatus = function(document) {
   setInterval(() => {
     fetch('/playersStatus')
@@ -34,7 +38,12 @@ const getPlayersStatus = function(document) {
         return response.json();
       })
       .then(json => {
-        createPlayersView(document, json.playersCount, json.playersNames);
+        createPlayersView(
+          document,
+          json.playersDetails.playersCount,
+          json.playersDetails.playersNames
+        );
+        showStatus(document, json.status);
       });
   }, 1000);
 };

@@ -33,7 +33,8 @@ describe('gamepage', function() {
   beforeEach(function() {
     const games = {};
     const game = {
-      playersCount: 2,numberOfPlayersJoined:2
+      playersCount: 2,
+      numberOfPlayersJoined: 2
     };
     games.getGame = sinon.stub();
     games.getGame.withArgs('1234').returns(game);
@@ -213,7 +214,7 @@ describe('player Status', function() {
         getPlayers: () => {
           return { getNumberOfPlayers: sinon.stub().returns(1) };
         },
-
+        activityLog: { getLatestLog: () => {} },
         getPlayersCount: sinon.stub().returns(1),
         startGame: () => {},
         hasStarted: () => true
@@ -226,6 +227,7 @@ describe('player Status', function() {
             getPlayers: () => [{ getName: () => 'name' }]
           };
         },
+        activityLog: { getLatestLog: () => { } },
         getPlayersCount: sinon.stub().returns(1),
         hasStarted: () => false
       },
@@ -233,6 +235,7 @@ describe('player Status', function() {
         getPlayers: () => {
           return { getNumberOfPlayers: sinon.stub().returns(2) };
         },
+        activityLog: { getLatestLog: () => { } },
         getPlayersCount: sinon.stub().returns(2),
         hasStarted: () => false,
         startGame: () => {}
@@ -525,7 +528,7 @@ describe('passTurn', function() {
       1234: {
         players: { changeTurn: () => {} },
         getPlayers: () => players,
-        updatePlayableCards:()=>{}
+        updatePlayableCards: () => {}
       },
       getGame: () => {
         return games['1234'];
