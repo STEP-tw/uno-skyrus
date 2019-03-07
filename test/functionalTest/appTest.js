@@ -130,17 +130,18 @@ describe('playerCards', function() {
 });
 
 describe('joinGame', function() {
+  const game = {};
   beforeEach(function() {
     const games = {};
 
     const players = {};
     players.addPlayer = sinon.stub();
 
-    const game = {};
     game.getPlayers = sinon.stub();
     game.getPlayers.returns(players);
     game.addPlayer = sinon.stub();
 
+    game.hasStarted = sinon.stub().returns(false);
     games.doesGameExist = sinon.stub();
     games.doesGameExist.withArgs(1234).returns(true);
     games.doesGameExist.returns(false);
@@ -150,11 +151,22 @@ describe('joinGame', function() {
     app.games = games;
   });
 
-  it('should response with 200 status code', function(done) {
+  it('should response with hasGameStarted status as false', function(done) {
     request(app)
       .post('/joinGame')
       .send({ playerName: 'Rishab', gameKey: 1234 })
       .expect(200)
+      .expect({ hasGameStarted: false })
+      .end(done);
+  });
+
+  it('should response with hasGameStarted status as true', function(done) {
+    game.hasStarted = () => true;
+    request(app)
+      .post('/joinGame')
+      .send({ playerName: 'Rishab', gameKey: 1234 })
+      .expect(200)
+      .expect({ hasGameStarted: true })
       .end(done);
   });
 });

@@ -50,14 +50,13 @@ const joinGame = function(req, res) {
   const games = req.app.games;
   const game = games.getGame(gameKey);
   const id = generateGameKey();
-  const player = new Player(playerName, id);
-
-  // game.getPlayers().addPlayer(player);
-  game.addPlayer(player);
-
+  if (!game.hasStarted()) {
+    const player = new Player(playerName, id);
+    game.addPlayer(player);
+  }
   res.cookie('gameKey', gameKey);
   res.cookie('id', id);
-  res.end();
+  res.send({ hasGameStarted: game.hasStarted() });
 };
 
 const servePlayerCards = function(req, res) {
