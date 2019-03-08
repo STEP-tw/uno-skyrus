@@ -425,13 +425,12 @@ describe('get players', () => {
 
 describe('gameStatus', function() {
   it('should return gameStatus for the game', function(done) {
+    const isCurrent = () => true;
+    const players = {getPlayer: ()=>{}, isCurrent};
     const games = {
       1234: {
-        activityLog: {
-          getLatestLog: () => {
-            return 'latest log';
-          }
-        },
+        activityLog: { getLatestLog: () => { return 'latest log'; } },
+        getPlayers: () => players,
         getSaveStatus: () => {
           return { status: false };
         },
@@ -453,12 +452,15 @@ describe('gameStatus', function() {
     request(app)
       .get('/gameStatus')
       .set('Cookie', 'gameKey=1234')
+      .set('Cookie', 'id=123')      
       .expect(200)
       .expect('content-type', 'application/json; charset=utf-8')
       .end(done);
   });
 
   it('should return gameStatus for the game', function(done) {
+    const isCurrent = () => true;
+    const players = {getPlayer: ()=>{}, isCurrent};
     const games = {
       1234: {
         getKey: () => '1234',
@@ -467,6 +469,8 @@ describe('gameStatus', function() {
             return 'latest log';
           }
         },
+        getPlayers: () => players,
+
         getSaveStatus: () => {
           return { status: true, lastSaved: '2019-10-05 13:23:23' };
         },
@@ -694,6 +698,7 @@ describe('restrictAccess', function(){
     games.getGame.returns(game);
     app.games = games;
   });
+  
   it('should restrict the access to the restricted urls ',function(done){
     request(app)
       .get('/lobby')
@@ -701,7 +706,6 @@ describe('restrictAccess', function(){
       .expect('Location', '/game')
       .end(done);
   });
-
 
   it('should not restrict the access to the valid urls ',function(done){
     request(app)

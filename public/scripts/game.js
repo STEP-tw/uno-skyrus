@@ -39,11 +39,11 @@ const drawCard = function(document) {
     });
 };
 
-const displayTopDiscard = function(document, card) {
+const displayTopDiscard = function(document, card, isCurrentPlayer) {
   const pile = document.getElementById('pile');
   pile.innerHTML = '';
   pile.append(createCard(document, card));
-  if (card.isWildCard && !card.isColorDeclared) {
+  if (card.isWildCard && !card.isColorDeclared && isCurrentPlayer) {
     document.getElementById('wildCardOverlay').className = 'overlay visible';
   }
   if (card.isWildCard && card.isColorDeclared) {
@@ -280,7 +280,7 @@ const getGameStatus = function(document) {
     .then(response => response.json())
     .then(gameStatus => {
       displayLog(document, gameStatus.gameLog);
-      displayTopDiscard(document, gameStatus.topDiscard);
+      displayTopDiscard(document, gameStatus.topDiscard, gameStatus.isCurrent);
       displayVictory(document, gameStatus.victoryStatus);
       updateRunningColor(document, gameStatus.runningColor);
       updateSaveStatus(document, gameStatus.saveStatus);

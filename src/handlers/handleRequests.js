@@ -225,13 +225,15 @@ const serveGameStatus = function(req, res) {
   const runningColor = getRunningColor(game);
   const saveStatus = getSaveStatus(game, id);
   const playersCount = game.numberOfPlayersJoined;
+  const player = game.getPlayers().getPlayer(id);
+  const isCurrent =  isCurrentPlayer(game, player);
   res.send({
     gameLog,
     topDiscard,
     runningColor,
     victoryStatus,
     saveStatus,
-    playersCount
+    playersCount, isCurrent
   });
 };
 
