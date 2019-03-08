@@ -56,9 +56,9 @@ class WildCard extends Card {
 }
 
 class DrawTwo extends Card {
-  constructor(color) {
+  constructor(symbol, color) {
     super();
-    this.symbol = '+2';
+    this.symbol = symbol;
     this.color = color;
     this.isDrawTwo = true;
   }
@@ -146,9 +146,9 @@ class ReverseCard extends Card {
 }
 
 class WildDrawFour extends Card {
-  constructor() {
+  constructor(symbol) {
     super();
-    this.symbol = '+4';
+    this.symbol = symbol;
     this.isDrawFour = true;
     this.isWildCard = true;
     this.isColorDeclared = false;

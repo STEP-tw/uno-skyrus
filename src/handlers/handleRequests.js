@@ -10,9 +10,6 @@ const { ActivityLog } = require('./../models/activityLog');
 const { URLS } = require('../constants.js');
 
 const LOBBY = fs.readFileSync('./public/lobby.html', 'utf8');
-const SYMBOLS = {
-  skipCard: '&#8856;'
-};
 
 const hostGame = function(req, res) {
   const gameKey = generateGameKey();
@@ -20,7 +17,7 @@ const hostGame = function(req, res) {
   const id = generateGameKey();
   const host = new Player(hostName, id);
   const players = new Players(host);
-  const deck = createDeck(SYMBOLS.skipCard);
+  const deck = createDeck();
   const activityLog = new ActivityLog([`Game created by ${hostName}`]);
   const game = new Game(deck, totalPlayers, gameKey, players, activityLog);
 

@@ -186,7 +186,7 @@ describe('DrawTwoCard', function() {
 
   describe('canPlayOnTopOf', function() {
     it('should return true when color is same', function() {
-      const card = new DrawTwo('red');
+      const card = new DrawTwo('+2', 'red');
       const actualOutput = card.canPlayOnTopOf(
         { number: 2, color: 'red' },
         'red',
@@ -198,7 +198,7 @@ describe('DrawTwoCard', function() {
     });
 
     it('should return true when symbol is same', function() {
-      const card = new DrawTwo('red');
+      const card = new DrawTwo('+2', 'red');
       const actualOutput = card.canPlayOnTopOf(
         { symbol: '+2', color: 'blue' },
         'blue',
@@ -224,7 +224,7 @@ describe('DrawTwoCard', function() {
 
   describe('action', function() {
     it('should update current player index by 1', function() {
-      const card = new DrawTwo('red');
+      const card = new DrawTwo('+2', 'red');
       const currentPlayerIndex = 0;
       const actualOutput = card.action(1, currentPlayerIndex);
       const expectedOutput = { updatedIndex: 1 };
@@ -234,7 +234,7 @@ describe('DrawTwoCard', function() {
 
   describe('logMessage', function() {
     it('should return the log Message', function() {
-      const card = new DrawTwo('blue');
+      const card = new DrawTwo('+2', 'blue');
       const actualOutput = card.logMessage();
       const expectedOutput = '+2 blue';
       chai.assert.deepEqual(actualOutput, expectedOutput);
@@ -243,7 +243,7 @@ describe('DrawTwoCard', function() {
 
   describe('Utils', function() {
     it('should give the color', function() {
-      const card = new DrawTwo('blue');
+      const card = new DrawTwo('+2', 'blue');
       const actualOutput = card.getColor();
       const expectedOutput = 'blue';
       chai.assert.deepEqual(actualOutput, expectedOutput);

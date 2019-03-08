@@ -1,10 +1,16 @@
 /* eslint no-unused-vars: "off" */
 const createCard = function(document, card, cardId) {
+  let spanClass = card.color + ' symbol';
+  let innerColor = card.color;
+  let id = cardId;
+
   if (card.isWildCard) {
-    const id = 'wild-card' + cardId;
-    return createWildCard(document, card, id);
+    id = 'wild-card' + cardId;
+    spanClass = 'symbol';
+    innerColor = 'black';
   }
-  return createNumberedCard(document, card, cardId);
+
+  return createNumberedCard(document, card, id, innerColor, spanClass);
 };
 
 const createOuterLayout = function(document, cardId) {
@@ -40,12 +46,16 @@ const createInnerSpan = function(document, className, text) {
   return numberSpan;
 };
 
-const createNumberedCard = function(document, card, cardId) {
-  const spanClass = card.color + ' symbol';
-
+const createNumberedCard = function(
+  document,
+  card,
+  cardId,
+  innerColor,
+  spanClass
+) {
   const unoCard = createOuterLayout(document, cardId);
 
-  const cardInner = createInnerLayout(document, card.color);
+  const cardInner = createInnerLayout(document, innerColor);
 
   const numberLeft = createInnerText(document, 'number-left', card.symbol);
 
@@ -64,29 +74,27 @@ const createNumberedCard = function(document, card, cardId) {
   return unoCard;
 };
 
-const createWildCard = function(document, card, cardId) {
-  const spanClass = 'symbol';
+// const createWildCard = function(document, card, cardId) {
+//   const unoCard = createOuterLayout(document, cardId);
 
-  const unoCard = createOuterLayout(document, cardId);
+//   const cardInner = createInnerLayout(document, innerColor);
 
-  const cardInner = createInnerLayout(document, 'black');
+//   const numberLeft = createInnerText(document, 'number-left', card.symbol);
 
-  const numberLeft = createInnerText(document, 'number-left', card.symbol);
+//   const designInner = createInnerDesign(document);
 
-  const designInner = createInnerDesign(document);
+//   const numberSpan = createInnerSpan(document, spanClass, card.symbol);
 
-  const numberSpan = createInnerSpan(document, spanClass, card.symbol);
+//   const numberRight = createInnerText(document, 'number-right', card.symbol);
 
-  const numberRight = createInnerText(document, 'number-right', card.symbol);
+//   designInner.appendChild(numberSpan);
+//   cardInner.appendChild(designInner);
+//   unoCard.appendChild(numberLeft);
+//   unoCard.appendChild(cardInner);
+//   unoCard.appendChild(numberRight);
 
-  designInner.appendChild(numberSpan);
-  cardInner.appendChild(designInner);
-  unoCard.appendChild(numberLeft);
-  unoCard.appendChild(cardInner);
-  unoCard.appendChild(numberRight);
-
-  return unoCard;
-};
+//   return unoCard;
+// };
 
 const createPlayerCard = function(document, playerName) {
   const unoCard = document.createElement('div');
