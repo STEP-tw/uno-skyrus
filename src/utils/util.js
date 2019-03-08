@@ -54,7 +54,7 @@ const createCard = function(card) {
   if (card.isDrawTwo) {
     return new DrawTwo(card.color);
   }
-  return new NumberedCard(card.number, card.color);
+  return new NumberedCard(card.symbol, card.color);
 };
 
 const parseCards = function(deck) {

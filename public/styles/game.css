@@ -189,15 +189,9 @@
   opacity: 0.5;
 }
 
-.num {
-  background: transparent;
-  font-size: 90px;
-  text-shadow: 1.5px 1.5px 5px black;
-}
-
 .symbol {
   background: transparent;
-  font-size: 55px;
+  font-size: 70px;
   text-shadow: 1.5px 1.5px 5px black;
 }
 
@@ -421,5 +415,3 @@
   display: flex;
   flex-direction: row;
 }
-
-

@@ -54,9 +54,9 @@ const displayTopDiscard = function(document, card, isCurrentPlayer) {
 const hasSameColor = (card1, card2) => card1.color == card2.color;
 
 const isNumberCardSimilar = (card1, card2) =>
-  !isNaN(card1.number) &&
-  !isNaN(card2.number) &&
-  (card1.number == card2.number && hasSameColor(card1, card2));
+  !isNaN(card1.symbol) &&
+  !isNaN(card2.symbol) &&
+  (card1.symbol == card2.symbol && hasSameColor(card1, card2));
 
 const isReverseCardSimilar = (card1, card2) =>
   card1.isReverseCard && card2.isReverseCard && hasSameColor(card1, card2);

@@ -6,7 +6,8 @@ const {
   ReverseCard,
   WildDrawFour
 } = require('./card');
-const REVERSE_SYMBOL = '&#8693';
+const REVERSE_SYMBOL = '&#10150';
+const WILD_SYMBOL = 'w';
 
 const addNumberCards = function(colors, cards, number) {
   colors.forEach(color => {
@@ -22,10 +23,10 @@ const createDrawTwoCards = function() {
   return container.concat(cards, cards);
 };
 
-const createWildCards = function() {
+const createWildCards = function(WILD_SYMBOL) {
   const wildCards = new Array(4).fill(0);
   return wildCards.map(() => {
-    return new WildCard();
+    return new WildCard(WILD_SYMBOL);
   });
 };
 
@@ -56,7 +57,7 @@ const createReverseCards = function(symbol) {
 const createDeck = function(skipCardSymbol) {
   const deck = [];
   const numberCards = createNumberCards();
-  const wildCards = createWildCards();
+  const wildCards = createWildCards(WILD_SYMBOL);
   const drawTwoCards = createDrawTwoCards();
   const skipCards = createSkipCards(skipCardSymbol);
   const reverseCards = createReverseCards(REVERSE_SYMBOL);
@@ -68,7 +69,7 @@ const createDeck = function(skipCardSymbol) {
     reverseCards,
     drawTwoCards,
     skipCards,
-    wildDrawFourCards,
+    wildDrawFourCards
   );
 };
 
