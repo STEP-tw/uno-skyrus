@@ -7,7 +7,7 @@ const { createDeck } = require('../models/deck');
 const { Players } = require('../models/players.js');
 const ld = require('lodash');
 const { ActivityLog } = require('./../models/activityLog');
-const {URLS} = require('../constants.js');
+const { URLS } = require('../constants.js');
 
 const LOBBY = fs.readFileSync('./public/lobby.html', 'utf8');
 const SYMBOLS = {
@@ -112,7 +112,7 @@ const handleGame = function(req, res) {
     playersCount,
     playersNames
   };
-  res.send({playersDetails, status});
+  res.send({ playersDetails, status });
 };
 
 const serveLobby = function(req, res) {
@@ -226,14 +226,15 @@ const serveGameStatus = function(req, res) {
   const saveStatus = getSaveStatus(game, id);
   const playersCount = game.numberOfPlayersJoined;
   const player = game.getPlayers().getPlayer(id);
-  const isCurrent =  isCurrentPlayer(game, player);
+  const isCurrent = isCurrentPlayer(game, player);
   res.send({
     gameLog,
     topDiscard,
     runningColor,
     victoryStatus,
     saveStatus,
-    playersCount, isCurrent
+    playersCount,
+    isCurrent
   });
 };
 
@@ -288,6 +289,8 @@ const leaveGame = function(req, res) {
   const { gameKey, id } = req.cookies;
   const game = res.app.games.getGame(gameKey);
   game.leaveGame(id);
+  res.clearCookie('gameKey');
+  res.clearCookie('id');
   res.end();
 };
 
@@ -298,12 +301,12 @@ const servePlayersCount = function(req, res) {
   res.send({ playersCount });
 };
 
-const isProhibited  = (game, url) => game.hasStarted() &&  !URLS.includes(url);
+const isProhibited = (game, url) => game.hasStarted() && !URLS.includes(url);
 
-const restrictAccess = function(req, res, next){
+const restrictAccess = function(req, res, next) {
   const { gameKey } = req.cookies;
   const game = req.app.games.getGame(gameKey);
-  if(!game) {
+  if (!game) {
     next();
     return;
   }
@@ -312,7 +315,7 @@ const restrictAccess = function(req, res, next){
     res.redirect('/game');
     return;
   }
-  next();  
+  next();
 };
 
 module.exports = {
