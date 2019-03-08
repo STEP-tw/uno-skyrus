@@ -265,6 +265,12 @@ class Game {
         hasWon: true
       };
     }
+    if (this.players.getPlayersCount() == 1) {
+      return {
+        name: this.players.getPlayers()[0].getName(),
+        hasWon: true
+      };
+    }
     return {
       hasWon: false
     };

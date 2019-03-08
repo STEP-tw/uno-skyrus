@@ -544,7 +544,8 @@ describe('Game Class', () => {
       };
       players = {
         players: [player1, player2],
-        getPlayers: () => players.players
+        getPlayers: () => players.players,
+        getPlayersCount: () => 2
       };
     });
     it('should return has won true and name of player if the player has won', function() {
@@ -566,6 +567,32 @@ describe('Game Class', () => {
       const actual = game.victoryStatus();
       const expected = {
         hasWon: false
+      };
+      chai.assert.deepEqual(actual, expected);
+    });
+
+    it('should return has won true and name of player if the player has won', function() {
+      players.players[1].hasWon = () => false;
+      const game = new Game([], 2, 1234, players, {
+        addLog: () => {}
+      });
+      const actual = game.victoryStatus();
+      const expected = {
+        hasWon: false
+      };
+      chai.assert.deepEqual(actual, expected);
+    });
+
+    it('should return has won true and name of player if the player has won', function() {
+      players.players[1].hasWon = () => false;
+      players.getPlayersCount = () => 1;
+      const game = new Game([], 2, 1234, players, {
+        addLog: () => {}
+      });
+      const actual = game.victoryStatus();
+      const expected = {
+        hasWon: true,
+        name: 'player1'
       };
       chai.assert.deepEqual(actual, expected);
     });
