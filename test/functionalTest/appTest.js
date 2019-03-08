@@ -17,7 +17,8 @@ describe('homepage', function() {
 describe('hostGame', function() {
   it('should redirect to lobby', function(done) {
     const games = {
-      addGame: () => {}
+      addGame: () => {},
+      getGame: () => {}
     };
     app.games = games;
     request(app)
@@ -682,4 +683,31 @@ describe('/playersCount', function() {
       .expect(200)
       .end(done);
   });
+});
+
+
+describe('restrictAccess', function(){
+  beforeEach(function() {
+    const games = {};
+    const game = {hasStarted: ()=>true};
+    games.getGame = sinon.stub();
+    games.getGame.returns(game);
+    app.games = games;
+  });
+  it('should restrict the access to the restricted urls ',function(done){
+    request(app)
+      .get('/lobby')
+      .expect(302)
+      .expect('Location', '/game')
+      .end(done);
+  });
+
+
+  it('should not restrict the access to the valid urls ',function(done){
+    request(app)
+      .get('/styles/main.css')
+      .expect(200)
+      .end(done);
+  });
+  
 });

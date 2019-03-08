@@ -7,6 +7,7 @@ const { createDeck } = require('../models/deck');
 const { Players } = require('../models/players.js');
 const ld = require('lodash');
 const { ActivityLog } = require('./../models/activityLog');
+const {URLS} = require('../constants.js');
 
 const LOBBY = fs.readFileSync('./public/lobby.html', 'utf8');
 const SYMBOLS = {
@@ -295,6 +296,23 @@ const servePlayersCount = function(req, res) {
   res.send({ playersCount });
 };
 
+const isProhibited  = (game, url) => game.hasStarted() &&  !URLS.includes(url);
+
+const restrictAccess = function(req, res, next){
+  const { gameKey } = req.cookies;
+  const game = req.app.games.getGame(gameKey);
+  if(!game) {
+    next();
+    return;
+  }
+
+  if (isProhibited(game, req.url)) {
+    res.redirect('/game');
+    return;
+  }
+  next();  
+};
+
 module.exports = {
   hostGame,
   validateGameKey,
@@ -313,5 +331,6 @@ module.exports = {
   catchPlayer,
   loadGame,
   leaveGame,
-  servePlayersCount
+  servePlayersCount,
+  restrictAccess
 };
