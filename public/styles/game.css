@@ -297,7 +297,6 @@
   border-radius: 5px;
 }
 
-
 .win-message {
   display: flex;
   flex-direction: column;
@@ -414,4 +413,13 @@
 .name-cards {
   display: flex;
   flex-direction: row;
+}
+
+.exit-btn {
+  padding: 10px 20px 10px 20px;
+  margin-top: 20px;
+  background: black;
+  color: white;
+  font-weight: 100;
+  cursor: pointer;
 }

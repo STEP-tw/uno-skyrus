@@ -5,10 +5,20 @@ const OTHERS_CARDS_LIMIT = 3;
 let calledUno = false;
 let numberOfPlayers;
 
+const deleteCookie = function(name) {
+  document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+};
+
 const leaveGame = function() {
   fetch('/leaveGame').then(res => {
     window.location.href = '/';
   });
+};
+
+const exitToStartGame = function() {
+  deleteCookie('gameKey');
+  deleteCookie('id');
+  window.location = '/';
 };
 
 const removePass = function(document) {
