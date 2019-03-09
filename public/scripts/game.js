@@ -279,8 +279,8 @@ const displayVictory = function(document, status) {
 };
 
 const changeGamePage = function(document, playersCount) {
-  numberOfPlayers = playersCount;
-  if (numberOfPlayers != playersCount && numberOfPlayers > 1) {
+  if (numberOfPlayers != playersCount && numberOfPlayers > 2) {
+    numberOfPlayers = playersCount;
     window.location.href = '/game';
   }
 };
