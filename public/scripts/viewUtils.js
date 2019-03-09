@@ -10,7 +10,7 @@ const createCard = function(document, card, cardId) {
     innerColor = 'black';
   }
 
-  return createNumberedCard(document, card, id, innerColor, spanClass);
+  return createUnoCard(document, card, id, innerColor, spanClass);
 };
 
 const createOuterLayout = function(document, cardId) {
@@ -20,10 +20,10 @@ const createOuterLayout = function(document, cardId) {
   return unoCard;
 };
 
-const createInnerText = function(document, className, text) {
-  const outerText = document.createElement('div');
+const createInnerText = function(document, className, text, addContent) {
+  let outerText = document.createElement('div');
   outerText.className = className;
-  outerText.innerHTML = text;
+  outerText = addContent(document, outerText, text);
   return outerText;
 };
 
@@ -39,31 +39,75 @@ const createInnerDesign = function(document, color = 'white') {
   return designInner;
 };
 
-const createInnerSpan = function(document, className, text) {
-  const numberSpan = document.createElement('span');
+const createInnerSpan = function(document, className, text, addContent) {
+  let numberSpan = document.createElement('div');
   numberSpan.className = className;
-  numberSpan.innerHTML = text;
+  // numberSpan.innerHTML = text;
+  numberSpan = addContent(document, numberSpan, text);
   return numberSpan;
 };
 
-const createNumberedCard = function(
-  document,
-  card,
-  cardId,
-  innerColor,
-  spanClass
-) {
+const createReverseSymbol = function(document, parentDiv, symbol) {
+  const reverseDiv = parentDiv;
+  reverseDiv.classList.add('reverse');
+
+  const reverse_left = document.createElement('span');
+  reverse_left.className = 'reverse-left';
+  reverse_left.innerHTML = symbol;
+
+  const reverse_right = document.createElement('span');
+  reverse_right.className = 'reverse-right';
+  reverse_right.innerHTML = symbol;
+
+  reverseDiv.appendChild(reverse_left);
+  reverseDiv.appendChild(reverse_right);
+  return reverseDiv;
+};
+
+const addHtmlContent = function(document, parentDiv, content) {
+  parentDiv.innerHTML = content;
+  return parentDiv;
+};
+
+const appendHtmlContent = function(document, parentDiv, content) {
+  parentDiv = createReverseSymbol(document, parentDiv, content);
+  // parentDiv.appendChild(content);
+  return parentDiv;
+};
+
+const createUnoCard = function(document, card, cardId, innerColor, spanClass) {
+  let addContent = addHtmlContent;
+
+  if (card.isReverseCard) {
+    addContent = appendHtmlContent;
+  }
+
   const unoCard = createOuterLayout(document, cardId);
 
   const cardInner = createInnerLayout(document, innerColor);
 
-  const numberLeft = createInnerText(document, 'number-left', card.symbol);
+  const numberLeft = createInnerText(
+    document,
+    'number-left',
+    card.symbol,
+    addContent
+  );
 
   const designInner = createInnerDesign(document);
 
-  const numberSpan = createInnerSpan(document, spanClass, card.symbol);
+  const numberSpan = createInnerSpan(
+    document,
+    spanClass,
+    card.symbol,
+    addContent
+  );
 
-  const numberRight = createInnerText(document, 'number-right', card.symbol);
+  const numberRight = createInnerText(
+    document,
+    'number-right',
+    card.symbol,
+    addContent
+  );
 
   designInner.appendChild(numberSpan);
   cardInner.appendChild(designInner);

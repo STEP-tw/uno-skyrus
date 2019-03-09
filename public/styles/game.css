@@ -195,6 +195,10 @@
   text-shadow: 1.5px 1.5px 5px black;
 }
 
+.symbol.reverse {
+  font-size: 50px;
+}
+
 .uno-card {
   width: 100px;
   height: 140px;
@@ -353,6 +357,7 @@
   height: 6%;
   font-size: 14px;
 }
+
 .save-game {
   /* float: right; */
   /* margin-right: 10%;
@@ -361,10 +366,12 @@
   color: #ffff90;
   background-color: #d33e32;
 }
+
 #save-game-overlay {
   color: white;
   border: 2px solid black;
 }
+
 #save-game-status-container {
   border-radius: 10px;
   width: 30%;
@@ -422,4 +429,27 @@
   color: white;
   font-weight: 100;
   cursor: pointer;
+}
+
+.reverse-left {
+  margin-top: -30%;
+  margin-left: 30%;
+  margin-bottom: -50%;
+  margin-right: 0%;
+  transform: rotate(-30deg);
+}
+
+.reverse-right {
+  margin-top: 0%;
+  margin-left: 0%;
+  margin-bottom: -30%;
+  margin-right: 30%;
+  transform: rotate(150deg);
+}
+
+.reverse {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
