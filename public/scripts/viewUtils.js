@@ -42,7 +42,6 @@ const createInnerDesign = function(document, color = 'white') {
 const createInnerSpan = function(document, className, text, addContent) {
   let numberSpan = document.createElement('div');
   numberSpan.className = className;
-  // numberSpan.innerHTML = text;
   numberSpan = addContent(document, numberSpan, text);
   return numberSpan;
 };
@@ -71,7 +70,6 @@ const addHtmlContent = function(document, parentDiv, content) {
 
 const appendHtmlContent = function(document, parentDiv, content) {
   parentDiv = createReverseSymbol(document, parentDiv, content);
-  // parentDiv.appendChild(content);
   return parentDiv;
 };
 
@@ -118,28 +116,6 @@ const createUnoCard = function(document, card, cardId, innerColor, spanClass) {
   return unoCard;
 };
 
-// const createWildCard = function(document, card, cardId) {
-//   const unoCard = createOuterLayout(document, cardId);
-
-//   const cardInner = createInnerLayout(document, innerColor);
-
-//   const numberLeft = createInnerText(document, 'number-left', card.symbol);
-
-//   const designInner = createInnerDesign(document);
-
-//   const numberSpan = createInnerSpan(document, spanClass, card.symbol);
-
-//   const numberRight = createInnerText(document, 'number-right', card.symbol);
-
-//   designInner.appendChild(numberSpan);
-//   cardInner.appendChild(designInner);
-//   unoCard.appendChild(numberLeft);
-//   unoCard.appendChild(cardInner);
-//   unoCard.appendChild(numberRight);
-
-//   return unoCard;
-// };
-
 const createPlayerCard = function(document, playerName) {
   const unoCard = document.createElement('div');
   unoCard.className = 'lobby-uno-card theme-uno-card';
@@ -148,7 +124,12 @@ const createPlayerCard = function(document, playerName) {
 
   const designInner = createInnerDesign(document, 'red');
 
-  const nameSpan = createInnerSpan(document, 'theme-color', playerName);
+  const nameSpan = createInnerSpan(
+    document,
+    'theme-color',
+    playerName,
+    addHtmlContent
+  );
 
   if (!playerName) {
     nameSpan.innerText = '';
