@@ -6,7 +6,14 @@ const {
   ReverseCard,
   WildDrawFour
 } = require('./card');
-const REVERSE_SYMBOL = '&#8693';
+
+const SYMBOLS = {
+  SKIP_SYMBOL: '&#8856;',
+  REVERSE_SYMBOL: '&#10150',
+  WILD_SYMBOL: 'w',
+  DRAW_TWO_SYMBOL: '+2',
+  DRAW_FOUR_SYMBOL: '+4'
+};
 
 const addNumberCards = function(colors, cards, number) {
   colors.forEach(color => {
@@ -15,22 +22,22 @@ const addNumberCards = function(colors, cards, number) {
   return cards;
 };
 
-const createDrawTwoCards = function() {
+const createDrawTwoCards = function(symbol) {
   const container = [];
   const colors = ['red', 'blue', 'green', 'yellow'];
-  const cards = colors.map(color => new DrawTwo(color));
+  const cards = colors.map(color => new DrawTwo(symbol, color));
   return container.concat(cards, cards);
 };
 
-const createWildCards = function() {
+const createWildCards = function(WILD_SYMBOL) {
   const wildCards = new Array(4).fill(0);
   return wildCards.map(() => {
-    return new WildCard();
+    return new WildCard(WILD_SYMBOL);
   });
 };
 
-const createWildDrawFourCards = function() {
-  return new Array(4).fill().map(() => new WildDrawFour());
+const createWildDrawFourCards = function(symbol) {
+  return new Array(4).fill().map(() => new WildDrawFour(symbol));
 };
 
 const createNumberCards = function() {
@@ -53,14 +60,14 @@ const createReverseCards = function(symbol) {
   return container.concat(cards, cards);
 };
 
-const createDeck = function(skipCardSymbol) {
+const createDeck = function() {
   const deck = [];
   const numberCards = createNumberCards();
-  const wildCards = createWildCards();
-  const drawTwoCards = createDrawTwoCards();
-  const skipCards = createSkipCards(skipCardSymbol);
-  const reverseCards = createReverseCards(REVERSE_SYMBOL);
-  const wildDrawFourCards = createWildDrawFourCards();
+  const wildCards = createWildCards(SYMBOLS.WILD_SYMBOL);
+  const drawTwoCards = createDrawTwoCards(SYMBOLS.DRAW_TWO_SYMBOL);
+  const skipCards = createSkipCards(SYMBOLS.SKIP_SYMBOL);
+  const reverseCards = createReverseCards(SYMBOLS.REVERSE_SYMBOL);
+  const wildDrawFourCards = createWildDrawFourCards(SYMBOLS.DRAW_FOUR_SYMBOL);
 
   return deck.concat(
     numberCards,
@@ -68,7 +75,7 @@ const createDeck = function(skipCardSymbol) {
     reverseCards,
     drawTwoCards,
     skipCards,
-    wildDrawFourCards,
+    wildDrawFourCards
   );
 };
 

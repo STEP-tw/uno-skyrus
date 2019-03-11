@@ -5,10 +5,20 @@ const OTHERS_CARDS_LIMIT = 3;
 let calledUno = false;
 let numberOfPlayers;
 
+const deleteCookie = function(name) {
+  document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+};
+
 const leaveGame = function() {
   fetch('/leaveGame').then(res => {
     window.location.href = '/';
   });
+};
+
+const exitToStartGame = function() {
+  deleteCookie('gameKey');
+  deleteCookie('id');
+  window.location = '/';
 };
 
 const removePass = function(document) {
@@ -39,11 +49,11 @@ const drawCard = function(document) {
     });
 };
 
-const displayTopDiscard = function(document, card) {
+const displayTopDiscard = function(document, card, isCurrentPlayer) {
   const pile = document.getElementById('pile');
   pile.innerHTML = '';
   pile.append(createCard(document, card));
-  if (card.isWildCard && !card.isColorDeclared) {
+  if (card.isWildCard && !card.isColorDeclared && isCurrentPlayer) {
     document.getElementById('wildCardOverlay').className = 'overlay visible';
   }
   if (card.isWildCard && card.isColorDeclared) {
@@ -54,9 +64,9 @@ const displayTopDiscard = function(document, card) {
 const hasSameColor = (card1, card2) => card1.color == card2.color;
 
 const isNumberCardSimilar = (card1, card2) =>
-  !isNaN(card1.number) &&
-  !isNaN(card2.number) &&
-  (card1.number == card2.number && hasSameColor(card1, card2));
+  !isNaN(card1.symbol) &&
+  !isNaN(card2.symbol) &&
+  (card1.symbol == card2.symbol && hasSameColor(card1, card2));
 
 const isReverseCardSimilar = (card1, card2) =>
   card1.isReverseCard && card2.isReverseCard && hasSameColor(card1, card2);
@@ -207,13 +217,10 @@ const getNamesInOrder = function(playerNames, playerPosition) {
 const updateNamesAndClasses = function(document, id, name, isCurrent) {
   document.getElementById(`player${id}`).innerText = name;
 
-  //let className = 'non-current-player';
   let handClassName = 'other-hand';
   if (isCurrent) {
     handClassName = 'other-hand current-hand';
-    //className = 'current-player';
   }
-  //document.getElementById(`player${id}-arrow`).className = className;
   if (id !== 1)
     document.getElementById(`player${id}Hand`).className = handClassName;
 };
@@ -269,7 +276,7 @@ const displayVictory = function(document, status) {
 };
 
 const changeGamePage = function(document, playersCount) {
-  if (numberOfPlayers != playersCount) {
+  if (numberOfPlayers != playersCount && numberOfPlayers > 2) {
     numberOfPlayers = playersCount;
     window.location.href = '/game';
   }
@@ -280,7 +287,7 @@ const getGameStatus = function(document) {
     .then(response => response.json())
     .then(gameStatus => {
       displayLog(document, gameStatus.gameLog);
-      displayTopDiscard(document, gameStatus.topDiscard);
+      displayTopDiscard(document, gameStatus.topDiscard, gameStatus.isCurrent);
       displayVictory(document, gameStatus.victoryStatus);
       updateRunningColor(document, gameStatus.runningColor);
       updateSaveStatus(document, gameStatus.saveStatus);

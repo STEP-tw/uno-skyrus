@@ -7,11 +7,9 @@ const { createDeck } = require('../models/deck');
 const { Players } = require('../models/players.js');
 const ld = require('lodash');
 const { ActivityLog } = require('./../models/activityLog');
+const { URLS } = require('../constants.js');
 
 const LOBBY = fs.readFileSync('./public/lobby.html', 'utf8');
-const SYMBOLS = {
-  skipCard: '&#8856;'
-};
 
 const hostGame = function(req, res) {
   const gameKey = generateGameKey();
@@ -19,7 +17,7 @@ const hostGame = function(req, res) {
   const id = generateGameKey();
   const host = new Player(hostName, id);
   const players = new Players(host);
-  const deck = createDeck(SYMBOLS.skipCard);
+  const deck = createDeck();
   const activityLog = new ActivityLog([`Game created by ${hostName}`]);
   const game = new Game(deck, totalPlayers, gameKey, players, activityLog);
 
@@ -111,7 +109,7 @@ const handleGame = function(req, res) {
     playersCount,
     playersNames
   };
-  res.send({playersDetails, status});
+  res.send({ playersDetails, status });
 };
 
 const serveLobby = function(req, res) {
@@ -224,13 +222,16 @@ const serveGameStatus = function(req, res) {
   const runningColor = getRunningColor(game);
   const saveStatus = getSaveStatus(game, id);
   const playersCount = game.numberOfPlayersJoined;
+  const player = game.getPlayers().getPlayer(id);
+  const isCurrent = isCurrentPlayer(game, player);
   res.send({
     gameLog,
     topDiscard,
     runningColor,
     victoryStatus,
     saveStatus,
-    playersCount
+    playersCount,
+    isCurrent
   });
 };
 
@@ -285,6 +286,8 @@ const leaveGame = function(req, res) {
   const { gameKey, id } = req.cookies;
   const game = res.app.games.getGame(gameKey);
   game.leaveGame(id);
+  res.clearCookie('gameKey');
+  res.clearCookie('id');
   res.end();
 };
 
@@ -293,6 +296,23 @@ const servePlayersCount = function(req, res) {
   const game = req.app.games.getGame(gameKey);
   const playersCount = game.numberOfPlayersJoined;
   res.send({ playersCount });
+};
+
+const isProhibited = (game, url) => game.hasStarted() && !URLS.includes(url);
+
+const restrictAccess = function(req, res, next) {
+  const { gameKey } = req.cookies;
+  const game = req.app.games.getGame(gameKey);
+  if (!game) {
+    next();
+    return;
+  }
+
+  if (isProhibited(game, req.url)) {
+    res.redirect('/game');
+    return;
+  }
+  next();
 };
 
 module.exports = {
@@ -313,5 +333,6 @@ module.exports = {
   catchPlayer,
   loadGame,
   leaveGame,
-  servePlayersCount
+  servePlayersCount,
+  restrictAccess
 };

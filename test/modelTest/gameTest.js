@@ -270,7 +270,8 @@ describe('Game Class', () => {
       ];
 
       game = new Game(deck, 1, 1234, players, {
-        addLog: () => {}
+        logThrowCard: () => {},
+        logCallUno: () => {}
       });
       game.startGame(identity);
     });
@@ -352,6 +353,7 @@ describe('Game Class', () => {
       ];
       chai.assert.deepEqual(actual, expected);
     });
+
     it('should remove a card from stack', function() {
       const player = {
         addCard: () => {},
@@ -380,7 +382,7 @@ describe('Game Class', () => {
         getColor: () => 'red'
       };
       const activityLog = {
-        addLog: () => {}
+        logDrawCards: () => {}
       };
       let nineCards = sevenCards.slice();
       nineCards.unshift(card);
@@ -398,6 +400,7 @@ describe('Game Class', () => {
       const expected = [card];
       chai.assert.deepEqual(actual, expected);
     });
+
     it('should remove a card from stack and pass turn if it  is not playable', function() {
       const player = {
         addCard: () => {},
@@ -425,7 +428,7 @@ describe('Game Class', () => {
         canPlayOnTopOf: () => false
       };
       const activityLog = {
-        addLog: () => {}
+        logDrawCards: () => {}
       };
       const nineCards = sevenCards.slice();
       nineCards.unshift(card);
@@ -470,7 +473,7 @@ describe('Game Class', () => {
       });
 
       const activityLog = {
-        addLog: () => {}
+        logDrawCards: () => {}
       };
 
       const game = new Game(deck, 0, 1234, players, activityLog);
@@ -514,7 +517,7 @@ describe('Game Class', () => {
         1234,
         {},
         {
-          addLog: () => {}
+          logRefillStack: () => {}
         }
       );
       game.pile = twoCards;
@@ -544,13 +547,12 @@ describe('Game Class', () => {
       };
       players = {
         players: [player1, player2],
-        getPlayers: () => players.players
+        getPlayers: () => players.players,
+        getPlayersCount: () => 2
       };
     });
     it('should return has won true and name of player if the player has won', function() {
-      const game = new Game([], 2, 1234, players, {
-        addLog: () => {}
-      });
+      const game = new Game([], 2, 1234, players, {});
       const actual = game.victoryStatus();
       const expected = {
         name: 'player2',
@@ -560,12 +562,32 @@ describe('Game Class', () => {
     });
     it('should return has won true and name of player if the player has won', function() {
       players.players[1].hasWon = () => false;
-      const game = new Game([], 2, 1234, players, {
-        addLog: () => {}
-      });
+      const game = new Game([], 2, 1234, players, {});
       const actual = game.victoryStatus();
       const expected = {
         hasWon: false
+      };
+      chai.assert.deepEqual(actual, expected);
+    });
+
+    it('should return has won true and name of player if the player has won', function() {
+      players.players[1].hasWon = () => false;
+      const game = new Game([], 2, 1234, players, {});
+      const actual = game.victoryStatus();
+      const expected = {
+        hasWon: false
+      };
+      chai.assert.deepEqual(actual, expected);
+    });
+
+    it('should return has won true and name of player if the player has won', function() {
+      players.players[1].hasWon = () => false;
+      players.getPlayersCount = () => 1;
+      const game = new Game([], 2, 1234, players, {});
+      const actual = game.victoryStatus();
+      const expected = {
+        hasWon: true,
+        name: 'player1'
       };
       chai.assert.deepEqual(actual, expected);
     });
@@ -594,9 +616,7 @@ describe('Game Class', () => {
         getColor: () => 'blue',
         setColorAsDeclared: () => {}
       };
-      game = new Game(tenCards, 1, 1234, players, {
-        addLog: () => {}
-      });
+      game = new Game(tenCards, 1, 1234, players, {});
       game.startGame(identity);
       game.updateRunningColor(12, 'red');
       const expectedOutput = 'blue';
@@ -610,9 +630,7 @@ describe('Game Class', () => {
         getColor: () => 'green',
         setColorAsDeclared: () => {}
       };
-      game = new Game(tenCards, 1, 1234, players, {
-        addLog: () => {}
-      });
+      game = new Game(tenCards, 1, 1234, players, {});
       game.startGame(identity);
       game.updateRunningColor(12, 'red');
       const expectedOutput = 'red';
@@ -792,7 +810,9 @@ describe('Game Class', () => {
       ];
 
       game = new Game(deck, 1, 1234, players, {
-        addLog: () => {}
+        logCaught: () => {},
+        logWrongCatch: () => {},
+        logRefillStack: () => {}
       });
       game.startGame(identity);
     });
@@ -900,12 +920,13 @@ describe('Game Class', () => {
     let game;
 
     beforeEach(function() {
-      const activityLog = { addLog: () => {} };
+      const activityLog = { logLeaveGame: () => {} };
       const players = {
         players: [
           {
             '12': {},
-            getName: () => 'reshmi'
+            getName: () => 'reshmi',
+            getCards : () =>[]  
           }
         ],
         removePlayer: function() {

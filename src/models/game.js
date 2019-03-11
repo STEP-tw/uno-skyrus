@@ -82,7 +82,7 @@ class Game {
       this.hasDrawnFour,
       hasNoNormalPlayableCards
     );
-    const name = player.getName();
+    const playerName = player.getName();
 
     if (canNotThrow(this.isCurrentPlayer(playerId), isThrowable)) {
       return;
@@ -103,16 +103,12 @@ class Game {
     player.removeCard(cardId);
     this.pile.push(thrownCard);
     player.setUnoCall(unoCallStatus);
-    this.log(name, ' has thrown ', thrownCard.logMessage());
+    this.activityLog.logThrowCard(playerName, thrownCard);
     if (player.getUnoCallStatus()) {
-      this.log(name, ' has called ', 'UNO');
+      this.activityLog.logCallUno(playerName);
     }
 
     this.updatePlayer(thrownCard);
-  }
-
-  log(subject, action, object) {
-    this.activityLog.addLog(subject, action, object);
   }
 
   updatePlayer(thrownCard) {
@@ -177,8 +173,6 @@ class Game {
     }
 
     const playerName = currentPlayer.getName();
-    const action = ' has drawn ';
-    let subject = 'a card';
     const drawnCards = this.stack.splice(-this.cardsToDraw);
     currentPlayer.resetHasCaught();
     currentPlayer.resetUnoCall();
@@ -188,8 +182,6 @@ class Game {
     currentPlayer.setPlayableCards([]);
 
     if (this.cardsToDraw != 1) {
-      subject = this.cardsToDraw + ' cards';
-      this.activityLog.addLog(playerName, action, subject);
       this.cardsToDraw = 1;
       this.hasDrawnTwo = true;
       this.hasDrawnFour = true;
@@ -211,7 +203,7 @@ class Game {
       hasNoNormalPlayableCards
     );
 
-    this.activityLog.addLog(playerName, action, subject);
+    this.activityLog.logDrawCards(playerName, drawnCards.length);
     if (isPlayable) {
       currentPlayer.setPlayableCards(drawnCards);
       return drawnCards;
@@ -259,9 +251,14 @@ class Game {
   victoryStatus() {
     const winner = this.players.getPlayers().find(player => player.hasWon());
     if (winner) {
-      this.activityLog.addLog(winner.getName(), ' has won ', 'the game');
       return {
         name: winner.getName(),
+        hasWon: true
+      };
+    }
+    if (this.players.getPlayersCount() == 1) {
+      return {
+        name: this.players.getPlayers()[0].getName(),
         hasWon: true
       };
     }
@@ -277,7 +274,7 @@ class Game {
   refillStack() {
     this.stack = this.pile.slice(0, -1);
     this.pile = this.pile.slice(-1);
-    this.activityLog.addLog('stack', ' has been refilled', '');
+    this.activityLog.logRefillStack();
   }
 
   hasStarted() {
@@ -317,25 +314,28 @@ class Game {
     ) {
       lastPlayer.setHasCaught();
       lastPlayer.addCards(penaltyCards);
-      this.log(catchingPlayerName, ' has caught ', lastPlayer.getName());
+      this.activityLog.logCaught(catchingPlayerName, lastPlayer.getName());
       return;
     }
 
     if (lastPlayer.getCardsCount() > 1 || lastPlayer.getUnoCallStatus()) {
       catchingPlayer.addCards(penaltyCards);
-      this.log(catchingPlayerName, ' has wrongly called uno ', '');
+      this.activityLog.logWrongCatch(catchingPlayerName);
     }
   }
 
   leaveGame(playerId) {
-    const playerName = this.players.getPlayer(playerId).getName();
+    const player = this.players.getPlayer(playerId);
+    const playerName = player.getName();
+    this.stack = this.stack.concat(player.getCards());
     this.players.removePlayer(playerId);
     this.numberOfPlayersJoined--;
-    this.activityLog.addLog(playerName, ' left the ', 'game');
+    this.activityLog.logLeaveGame(playerName);
   }
 
   addPlayer(player) {
     this.players.addPlayer(player);
+    this.activityLog.logJoinGame(player.getName());
     this.numberOfPlayersJoined++;
   }
 

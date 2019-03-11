@@ -8,6 +8,13 @@
       media="screen"
       href="styles/main.css"
     />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      media="screen"
+      href="styles/index.css"
+    />
+    <script src="/scripts/index.js"></script>
   </head>
   <body>
     <main>
@@ -18,21 +25,120 @@
             <div class="theme-cards theme-uno-card">
               <div class="theme-uno-card-inner black">
                 <div class="theme-uno-design-inner red">
-                  <span class=" theme-color">Start Game</span>
+                  <div class=" theme-color">Start Game</div>
                 </div>
               </div>
             </div>
           </a>
 
-          <a href="#" class="link">
+          <a id="openGuide" class="link">
             <div class="theme-cards theme-uno-card">
               <div class="theme-uno-card-inner black">
                 <div class="theme-uno-design-inner red">
-                  <span class=" theme-color">How to Play</span>
+                  <div class=" theme-color">How to Play</div>
                 </div>
               </div>
             </div>
           </a>
+        </div>
+      </div>
+      <div class="overlay hidden" id="guideBook">
+        <div class="guide-book">
+          <div class="rules-data">
+            <p>
+              <span class="sub-heading">Card Details</span>
+              <ul>
+                <li>19 Blue Cards - 0 to 9</li>
+                <li>19 Green cards - 0 to 9</li>
+                <li>19 Red cards - 0 to 9</li>
+                <li>19 Yellow cards - 0 to 9</li>
+                <li>8 Draw Two cards - 2 each in blue, green, red and yellow</li>
+                <li>8 Reverse cards - 2 each in blue, green, red and yellow</li>
+                <li>8 Skip cards - 2 each in blue, green, red and yellow 4 Wild cards</li>
+                <li>4 Wild Draw Four cards</li>
+              </ul>
+            </p>
+            <div>
+              <span class="sub-heading">How to play</span>
+              <p align="justify">Once the cards are shuffled each player is dealt 7 cards. The remainder of the deck is
+                placed face down to form a DRAW pile. The top card of the DRAW pile is turned over to begin a DISCARD pile.
+                If an Action Card is the first one turned up from
+                the DRAW pile, certain rules apply (See FUNCTIONS OF ACTION CARDS). The person to the left of the dealer
+                starts play. He/she has to match the card on the DISCARD pile, either by number, color or symbol. For
+                example, if the card is a red 7, the
+                player must put down a red card or any color 7. Alternatively, the player can put down a Wild card (See
+                FUNCTIONS OF ACTION CARDS). If the player doesn’t have a card to match the one on the DISCARD pile, he/she
+                must take a card from the DRAW
+                pile. If the card picked up can be played, the player is free to put it down in the same turn. Otherwise,
+                play moves on to the next person in turn. Players may choose not to play a playable card from their hand. If
+                so, the player must draw a
+                card from the DRAW pile. If playable, that card can be put down in the same turn, but the player may not use
+                a card from the hand after the draw.
+              </p>
+            </div>
+            <div>
+              <span class="sub-heading">Functions Of The Action Cards</span>
+              <p>The functions of the Action Cards, and when they may be played, are set out below.</p>
+              <p><span class="third-heading">
+                  Draw Two Card</span> - When this card is played, the next person to play must draw 2 cards and miss his/her
+                turn. This card can only be played on matching colors and other Draw Two cards. If turned up at the beginning
+                of play, the same rule applies.
+              </p>
+              <p><span class="third-heading">
+                  Reverse Card</span> - This simply reverses direction of play. Play to changes direction to the right, and
+                vice versa. The card may only be played on a matching color or on another Reverse card. If this card is
+                turned up at the beginning of play, the dealer goes first, then play moves to the right instead of the left.
+              </p>
+              <p><span class="third-heading">
+                  Skip Card</span> - The next player to play after this card has been laid loses his/her turn and is
+                “skipped”. The card may only be played on a matching color or on another Skip card. If a Skip card is turned
+                up at the beginning of play, the player to the left of the dealer is “skipped”, hence the player to the left
+                of that player commences play.
+      
+              </p>
+              <p><span class="third-heading">
+                  Wild Card</span> - The person playing this card calls for any color to continue the play, including the one
+                currently being played, if so desired. A Wild card can be played at any time - even if the player has another
+                playable card in the hand. If a Wild card is turned up at the beginning of play, the person to the left of
+                the dealer determines the color, which continues play.
+              </p>
+              <p><span class="third-heading">
+                  Wild Draw Four Card</span> - This is the best card to have. The person who plays it calls the color that
+                continues play. Also, the next player has to pick up 4 cards from the DRAW pile and miss his/her turn.
+                Unfortunately, the card can only be played when the player holding it does not have a card in his/her hand to
+                match the color on the DISCARD pile. If the player holds matching numbers or Action Cards, however, the Wild
+                Draw Four card may be played. A player holding a Wild Draw Four may choose to bluff and play the card
+                illegally, but if he/she is caught certain rules apply (See PENALTIES). If this card is turned up at the
+                beginning of play, it is returned to the deck and another card is picked.
+              </p>
+            </div>
+            <div>
+              <span class="sub-heading">Going Out<span>
+                  <p align = "justify">
+                    When a player has only one card left, he/she must yell “UNO” (meaning “one”). Failure to do this results
+                    in having to pick up 2 cards from the DRAW pile. This is only necessary, however, if he/she is caught by
+                    one of the other players (See PENALTIES).
+                    Once a player has no cards left, the hand is over, Then the player will be declared as the winner.
+                    If no player is out of cards by the time the DRAW pile is depleted, the deck is reshuffled and play
+                    continues.
+                  </p>
+            </div>
+            <div>
+              <span class="sub-heading">Winning The Game<span>
+                  <p align="justify">
+                   The player who finishes all the cards in his hand will be considered as the winner of the game
+                  </p>
+            </div>
+            <div>
+              <span class="sub-heading">Penalities<span>
+                  <p align="justify">
+                    A player who forgets to say “UNO” before his/her second-to-last card touches the DISCARD pile. Players may not be
+                    caught for failure to say “UNO” until his/her second-to-last card touches the DISCARD pile. A player may also not be
+                    caught for failure to say “UNO” after the next player begins his/her turn. “Beginning a turn” is defined as either
+                    taking a card from the DRAW pile or drawing a card from your hand to play.
+                  </p>
+            </div>
+          </div>
         </div>
       </div>
     </main>

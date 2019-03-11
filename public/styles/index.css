@@ -1,0 +1,30 @@
+.guide-book {
+  width: 80%;
+  height: 80%;
+
+  background: white;
+  border-radius: 10px;
+}
+
+.sub-heading {
+  font-size: 20px;
+  font-weight: 100;
+}
+
+.rules-data {
+  padding: 20px;
+  height: 95%;
+
+  font-weight: 100;
+
+  overflow: scroll;
+}
+
+.third-heading {
+  font-weight: 500;
+  font-size: 16px;
+}
+
+p {
+  font-size: 16px;
+}
