@@ -178,6 +178,9 @@
   cursor: pointer;
   align-self: center;
 }
+.highlight-playable-card:hover {
+  z-index: 5;
+}
 
 .non-playable-card {
   opacity: 1;
