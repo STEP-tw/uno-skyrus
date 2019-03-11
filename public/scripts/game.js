@@ -327,10 +327,85 @@ const declareRunningColor = function() {
   }).then(() => hidePopUp());
 };
 
+const chatListener = function (document){
+	fetch('/serveChat')
+      .then(response => response.json())
+      .then(chat => {
+        var chatArray = chat;
+		const panel = document.getElementById("ChatTable");
+
+		if(chatArray.length == 0){
+			//No messages yet.
+			panel.innerHTML = '<tr><td style="text-align: center">** No messages yet **</td></tr>';
+		}else{
+			//There is at least one message.
+			var i;
+			var panelHTML = constHTML = '<thead><tr><td width="20%" ></td><td  ></td></tr></thead>';
+			for(i = 0; i < chatArray.length; i++){
+
+					//Make every player name with different color
+					switch(chatArray[i].color){
+						case 0:
+							panelHTML += '<tr><td style="color: blue"><b>' + chatArray[i].from + ': </b></td><td >' + chatArray[i].msg + '</td></tr>';
+							break;
+						case 1:
+							panelHTML += '<tr><td style="color: red"><b>' + chatArray[i].from + ': </b></td><td >' + chatArray[i].msg + '</td></tr>';
+							break;
+						case 2:
+							panelHTML += '<tr><td style="color: green"><b>' + chatArray[i].from + ': </b></td><td >' + chatArray[i].msg + '</td></tr>';
+							break;
+						case 3:
+							panelHTML += '<tr><td style="color: orange"><b>' + chatArray[i].from + ': </b></td><td >' + chatArray[i].msg + '</td></tr>';
+							break;
+						case 4:
+							panelHTML += '<tr><td style="color: sienna"><b>' + chatArray[i].from + ': </b></td><td >' + chatArray[i].msg + '</td></tr>';
+							break;
+						case 5:
+							panelHTML += '<tr><td style="color: indigo"><b>' + chatArray[i].from + ': </b></td><td >' + chatArray[i].msg + '</td></tr>';
+							break;
+						case 6:
+							panelHTML += '<tr><td style="color: darkblue"><b>' + chatArray[i].from + ': </b></td><td >' + chatArray[i].msg + '</td></tr>';
+							break;
+						case 7:
+							panelHTML += '<tr><td style="color: darkslategrey "><b>' + chatArray[i].from + ': </b></td><td >' + chatArray[i].msg + '</td></tr>';
+							break;
+					}
+			}
+			//Update the chat table
+			panel.innerHTML = panelHTML;
+		}
+      });
+};
+
+const handleChatAdd = function (){
+	var input = document.getElementById('usermsg');
+	var msg = document.getElementById('usermsg').value;
+	if(msg == ""){
+		//Check if the input is empty
+		input.placeholder = "You have to fill the field!";
+	}else{
+		var messageObject = {text: msg};
+		fetch('/addChat',{
+			method: 'post',
+			headers:{
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(messageObject)
+		});
+	}
+	input.value = "";
+	//Go to the end of the chat.
+	setTimeout(function () {
+		var chatBox = document.getElementById('chatbox');
+		chatBox.scrollTop = chatBox.scrollHeight+10;
+    }, 500);
+};
+
 const initialize = function(document) {
   setInterval(() => {
     getGameStatus(document);
     fetchCards(document);
+	chatListener(document);
 
     const pile = document.getElementById('pile');
     pile.setAttribute('ondrop', 'drop(event)');
