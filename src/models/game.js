@@ -325,7 +325,9 @@ class Game {
   }
 
   leaveGame(playerId) {
-    const playerName = this.players.getPlayer(playerId).getName();
+    const player = this.players.getPlayer(playerId);
+    const playerName = player.getName();
+    this.stack = this.stack.concat(player.getCards());
     this.players.removePlayer(playerId);
     this.numberOfPlayersJoined--;
     this.activityLog.logLeaveGame(playerName);

@@ -925,7 +925,8 @@ describe('Game Class', () => {
         players: [
           {
             '12': {},
-            getName: () => 'reshmi'
+            getName: () => 'reshmi',
+            getCards : () =>[]  
           }
         ],
         removePlayer: function() {
