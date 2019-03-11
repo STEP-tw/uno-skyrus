@@ -257,13 +257,9 @@
 }
 
 .non-current-player {
-  visibility: hidden;
-  margin-right: 10%;
 }
 
 .current-player {
-  visibility: visible;
-  margin-right: 10%;
   animation: blink 0.9s linear infinite;
 }
 

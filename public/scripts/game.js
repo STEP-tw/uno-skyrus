@@ -218,11 +218,15 @@ const updateNamesAndClasses = function(document, id, name, isCurrent) {
   document.getElementById(`player${id}`).innerText = name;
 
   let handClassName = 'other-hand';
+  let nameCardClass = 'non-current-player name-cards';
   if (isCurrent) {
     handClassName = 'other-hand current-hand';
+    nameCardClass = 'current-player name-cards';
   }
-  if (id !== 1)
+  document.getElementById(`name-card${id}`).className = nameCardClass;
+  if (id !== 1) {
     document.getElementById(`player${id}Hand`).className = handClassName;
+  }
 };
 
 const updatePlayersDetails = function(document, playerDetails, playerPosition) {
