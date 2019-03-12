@@ -2,9 +2,16 @@
   <head>
     <link rel="stylesheet" href="/styles/main.css" />
     <link rel="stylesheet" href="/styles/game.css" />
-    <script src="/scripts/game.js"></script>
+	<link rel="stylesheet" href="/styles/chat_style.css" />
+	<link rel="stylesheet" href="/styles/w3.css">
+	<script src="/scripts/game.js"></script>
     <script src="/scripts/viewUtils.js"></script>
   </head>
+
+  <!-- Disable ENTER to send the form -->
+  <script type="text/javascript">
+    window.addEventListener('keydown',function(e){if(e.keyIdentifier=='U+000A'||e.keyIdentifier=='Enter'||e.keyCode==13){if(e.target.nodeName=='INPUT'&&e.target.type=='text'){e.preventDefault();return false;}}},true);
+  </script>
 
   <body>
     <main>
@@ -362,6 +369,27 @@
 
         </div>
       </div>
+
+	  <div class="w3-round-xlarge ">
+          <div class=" ChatContainer w3-container w3-left w3-animate-opacity  ">
+              <div class=" w3-round-xlarge w3-mobile" id="wrapper">
+                  <div id="menu">
+                      <div style="clear:both"></div>
+                  </div>
+                  <div id="chatbox">
+                      <table id="ChatTable" width="100%">
+
+                      </table>
+                  </div>
+                  <form name="message" >
+                      <input  class="w3-threequarter w3-left-align" name="usermsg" type="text" id="usermsg" size="60" autocomplete="off" />
+                      <input class="w3-blue w3-button w3-hover-light-blue w3-quarter w3-right w3-tiny "
+                             type="button" onclick="handleChatAdd()" id="submitmsg" value="SEND" />
+                  </form>
+              </div>
+          </div>
+      </div>
+
     </main>
   </body>
 </html>

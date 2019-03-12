@@ -40,6 +40,15 @@ class Game {
     this.cardsToDraw = 1;
     this.hasDrawnTwo = true;
     this.hasDrawnFour = true;
+	this.chat = [];
+  }
+
+  getChat(){
+	return this.chat;
+  }
+
+  setChat(newchat){
+	this.chat = newchat;
   }
 
   updateSaveStatus() {
