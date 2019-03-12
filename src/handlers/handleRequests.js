@@ -315,36 +315,6 @@ const restrictAccess = function(req, res, next) {
   next();
 };
 
-const serveChat = function(req, res) {
-	const { gameKey } = req.cookies;
-    const game = req.app.games.getGame(gameKey);
-	const chat = JSON.stringify(game.getChat());
-	res.send(chat);
-};
-
-const addChat = function(req, res){
-	const { gameKey, id } = req.cookies;
-    const game = req.app.games.getGame(gameKey);
-
-	//Getting the objects
-	const array = game.getChat();
-	var message = req.body;
-
-	const players = game.getPlayers().getPlayers();
-	const playerPosition = players.findIndex(player => player.id == id);
-	const playerDetails = players.map(player => {
-      return {
-        name: player.name,
-        isCurrent: game.getPlayers().isCurrent(player),
-        cardsCount: player.getCardsCount()
-      };
-    });
-
-	array.push({from: playerDetails[playerPosition].name, msg: message.text, color: playerPosition});
-	game.setChat(array);
-	res.send(game.getChat());
-};
-
 module.exports = {
   hostGame,
   validateGameKey,
@@ -364,7 +334,5 @@ module.exports = {
   loadGame,
   leaveGame,
   servePlayersCount,
-  restrictAccess,
-  serveChat,
-  addChat
+  restrictAccess
 };
