@@ -144,27 +144,43 @@ const isWildCard = cardId => {
   return cardId.startsWith('wild');
 };
 
-const throwCard = function(document, cardId) {
-  if (isWildCard(cardId)) {
-    document.getElementById('wildCardOverlay').className = 'overlay visible';
-  }
-
+const throwCard = function(document, cardId, declaredColor) {
   fetch('/throwCard', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ cardId, calledUno })
+    body: JSON.stringify({ cardId, calledUno, declaredColor })
   }).then(() => {
+    hidePopUp();
     fetchCards(document);
   });
 };
 
+const declareRunningColor = function(droppedCardId) {
+  const declaredColor = event.target.classList[0];
+  throwCard(document, droppedCardId, declaredColor);
+};
+
+const setOnClickOnColors = function(cardId) {
+  const setRunningColor = declareRunningColor.bind(null, cardId);
+  document.getElementById('redColorDiv').onclick = setRunningColor;
+  document.getElementById('redColorDiv').onclick = setRunningColor;
+  document.getElementById('redColorDiv').onclick = setRunningColor;
+  document.getElementById('redColorDiv').onclick = setRunningColor;
+};
+
 const drop = function(event) {
   event.preventDefault();
-  const cardId = event.dataTransfer.getData('text');
-  if (cardId != 'stack') {
-    throwCard(document, cardId);
+  const droppedCardId = event.dataTransfer.getData('text');
+
+  if (isWildCard(droppedCardId)) {
+    document.getElementById('wildCardOverlay').className = 'overlay visible';
+    setOnClickOnColors(droppedCardId);
+    return;
+  }
+  if (droppedCardId != 'stack') {
+    throwCard(document, droppedCardId);
     disableGameElements();
   }
 };
@@ -318,17 +334,6 @@ const updateRunningColor = function(document, color) {
 const hidePopUp = function() {
   const wildCardOverlay = document.getElementById('wildCardOverlay');
   wildCardOverlay.className = 'overlay hidden';
-};
-
-const declareRunningColor = function() {
-  const declaredColor = event.target.classList[0];
-  fetch('/updateRunningColor', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ declaredColor })
-  }).then(() => hidePopUp());
 };
 
 const initialize = function(document) {

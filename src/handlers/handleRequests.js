@@ -121,10 +121,15 @@ const serveLobby = function(req, res) {
 
 const handleThrowCard = function(req, res) {
   const { gameKey, id } = req.cookies;
-  const { cardId, calledUno } = req.body;
+  const { cardId, calledUno, declaredColor } = req.body;
 
   const game = req.app.games.getGame(gameKey);
   game.throwCard(id, cardId, calledUno);
+
+  if (declaredColor) {
+    game.updateRunningColor(id, declaredColor);
+  }
+
   res.end();
 };
 
@@ -235,15 +240,6 @@ const serveGameStatus = function(req, res) {
   });
 };
 
-const updateRunningColor = function(req, res) {
-  const { declaredColor } = req.body;
-  const { gameKey, id } = req.cookies;
-  const game = res.app.games.getGame(gameKey);
-  game.updateRunningColor(id, declaredColor);
-
-  res.end();
-};
-
 const saveGame = function(req, res) {
   const { gameKey } = req.cookies;
   const games = res.app.games;
@@ -328,7 +324,6 @@ module.exports = {
   serveGameStatus,
   renderGamePage,
   passTurn,
-  updateRunningColor,
   saveGame,
   catchPlayer,
   loadGame,

@@ -17,7 +17,6 @@ const {
   getPlayerNames,
   renderGamePage,
   passTurn,
-  updateRunningColor,
   saveGame,
   catchPlayer,
   loadGame,
@@ -40,7 +39,6 @@ app.post('/throwCard', handleThrowCard);
 app.post('/validateGameKey', validateGameKey);
 app.get('/saveGame', saveGame);
 app.post('/loadGame', loadGame);
-app.post('/updateRunningColor', updateRunningColor);
 app.get('/getPlayerNames', getPlayerNames);
 app.get('/playersStatus', handleGame);
 app.get('/gameStatus', serveGameStatus);

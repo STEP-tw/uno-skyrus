@@ -240,7 +240,7 @@ describe('player Status', function() {
             getPlayers: () => [{ getName: () => 'name' }]
           };
         },
-        activityLog: { getLatestLog: () => { } },
+        activityLog: { getLatestLog: () => {} },
         getPlayersCount: sinon.stub().returns(1),
         hasStarted: () => false
       },
@@ -248,7 +248,7 @@ describe('player Status', function() {
         getPlayers: () => {
           return { getNumberOfPlayers: sinon.stub().returns(2) };
         },
-        activityLog: { getLatestLog: () => { } },
+        activityLog: { getLatestLog: () => {} },
         getPlayersCount: sinon.stub().returns(2),
         hasStarted: () => false,
         startGame: () => {}
@@ -300,6 +300,15 @@ describe('Handle Throw Card', () => {
     request(app)
       .post('/throwCard')
       .send({ cardId: '1' })
+      .set('Cookie', 'gameKey=1234; id=5678')
+      .expect(200)
+      .end(done);
+  });
+
+  it('should update the running color when thrown card is wildcard', done => {
+    request(app)
+      .post('/throwCard')
+      .send({ cardId: '1', calledUno: false, declaredColor: 'red' })
       .set('Cookie', 'gameKey=1234; id=5678')
       .expect(200)
       .end(done);
@@ -426,10 +435,14 @@ describe('get players', () => {
 describe('gameStatus', function() {
   it('should return gameStatus for the game', function(done) {
     const isCurrent = () => true;
-    const players = {getPlayer: ()=>{}, isCurrent};
+    const players = { getPlayer: () => {}, isCurrent };
     const games = {
       1234: {
-        activityLog: { getLatestLog: () => { return 'latest log'; } },
+        activityLog: {
+          getLatestLog: () => {
+            return 'latest log';
+          }
+        },
         getPlayers: () => players,
         getSaveStatus: () => {
           return { status: false };
@@ -452,7 +465,7 @@ describe('gameStatus', function() {
     request(app)
       .get('/gameStatus')
       .set('Cookie', 'gameKey=1234')
-      .set('Cookie', 'id=123')      
+      .set('Cookie', 'id=123')
       .expect(200)
       .expect('content-type', 'application/json; charset=utf-8')
       .end(done);
@@ -460,7 +473,7 @@ describe('gameStatus', function() {
 
   it('should return gameStatus for the game', function(done) {
     const isCurrent = () => true;
-    const players = {getPlayer: ()=>{}, isCurrent};
+    const players = { getPlayer: () => {}, isCurrent };
     const games = {
       1234: {
         getKey: () => '1234',
@@ -562,36 +575,6 @@ describe('passTurn', function() {
   });
 });
 
-describe('/updateRunningColor', function() {
-  beforeEach(function() {
-    const games = {};
-    const game = {
-      runningColor: '',
-      playersCount: 1,
-      updateRunningColor: function(color) {
-        this.runningColor = color;
-      },
-      getRunningColor: function() {
-        return this.runningColor;
-      },
-      updatePlayableCards: function() {}
-    };
-
-    games.getGame = sinon.stub();
-    games.getGame.withArgs('1234').returns(game);
-
-    app.games = games;
-  });
-  it('should return 200 status code and update the running color with provided color', function(done) {
-    request(app)
-      .post('/updateRunningColor')
-      .send({ declaredColor: 'red' })
-      .set('Cookie', 'gameKey=1234')
-      .expect(200)
-      .end(done);
-  });
-});
-
 describe('/saveGame', function() {
   beforeEach(() => {
     const game = {
@@ -605,6 +588,7 @@ describe('/saveGame', function() {
     };
     app.games = games;
   });
+
   it('should call save game function in games', done => {
     request(app)
       .get('/saveGame')
@@ -689,17 +673,16 @@ describe('/playersCount', function() {
   });
 });
 
-
-describe('restrictAccess', function(){
+describe('restrictAccess', function() {
   beforeEach(function() {
     const games = {};
-    const game = {hasStarted: ()=>true};
+    const game = { hasStarted: () => true };
     games.getGame = sinon.stub();
     games.getGame.returns(game);
     app.games = games;
   });
-  
-  it('should restrict the access to the restricted urls ',function(done){
+
+  it('should restrict the access to the restricted urls ', function(done) {
     request(app)
       .get('/lobby')
       .expect(302)
@@ -707,11 +690,10 @@ describe('restrictAccess', function(){
       .end(done);
   });
 
-  it('should not restrict the access to the valid urls ',function(done){
+  it('should not restrict the access to the valid urls ', function(done) {
     request(app)
       .get('/styles/main.css')
       .expect(200)
       .end(done);
   });
-  
 });
