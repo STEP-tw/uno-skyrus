@@ -72,7 +72,7 @@ button {
 
 .host-room {
   width: 100%;
-  height: 80%;
+  height: 93%;
 
   display: flex;
   flex-direction: row;
@@ -180,7 +180,7 @@ input {
 
 .invalid-input {
   text-align: center;
-  height: 5%;
+  height: 7%;
   width: 100%;
   color: red;
   font-size: 25px;
@@ -228,8 +228,8 @@ input {
 }
 
 .big-theme-card {
-  width: 375px;
-  height: 525px;
+  width: 28%;
+  height: 100%;
 }
 
 .single-btn {

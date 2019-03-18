@@ -97,8 +97,12 @@ const hasCard = (playableCards, card) => {
 };
 
 const displayLog = function(document, log) {
+  /*eslint-disable */
+  const statusLog = generateStatusLog(log);
+  /*eslint-enable */
   const status = document.getElementById('statusBar');
-  status.innerHTML = log;
+  status.innerHTML = '';
+  status.appendChild(statusLog);
 };
 
 const setCardAttributes = function(cardView, playableCards, card) {
