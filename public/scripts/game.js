@@ -165,9 +165,9 @@ const declareRunningColor = function(droppedCardId) {
 const setOnClickOnColors = function(cardId) {
   const setRunningColor = declareRunningColor.bind(null, cardId);
   document.getElementById('redColorDiv').onclick = setRunningColor;
-  document.getElementById('redColorDiv').onclick = setRunningColor;
-  document.getElementById('redColorDiv').onclick = setRunningColor;
-  document.getElementById('redColorDiv').onclick = setRunningColor;
+  document.getElementById('blueColorDiv').onclick = setRunningColor;
+  document.getElementById('greenColorDiv').onclick = setRunningColor;
+  document.getElementById('yellowColorDiv').onclick = setRunningColor;
 };
 
 const drop = function(event) {
