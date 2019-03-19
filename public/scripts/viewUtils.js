@@ -66,16 +66,16 @@ const createReverseSymbol = function (document, parentDiv, symbol) {
 const createWildCard = function (document, parentDiv) {
   parentDiv.classList.add('wild');
   const wildUp = document.createElement('span');
-  wildUp.className = "wild-up";
+  wildUp.className = 'wild-up';
 
   const wildDown = document.createElement('span');
-  wildDown.className = "wild-down";
+  wildDown.className = 'wild-down';
   parentDiv.appendChild(wildUp);
   parentDiv.appendChild(wildDown);
 
   return parentDiv;
 
-}
+};
 
 const addHtmlContent = function (document, parentDiv, content) {
   parentDiv.innerHTML = content;
@@ -97,7 +97,7 @@ const createInnerEllipse = function (document, card, spanClass, addContent) {
   let designInner = createInnerDesign(document);
   if (card.isWildCard) {
     designInner.classList.add(spanClass);
-    designInner = appendWildCard(document, designInner)
+    designInner = appendWildCard(document, designInner);
 
     return designInner;
   }
@@ -110,7 +110,7 @@ const createInnerEllipse = function (document, card, spanClass, addContent) {
   );
   designInner.appendChild(design);
   return designInner;
-}
+};
 
 
 const createUnoCard = function (document, card, cardId, innerColor, spanClass) {

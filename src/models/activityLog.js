@@ -65,7 +65,6 @@ class ActivityLog {
       action: 'wrong-catch',
       playerName
     };
-
     this.logs.push(log);
   }
 

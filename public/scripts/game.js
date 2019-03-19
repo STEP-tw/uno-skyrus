@@ -97,8 +97,12 @@ const hasCard = (playableCards, card) => {
 };
 
 const displayLog = function(document, log) {
+  /*eslint-disable */
+  const statusLog = generateStatusLog(log);
+  /*eslint-enable */
   const status = document.getElementById('statusBar');
-  status.innerHTML = log;
+  status.innerHTML = '';
+  status.appendChild(statusLog);
 };
 
 const setCardAttributes = function(cardView, playableCards, card) {
@@ -165,9 +169,9 @@ const declareRunningColor = function(droppedCardId) {
 const setOnClickOnColors = function(cardId) {
   const setRunningColor = declareRunningColor.bind(null, cardId);
   document.getElementById('redColorDiv').onclick = setRunningColor;
-  document.getElementById('redColorDiv').onclick = setRunningColor;
-  document.getElementById('redColorDiv').onclick = setRunningColor;
-  document.getElementById('redColorDiv').onclick = setRunningColor;
+  document.getElementById('blueColorDiv').onclick = setRunningColor;
+  document.getElementById('greenColorDiv').onclick = setRunningColor;
+  document.getElementById('yellowColorDiv').onclick = setRunningColor;
 };
 
 const drop = function(event) {

@@ -24,8 +24,11 @@ const createPlayersView = function(document, playersCount, playersNames) {
   }
 };
 
-const showStatus = function(document, status) {
-  document.getElementById('statusBar').innerText = status;
+const showStatus = function(document, log) {
+  // eslint-disable-next-line no-undef
+  const status = generateStatusLog(log);
+  document.getElementById('statusBar').innerHTML = '';
+  document.getElementById('statusBar').appendChild(status);
 };
 
 const getPlayersStatus = function(document) {

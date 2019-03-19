@@ -18,7 +18,7 @@ const hostGame = function(req, res) {
   const host = new Player(hostName, id);
   const players = new Players(host);
   const deck = createDeck();
-  const activityLog = new ActivityLog([`Game created by ${hostName}`]);
+  const activityLog = new ActivityLog([{ action: 'start-game', hostName }]);
   const game = new Game(deck, totalPlayers, gameKey, players, activityLog);
 
   req.app.games.addGame(game, gameKey);
