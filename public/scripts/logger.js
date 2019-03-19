@@ -25,7 +25,7 @@ const logStartGame = function(log) {
 const logJoinGame = function(log) {
   const player = log.playerName;
   const status = document.createElement('span');
-  status.innerText = player + ' has joined the game.';
+  status.innerText = '\u1F464' + player + ' has joined the game.';
   return status;
 };
 
@@ -78,6 +78,44 @@ const logRefillStack = function(log) {
 };
 
 const getCard = function(card) {
-  let cardView = 'a card';
-  return cardView;
+  if (card.isDrawFour) {
+    return generateDrawFour(card);
+  }
+  if (card.isWildCard) {
+    return generateWildCard(card);
+  }
+  if (card.isDrawTwo) {
+    return generateDrawTwo(card);
+  }
+  if (card.isSkipCard) {
+    return generateSkipCard(card);
+  }
+  if (card.isReverseCard) {
+    return generateReverseCard(card);
+  }
+  return generateNumberCard(card);
+};
+
+const generateWildCard = function() {
+  return 'Wild Card';
+};
+
+const generateDrawTwo = function(card) {
+  return card.color + ' draw two';
+};
+
+const generateSkipCard = function(card) {
+  return card.color + ' skip';
+};
+
+const generateReverseCard = function(card) {
+  return card.color + ' reverse card';
+};
+
+const generateNumberCard = function(card) {
+  return card.symbol + ' of ' + card.color;
+};
+
+const generateDrawFour = function(card) {
+  return ' draw four';
 };
