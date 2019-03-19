@@ -25,36 +25,54 @@ const logStartGame = function(log) {
 const logJoinGame = function(log) {
   const player = log.playerName;
   const status = document.createElement('span');
-  status.innerText = '\u1F464' + player + ' has joined the game.';
+  status.innerText = '👤 ' + player + ' has joined the game.';
   return status;
 };
 
 const logLeaveGame = function(log) {
   const player = log.playerName;
   const status = document.createElement('span');
-  status.innerText = player + ' has left the game.';
+  status.innerText = '👤 ' + player + ' has left the game.';
   return status;
 };
 
 const logThrowCard = function(log) {
   const player = log.playerName;
   const card = getCard(log.card);
-  const status = document.createElement('span');
-  status.innerText = player + ' has thrown ' + card;
+  const status = document.createElement('div');
+  status.className = 'inner-status-div';
+  const statusFirst = document.createElement('span');
+
+  statusFirst.innerText = '👤 ' + player + ' has thrown ';
+  status.appendChild(statusFirst);
+  status.appendChild(card);
   return status;
 };
 
 const logDrawCard = function(log) {
-  const player = log.playerName;
-  const status = document.createElement('span');
-  status.innerText = player + ' has drawn ' + log.cardCount + 'card(s)';
+  const status = document.createElement('div');
+  status.className = 'inner-status-div';
+
+  const statusFirst = document.createElement('span');
+  statusFirst.innerText = '👤 ' + log.playerName + ' ';
+
+  const drawIcon = document.createElement('img');
+  drawIcon.className = 'status-icon';
+  drawIcon.src = '/statusIcons/card-draw.svg';
+
+  const statusLast = document.createElement('span');
+  statusLast.innerText = ' × ' + log.cardCount;
+
+  status.appendChild(statusFirst);
+  status.appendChild(drawIcon);
+  status.appendChild(statusLast);
   return status;
 };
 
 const logCallUno = function(log) {
   const player = log.playerName;
   const status = document.createElement('span');
-  status.innerText = player + ' has called UNO..';
+  status.innerText = '👤 ' + player + ' has Called UNO..';
   return status;
 };
 
@@ -69,7 +87,7 @@ const logCaught = function(log) {
 const logWrongCatch = function(log) {
   const player = log.playerName;
   const status = document.createElement('span');
-  status.innerText = player + ' has made a wrong catch';
+  status.innerText = '👤 ' + player + ' has made a wrong catch';
   return status;
 };
 
@@ -97,25 +115,43 @@ const getCard = function(card) {
 };
 
 const generateWildCard = function() {
-  return 'Wild Card';
+  const cardView = document.createElement('span');
+  cardView.className = 'black-background';
+  cardView.innerText = 'W';
+  return cardView;
 };
 
 const generateDrawTwo = function(card) {
-  return card.color + ' draw two';
+  const cardView = document.createElement('span');
+  cardView.className = card.color + '-background';
+  cardView.innerHTML = card.symbol;
+  return cardView;
 };
 
 const generateSkipCard = function(card) {
-  return card.color + ' skip';
+  const cardView = document.createElement('span');
+  cardView.className = card.color + '-background';
+  cardView.innerText = 'X';
+  return cardView;
 };
 
 const generateReverseCard = function(card) {
-  return card.color + ' reverse card';
+  const cardView = document.createElement('span');
+  cardView.className = card.color + '-background';
+  cardView.innerHTML = '&#8693';
+  return cardView;
 };
 
 const generateNumberCard = function(card) {
-  return card.symbol + ' of ' + card.color;
+  const cardView = document.createElement('span');
+  cardView.className = card.color + '-background';
+  cardView.innerText = card.symbol;
+  return cardView;
 };
 
 const generateDrawFour = function(card) {
-  return ' draw four';
+  const cardView = document.createElement('span');
+  cardView.className = 'black-background';
+  cardView.innerHTML = card.symbol;
+  return cardView;
 };

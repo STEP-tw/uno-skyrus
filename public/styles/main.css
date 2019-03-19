@@ -275,3 +275,49 @@ input {
 .visible {
   visibility: visible;
 }
+
+.black-background {
+  background: black;
+  color: white;
+  padding: 5px;
+  border-radius: 3px;
+}
+
+.red-background {
+  background: #d33e32;
+  color: white;
+  padding: 5px;
+  border-radius: 3px;
+}
+
+.green-background {
+  background: #9bc53d;
+  color: white;
+  padding: 5px;
+  border-radius: 3px;
+}
+.blue-background {
+  background: #5bc0eb;
+  color: white;
+  padding: 5px;
+  border-radius: 3px;
+}
+.yellow-background {
+  background: #ffdf00;
+  color: white;
+  padding: 5px;
+  border-radius: 3px;
+}
+.status-icon {
+  height: 40px;
+  width: 40px;
+}
+
+.inner-status-div {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

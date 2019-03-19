@@ -179,6 +179,7 @@ class Game {
     currentPlayer.setDrawCardStatus(false);
 
     currentPlayer.setPlayableCards([]);
+    this.activityLog.logDrawCards(playerName, drawnCards.length);
 
     if (this.cardsToDraw != 1) {
       this.cardsToDraw = 1;
@@ -202,7 +203,6 @@ class Game {
       hasNoNormalPlayableCards
     );
 
-    this.activityLog.logDrawCards(playerName, drawnCards.length);
     if (isPlayable) {
       currentPlayer.setPlayableCards(drawnCards);
       return drawnCards;

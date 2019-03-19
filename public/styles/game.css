@@ -256,9 +256,6 @@
   border-radius: 5px;
 }
 
-.non-current-player {
-}
-
 .current-player {
   animation: blink 0.9s linear infinite;
 }
