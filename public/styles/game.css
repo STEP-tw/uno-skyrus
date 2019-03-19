@@ -194,7 +194,7 @@
 
 .symbol {
   background: transparent;
-  font-size: 70px;
+  font-size: 65px;
   text-shadow: 1.5px 1.5px 5px black;
 }
 
@@ -451,4 +451,29 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+
+.wild{
+  height:100%;
+  width:100%;
+  display:flex;
+  flex-direction: column;
+  overflow:hidden;
+  border: 5px solid white;
+  transform: rotate(30deg);
+}
+
+.wild-up{
+  width:100%;
+  height:50%;
+  
+  background:linear-gradient(to right,red 50%,blue 50%);
+}
+
+.wild-down{
+  width:100%;
+  height:50%;
+  float:bottom;
+  background:linear-gradient(to right,green 50%,yellow 50%);
 }

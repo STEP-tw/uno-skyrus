@@ -290,7 +290,7 @@ describe('Handle Throw Card', () => {
         throwCard: (playerId, cardId) => {
           chai.assert.equal(playerId, '5678');
           chai.assert.equal(cardId, '1');
-        }
+        },updateRunningColor:()=>{}
       },
       getGame: () => games[1234]
     };
