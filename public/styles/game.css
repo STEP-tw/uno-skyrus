@@ -307,7 +307,8 @@
   width: 30%;
   height: 50%;
   color: black;
-  background: white;
+  background: rgb(223, 216, 216);
+  box-shadow: 4px 4px 5px rgb(151, 144, 144);
 }
 
 .color-div {
@@ -422,10 +423,14 @@
 .exit-btn {
   padding: 10px 20px 10px 20px;
   margin-top: 20px;
+
+  border-radius: 8%;
   background: black;
   color: white;
   font-weight: 100;
   cursor: pointer;
+
+  box-shadow: 2px 2px 3px rgb(54, 53, 53);
 }
 
 .reverse-left {
@@ -461,16 +466,22 @@
   transform: rotate(30deg);
 }
 
-.wild-up {
-  width: 100%;
-  height: 50%;
-
-  background: linear-gradient(to right, red 50%, blue 50%);
+.wild-up{
+  width:100%;
+  height:50%;
+  
+  background:linear-gradient(to right,#d33e32 50%,#5bc0eb 50%);
 }
 
-.wild-down {
-  width: 100%;
-  height: 50%;
-  float: bottom;
-  background: linear-gradient(to right, green 50%, yellow 50%);
+.wild-down{
+  width:100%;
+  height:50%;
+  float:bottom;
+  background:linear-gradient(to right,#9bc53d 50%,#f6db18 50%);
+}
+
+.pop-up-message{
+  text-align: center;
+  font-size: 25px;
+  text-shadow: 1px 1px 2px gray;
 }
