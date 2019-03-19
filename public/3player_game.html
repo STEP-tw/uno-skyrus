@@ -24,21 +24,38 @@
         <div class=" color-container ">
           <span class="color-header">Choose Running Color</span>
           <div class="color-row">
-            <div class="red color-div" onclick="declareRunningColor()"></div>
-            <div class="blue color-div" onclick="declareRunningColor()"></div>
+            <div
+              class="red color-div"
+              id="redColorDiv"
+              onclick="declareRunningColor()"
+            ></div>
+            <div
+              class="blue color-div"
+              id="blueColorDiv"
+              onclick="declareRunningColor()"
+            ></div>
           </div>
           <div class="color-row">
-            <div class="green color-div" onclick="declareRunningColor()"></div>
-            <div class="yellow color-div" onclick="declareRunningColor()"></div>
+            <div
+              class="green color-div"
+              id="greenColorDiv"
+              onclick="declareRunningColor()"
+            ></div>
+            <div
+              class="yellow color-div"
+              id="yellowColorDiv"
+              onclick="declareRunningColor()"
+            ></div>
           </div>
         </div>
       </div>
+      s
       <div class="play-table">
         <div class="middle-table">
           <div class="left-table">
             <div class="vertical-player">
               <div class="player-name-div">
-                <div class="name-cards" id = "name-card2">
+                <div class="name-cards" id="name-card2">
                   <div
                     class="name-uno-card theme-uno-card name-card-border name-first-card"
                   >
@@ -144,7 +161,7 @@
           <div class="right-table">
             <div class="vertical-player">
               <div class="player-name-div">
-                <div class="name-cards" id = "name-card3">
+                <div class="name-cards" id="name-card3">
                   <div
                     class="name-uno-card theme-uno-card name-card-border name-first-card"
                   >
@@ -194,7 +211,7 @@
         <div class="bottom-table">
           <div class="player">
             <div class="player-name-div">
-              <div class="name-cards" id = "name-card1">
+              <div class="name-cards" id="name-card1">
                 <div
                   class="name-uno-card theme-uno-card name-card-border name-first-card"
                 >
@@ -220,7 +237,6 @@
         <div class="win-message">
           <span id="popupMessage" class="pop-up-message"></span>
           <div class="exit-btn" onclick="exitToStartGame()">EXIT</div>
-
         </div>
       </div>
     </main>

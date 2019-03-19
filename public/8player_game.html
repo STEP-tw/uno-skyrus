@@ -20,19 +20,21 @@
           <button class="leave-game" onclick="leaveGame()">Leave Game</button>
         </div>
       </header>
+      
       <div id="wildCardOverlay" class="overlay hidden">
         <div class=" color-container ">
           <span class="color-header">Choose Running Color</span>
           <div class="color-row">
-            <div class="red color-div" onclick="declareRunningColor()"></div>
-            <div class="blue color-div" onclick="declareRunningColor()"></div>
+            <div class="red color-div" id = 'redColorDiv' onclick="declareRunningColor()"></div>
+            <div class="blue color-div" id= 'blueColorDiv' onclick="declareRunningColor()"></div>
           </div>
           <div class="color-row">
-            <div class="green color-div" onclick="declareRunningColor()"></div>
-            <div class="yellow color-div" onclick="declareRunningColor()"></div>
+            <div class="green color-div" id = 'greenColorDiv' onclick="declareRunningColor()"></div>
+            <div class="yellow color-div" id = 'yellowColorDiv' onclick="declareRunningColor()"></div>
           </div>
         </div>
       </div>
+
       <div class="play-table">
         <div class="top-table">
           <div class="left-table">
