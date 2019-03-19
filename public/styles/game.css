@@ -391,7 +391,8 @@
 }
 
 .save-details {
-  font-size: 20px;
+  font-size: 18px;
+  font-weight: 100;
 }
 
 .current-hand {
@@ -453,27 +454,26 @@
   align-items: center;
 }
 
-
-.wild{
-  height:100%;
-  width:100%;
-  display:flex;
+.wild {
+  height: 100%;
+  width: 100%;
+  display: flex;
   flex-direction: column;
-  overflow:hidden;
+  overflow: hidden;
   border: 5px solid white;
   transform: rotate(30deg);
 }
 
-.wild-up{
-  width:100%;
-  height:50%;
-  
-  background:linear-gradient(to right,red 50%,blue 50%);
+.wild-up {
+  width: 100%;
+  height: 50%;
+
+  background: linear-gradient(to right, red 50%, blue 50%);
 }
 
-.wild-down{
-  width:100%;
-  height:50%;
-  float:bottom;
-  background:linear-gradient(to right,green 50%,yellow 50%);
+.wild-down {
+  width: 100%;
+  height: 50%;
+  float: bottom;
+  background: linear-gradient(to right, green 50%, yellow 50%);
 }

@@ -311,6 +311,15 @@ const restrictAccess = function(req, res, next) {
   next();
 };
 
+const updateRunningColor = function(req, res) {
+  const { declaredColor } = req.body;
+  const { gameKey, id } = req.cookies;
+  const game = res.app.games.getGame(gameKey);
+  game.updateRunningColor(id, declaredColor);
+
+  res.end();
+};
+
 module.exports = {
   hostGame,
   validateGameKey,
@@ -329,5 +338,6 @@ module.exports = {
   loadGame,
   leaveGame,
   servePlayersCount,
-  restrictAccess
+  restrictAccess,
+  updateRunningColor
 };

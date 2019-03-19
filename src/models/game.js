@@ -44,7 +44,6 @@ class Game {
 
   updateSaveStatus() {
     this.saveStatus.status = true;
-    this.saveStatus.lastSaved = new Date().toLocaleString();
   }
 
   getSaveStatus() {

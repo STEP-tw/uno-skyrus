@@ -161,13 +161,24 @@ const throwCard = function(document, cardId, declaredColor) {
   });
 };
 
-const declareRunningColor = function(droppedCardId) {
+const throwWildCard = function(droppedCardId) {
   const declaredColor = event.target.classList[0];
   throwCard(document, droppedCardId, declaredColor);
 };
 
+const declareRunningColor = function() {
+  const declaredColor = event.target.classList[0];
+  fetch('/updateRunningColor', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ declaredColor })
+  }).then(() => hidePopUp());
+};
+
 const setOnClickOnColors = function(cardId) {
-  const setRunningColor = declareRunningColor.bind(null, cardId);
+  const setRunningColor = throwWildCard.bind(null, cardId);
   document.getElementById('redColorDiv').onclick = setRunningColor;
   document.getElementById('blueColorDiv').onclick = setRunningColor;
   document.getElementById('greenColorDiv').onclick = setRunningColor;
@@ -323,9 +334,9 @@ const updateSaveStatus = function(document, saveStatus) {
   if (saveStatus.status) {
     const saveDetailsView = document.getElementById('saveDetails');
 
-    const saveData = `The game was saved by Game Id ${
+    const saveData = `The game was saved. Game Id: ${
       saveStatus.gameKey
-    } and Player Id ${saveStatus.playerId} at ${saveStatus.lastSaved}`;
+    }, Player Id: ${saveStatus.playerId}`;
     saveDetailsView.innerText = saveData;
   }
 };

@@ -54,7 +54,7 @@ const logDrawCard = function(log) {
 const logCallUno = function(log) {
   const player = log.playerName;
   const status = document.createElement('span');
-  status.innerText = player + ' has Called UNO..';
+  status.innerText = player + ' has called UNO..';
   return status;
 };
 
@@ -62,7 +62,7 @@ const logCaught = function(log) {
   const catcher = log.catcher;
   const victim = log.victim;
   const status = document.createElement('span');
-  status.innerText = catcher + ' caught ' + victim;
+  status.innerText = catcher + ' has caught ' + victim;
   return status;
 };
 

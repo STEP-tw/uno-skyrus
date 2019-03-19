@@ -71,11 +71,11 @@ const createDeck = function() {
 
   return deck.concat(
     numberCards,
-    wildCards,
     reverseCards,
-    drawTwoCards,
     skipCards,
-    wildDrawFourCards
+    wildCards,
+    wildDrawFourCards,
+    drawTwoCards,
   );
 };
 
