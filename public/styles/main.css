@@ -127,7 +127,7 @@ button {
   border-radius: 7px;
   padding: 1px 0.5px;
 
-  background: white;
+  background: whitesmoke;
   box-shadow: 8px 8px 15px rgb(104, 99, 99);
 
   display: flex;
@@ -235,7 +235,7 @@ input {
 
 .white {
   color: white;
-  background: white;
+  background: whitesmoke;
 }
 
 .theme-color {
