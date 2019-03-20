@@ -33,32 +33,6 @@
   justify-content: space-around;
 }
 
-.gameKey {
-  border: none;
-  font-size: 20px;
-  font-weight: bold;
-
-  width: 170px;
-
-  background: transparent;
-  color: black;
-
-  transform: rotate(0deg);
-}
-
-.gameKey:focus {
-  outline: none;
-}
-
-.copy-btn {
-  cursor: pointer;
-
-  font-size: 35px;
-  font-weight: bold;
-
-  color: rgb(0, 0, 0);
-}
-
 /* Joining players styles */
 
 .players-container {

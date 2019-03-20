@@ -330,14 +330,28 @@ const getGameStatus = function(document) {
     });
 };
 
+const copy = function() {
+  const copyText = document.getElementById('gameKey');
+  copyText.select();
+  document.execCommand('copy');
+};
+
+const copyPlayerId = function() {
+  const copyText = document.getElementById('playerId');
+  copyText.select();
+  document.execCommand('copy');
+};
+
 const updateSaveStatus = function(document, saveStatus) {
   if (saveStatus.status) {
     const saveDetailsView = document.getElementById('saveDetails');
 
-    const saveData = `The game was saved. Game Id: ${
+    const saveData = `The game was saved. Game Id: <input id="gameKey" value="${
       saveStatus.gameKey
-    }, Player Id: ${saveStatus.playerId}`;
-    saveDetailsView.innerText = saveData;
+    }" class="gameKey" readonly/> <span class="copy-btn" onclick="copy()">&#x2398</span>, Player Id: <input id="playerId" value="${
+      saveStatus.playerId
+    }" class="gameKey" readonly/> <span class="copy-btn" onclick="copyPlayerId()">&#x2398</span>`;
+    saveDetailsView.innerHTML = saveData;
   }
 };
 
