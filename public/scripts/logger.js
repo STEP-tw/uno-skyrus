@@ -60,7 +60,7 @@ const logDrawCard = function(log) {
   status.className = 'inner-status-div';
 
   const statusFirst = document.createElement('span');
-  statusFirst.innerText = '👤 ' + log.playerName + '&nbsp;&nbsp;';
+  statusFirst.innerHTML = '👤 ' + log.playerName + '&nbsp;&nbsp;';
 
   const drawIcon = document.createElement('img');
   drawIcon.className = 'status-icon';
@@ -78,7 +78,7 @@ const logDrawCard = function(log) {
 const logCallUno = function(log) {
   const player = log.playerName;
   const status = document.createElement('span');
-  status.innerText = '👤 ' + player + '&nbsp;&nbsp;' + ' has Called UNO..';
+  status.innerHTML = '👤 ' + player + '&nbsp;&nbsp;' + ' has Called UNO..';
   return status;
 };
 
