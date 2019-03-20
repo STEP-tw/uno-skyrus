@@ -37,17 +37,6 @@ const logLeaveGame = function(log) {
 };
 
 const logThrowCard = function(log) {
-  // const player = log.playerName;
-  // const card = getCard(log.card);
-  // const status = document.createElement('div');
-  // status.className = 'inner-status-div';
-  // const statusFirst = document.createElement('span');
-
-  // statusFirst.innerText = '👤 ' + player + ' has thrown ';
-  // status.appendChild(statusFirst);
-  // status.appendChild(card);
-  // return status;
-
   const status = document.createElement('div');
   status.className = 'inner-status-div';
 
@@ -58,8 +47,6 @@ const logThrowCard = function(log) {
   drawIcon.className = 'status-icon';
   drawIcon.src = '/statusIcons/card-discard.svg';
 
-  // const statusLast = document.createElement('span');
-  // statusLast.innerText = ' × ' + log.cardCount;
   const card = getCard(log.card);
 
   status.appendChild(statusFirst);
