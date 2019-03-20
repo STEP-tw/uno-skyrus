@@ -10,14 +10,22 @@
   </head>
   <body>
     <main class="lobby">
-      <header>UNO
-        <button class="leave-game" onclick="leaveGame()">Leave Game</button>
+      <header>
+        <div class="header-inner-div">
+          <div class="uno-ellipse"><span>UNO</span></div>
+        </div>
+        <div class="header-inner-div">
+          <button class="leave-game-btn" onclick="leaveGame()">
+            Leave Game
+          </button>
+        </div>
       </header>
       <div class="gameKey-container">
         <div>
-          Game key : <input id="gameKey" value="__gameKey__" class="gameKey" readonly/> 
-          <span class="copy-btn" id ="copyBtn">&#x2398</span>
-            <div class="status-bar" id="statusBar"></div>
+          Game key :
+          <input id="gameKey" value="__gameKey__" class="gameKey" readonly />
+          <span class="copy-btn" id="copyBtn">&#x2398;</span>
+          <div class="status-bar" id="statusBar"></div>
         </div>
         <div>
           Waiting for all players to join
