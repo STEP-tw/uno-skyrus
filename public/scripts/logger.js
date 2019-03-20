@@ -18,7 +18,7 @@ const generateStatusLog = function(log) {
 const logStartGame = function(log) {
   const host = log.hostName;
   const status = document.createElement('span');
-  status.innerText = '\u25B6 ' + host + ' has started the game.';
+  status.innerText = '👤 ' + host + ' has started the game.';
   return status;
 };
 
@@ -37,14 +37,33 @@ const logLeaveGame = function(log) {
 };
 
 const logThrowCard = function(log) {
-  const player = log.playerName;
-  const card = getCard(log.card);
+  // const player = log.playerName;
+  // const card = getCard(log.card);
+  // const status = document.createElement('div');
+  // status.className = 'inner-status-div';
+  // const statusFirst = document.createElement('span');
+
+  // statusFirst.innerText = '👤 ' + player + ' has thrown ';
+  // status.appendChild(statusFirst);
+  // status.appendChild(card);
+  // return status;
+
   const status = document.createElement('div');
   status.className = 'inner-status-div';
-  const statusFirst = document.createElement('span');
 
-  statusFirst.innerText = '👤 ' + player + ' has thrown ';
+  const statusFirst = document.createElement('span');
+  statusFirst.innerHTML = '👤 ' + log.playerName + '&nbsp;&nbsp;';
+
+  const drawIcon = document.createElement('img');
+  drawIcon.className = 'status-icon';
+  drawIcon.src = '/statusIcons/card-discard.svg';
+
+  // const statusLast = document.createElement('span');
+  // statusLast.innerText = ' × ' + log.cardCount;
+  const card = getCard(log.card);
+
   status.appendChild(statusFirst);
+  status.appendChild(drawIcon);
   status.appendChild(card);
   return status;
 };
