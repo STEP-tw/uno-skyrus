@@ -11,8 +11,8 @@ const SYMBOLS = {
   SKIP_SYMBOL: '&#8856;',
   REVERSE_SYMBOL: '&#10150',
   WILD_SYMBOL: 'w',
-  DRAW_TWO_SYMBOL: '+2',
-  DRAW_FOUR_SYMBOL: '+4'
+  DRAW_TWO_SYMBOL: '&#8314;2',
+  DRAW_FOUR_SYMBOL: '&#8314;4'
 };
 
 const addNumberCards = function(colors, cards, number) {
@@ -71,11 +71,11 @@ const createDeck = function() {
 
   return deck.concat(
     numberCards,
-    wildCards,
     reverseCards,
-    drawTwoCards,
     skipCards,
-    wildDrawFourCards
+    wildCards,
+    wildDrawFourCards,
+    drawTwoCards,
   );
 };
 

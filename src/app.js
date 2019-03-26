@@ -17,15 +17,13 @@ const {
   getPlayerNames,
   renderGamePage,
   passTurn,
-  updateRunningColor,
   saveGame,
   catchPlayer,
   loadGame,
   leaveGame,
   servePlayersCount,
   restrictAccess,
-  serveChat,
-  addChat
+  updateRunningColor
 } = require('./handlers/handleRequests');
 
 const app = express();
@@ -51,8 +49,6 @@ app.get('/passTurn', passTurn);
 app.get('/catch', catchPlayer);
 app.get('/leaveGame', leaveGame);
 app.get('/playersCount', servePlayersCount);
-app.get('/serveChat', serveChat);
-app.post('/addChat', addChat);
 
 app.use(restrictAccess);
 

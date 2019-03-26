@@ -40,20 +40,10 @@ class Game {
     this.cardsToDraw = 1;
     this.hasDrawnTwo = true;
     this.hasDrawnFour = true;
-	this.chat = [];
-  }
-
-  getChat(){
-	return this.chat;
-  }
-
-  setChat(newchat){
-	this.chat = newchat;
   }
 
   updateSaveStatus() {
     this.saveStatus.status = true;
-    this.saveStatus.lastSaved = new Date().toLocaleString();
   }
 
   getSaveStatus() {
@@ -189,6 +179,7 @@ class Game {
     currentPlayer.setDrawCardStatus(false);
 
     currentPlayer.setPlayableCards([]);
+    this.activityLog.logDrawCards(playerName, drawnCards.length);
 
     if (this.cardsToDraw != 1) {
       this.cardsToDraw = 1;
@@ -212,7 +203,6 @@ class Game {
       hasNoNormalPlayableCards
     );
 
-    this.activityLog.logDrawCards(playerName, drawnCards.length);
     if (isPlayable) {
       currentPlayer.setPlayableCards(drawnCards);
       return drawnCards;

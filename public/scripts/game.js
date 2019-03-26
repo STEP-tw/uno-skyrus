@@ -97,8 +97,12 @@ const hasCard = (playableCards, card) => {
 };
 
 const displayLog = function(document, log) {
+  /*eslint-disable */
+  const statusLog = generateStatusLog(log);
+  /*eslint-enable */
   const status = document.getElementById('statusBar');
-  status.innerHTML = log;
+  status.innerHTML = '';
+  status.appendChild(statusLog);
 };
 
 const setCardAttributes = function(cardView, playableCards, card) {
@@ -144,27 +148,54 @@ const isWildCard = cardId => {
   return cardId.startsWith('wild');
 };
 
-const throwCard = function(document, cardId) {
-  if (isWildCard(cardId)) {
-    document.getElementById('wildCardOverlay').className = 'overlay visible';
-  }
-
+const throwCard = function(document, cardId, declaredColor) {
   fetch('/throwCard', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ cardId, calledUno })
+    body: JSON.stringify({ cardId, calledUno, declaredColor })
   }).then(() => {
+    hidePopUp();
     fetchCards(document);
   });
 };
 
+const throwWildCard = function(droppedCardId) {
+  const declaredColor = event.target.classList[0];
+  throwCard(document, droppedCardId, declaredColor);
+};
+
+const declareRunningColor = function() {
+  const declaredColor = event.target.classList[0];
+  fetch('/updateRunningColor', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ declaredColor })
+  }).then(() => hidePopUp());
+};
+
+const setOnClickOnColors = function(cardId) {
+  const setRunningColor = throwWildCard.bind(null, cardId);
+  document.getElementById('redColorDiv').onclick = setRunningColor;
+  document.getElementById('blueColorDiv').onclick = setRunningColor;
+  document.getElementById('greenColorDiv').onclick = setRunningColor;
+  document.getElementById('yellowColorDiv').onclick = setRunningColor;
+};
+
 const drop = function(event) {
   event.preventDefault();
-  const cardId = event.dataTransfer.getData('text');
-  if (cardId != 'stack') {
-    throwCard(document, cardId);
+  const droppedCardId = event.dataTransfer.getData('text');
+
+  if (isWildCard(droppedCardId)) {
+    document.getElementById('wildCardOverlay').className = 'overlay visible';
+    setOnClickOnColors(droppedCardId);
+    return;
+  }
+  if (droppedCardId != 'stack') {
+    throwCard(document, droppedCardId);
     disableGameElements();
   }
 };
@@ -218,11 +249,15 @@ const updateNamesAndClasses = function(document, id, name, isCurrent) {
   document.getElementById(`player${id}`).innerText = name;
 
   let handClassName = 'other-hand';
+  let nameCardClass = 'non-current-player name-cards';
   if (isCurrent) {
     handClassName = 'other-hand current-hand';
+    nameCardClass = 'current-player name-cards';
   }
-  if (id !== 1)
+  document.getElementById(`name-card${id}`).className = nameCardClass;
+  if (id !== 1) {
     document.getElementById(`player${id}Hand`).className = handClassName;
+  }
 };
 
 const updatePlayersDetails = function(document, playerDetails, playerPosition) {
@@ -295,14 +330,28 @@ const getGameStatus = function(document) {
     });
 };
 
+const copy = function() {
+  const copyText = document.getElementById('gameKey');
+  copyText.select();
+  document.execCommand('copy');
+};
+
+const copyPlayerId = function() {
+  const copyText = document.getElementById('playerId');
+  copyText.select();
+  document.execCommand('copy');
+};
+
 const updateSaveStatus = function(document, saveStatus) {
   if (saveStatus.status) {
     const saveDetailsView = document.getElementById('saveDetails');
 
-    const saveData = `The game was saved by Game Id ${
+    const saveData = `The game was saved. Game Id: <input id="gameKey" value="${
       saveStatus.gameKey
-    } and Player Id ${saveStatus.playerId} at ${saveStatus.lastSaved}`;
-    saveDetailsView.innerText = saveData;
+    }" class="gameKey" readonly/> <span class="copy-btn" onclick="copy()">&#x2398</span>, Player Id: <input id="playerId" value="${
+      saveStatus.playerId
+    }" class="gameKey" readonly/> <span class="copy-btn" onclick="copyPlayerId()">&#x2398</span>`;
+    saveDetailsView.innerHTML = saveData;
   }
 };
 
@@ -316,96 +365,10 @@ const hidePopUp = function() {
   wildCardOverlay.className = 'overlay hidden';
 };
 
-const declareRunningColor = function() {
-  const declaredColor = event.target.classList[0];
-  fetch('/updateRunningColor', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ declaredColor })
-  }).then(() => hidePopUp());
-};
-
-const chatListener = function (document){
-	fetch('/serveChat')
-      .then(response => response.json())
-      .then(chat => {
-        var chatArray = chat;
-		const panel = document.getElementById("ChatTable");
-
-		if(chatArray.length == 0){
-			//No messages yet.
-			panel.innerHTML = '<tr><td style="text-align: center">** No messages yet **</td></tr>';
-		}else{
-			//There is at least one message.
-			var i;
-			var panelHTML = constHTML = '<thead><tr><td width="20%" ></td><td  ></td></tr></thead>';
-			for(i = 0; i < chatArray.length; i++){
-
-					//Make every player name with different color
-					switch(chatArray[i].color){
-						case 0:
-							panelHTML += '<tr><td style="color: blue"><b>' + chatArray[i].from + ': </b></td><td >' + chatArray[i].msg + '</td></tr>';
-							break;
-						case 1:
-							panelHTML += '<tr><td style="color: red"><b>' + chatArray[i].from + ': </b></td><td >' + chatArray[i].msg + '</td></tr>';
-							break;
-						case 2:
-							panelHTML += '<tr><td style="color: green"><b>' + chatArray[i].from + ': </b></td><td >' + chatArray[i].msg + '</td></tr>';
-							break;
-						case 3:
-							panelHTML += '<tr><td style="color: orange"><b>' + chatArray[i].from + ': </b></td><td >' + chatArray[i].msg + '</td></tr>';
-							break;
-						case 4:
-							panelHTML += '<tr><td style="color: sienna"><b>' + chatArray[i].from + ': </b></td><td >' + chatArray[i].msg + '</td></tr>';
-							break;
-						case 5:
-							panelHTML += '<tr><td style="color: indigo"><b>' + chatArray[i].from + ': </b></td><td >' + chatArray[i].msg + '</td></tr>';
-							break;
-						case 6:
-							panelHTML += '<tr><td style="color: darkblue"><b>' + chatArray[i].from + ': </b></td><td >' + chatArray[i].msg + '</td></tr>';
-							break;
-						case 7:
-							panelHTML += '<tr><td style="color: darkslategrey "><b>' + chatArray[i].from + ': </b></td><td >' + chatArray[i].msg + '</td></tr>';
-							break;
-					}
-			}
-			//Update the chat table
-			panel.innerHTML = panelHTML;
-		}
-      });
-};
-
-const handleChatAdd = function (){
-	var input = document.getElementById('usermsg');
-	var msg = document.getElementById('usermsg').value;
-	if(msg == ""){
-		//Check if the input is empty
-		input.placeholder = "You have to fill the field!";
-	}else{
-		var messageObject = {text: msg};
-		fetch('/addChat',{
-			method: 'post',
-			headers:{
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify(messageObject)
-		});
-	}
-	input.value = "";
-	//Go to the end of the chat.
-	setTimeout(function () {
-		var chatBox = document.getElementById('chatbox');
-		chatBox.scrollTop = chatBox.scrollHeight+10;
-    }, 500);
-};
-
 const initialize = function(document) {
   setInterval(() => {
     getGameStatus(document);
     fetchCards(document);
-	chatListener(document);
 
     const pile = document.getElementById('pile');
     pile.setAttribute('ondrop', 'drop(event)');

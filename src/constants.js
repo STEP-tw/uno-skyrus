@@ -1,12 +1,11 @@
 const URLS = [
   '/styles/main.css',
   '/styles/game.css',
-  '/styles/chat_style.css',
-  '/styles/chat_style2.css',
-  '/styles/w3.css',
-  '/images/back.png',
   '/scripts/game.js',
-  '/scripts/viewUtils.js'
+  '/scripts/viewUtils.js',
+  '/scripts/logger.js',
+  '/statusIcons/card-draw.svg',
+  '/statusIcons/card-discard.svg'
 ];
 
-module.exports = {URLS};
+module.exports = { URLS };

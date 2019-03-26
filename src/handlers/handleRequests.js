@@ -18,7 +18,7 @@ const hostGame = function(req, res) {
   const host = new Player(hostName, id);
   const players = new Players(host);
   const deck = createDeck();
-  const activityLog = new ActivityLog([`Game created by ${hostName}`]);
+  const activityLog = new ActivityLog([{ action: 'start-game', hostName }]);
   const game = new Game(deck, totalPlayers, gameKey, players, activityLog);
 
   req.app.games.addGame(game, gameKey);
@@ -121,10 +121,15 @@ const serveLobby = function(req, res) {
 
 const handleThrowCard = function(req, res) {
   const { gameKey, id } = req.cookies;
-  const { cardId, calledUno } = req.body;
+  const { cardId, calledUno, declaredColor } = req.body;
 
   const game = req.app.games.getGame(gameKey);
   game.throwCard(id, cardId, calledUno);
+
+  if (declaredColor) {
+    game.updateRunningColor(id, declaredColor);
+  }
+
   res.end();
 };
 
@@ -235,15 +240,6 @@ const serveGameStatus = function(req, res) {
   });
 };
 
-const updateRunningColor = function(req, res) {
-  const { declaredColor } = req.body;
-  const { gameKey, id } = req.cookies;
-  const game = res.app.games.getGame(gameKey);
-  game.updateRunningColor(id, declaredColor);
-
-  res.end();
-};
-
 const saveGame = function(req, res) {
   const { gameKey } = req.cookies;
   const games = res.app.games;
@@ -315,34 +311,13 @@ const restrictAccess = function(req, res, next) {
   next();
 };
 
-const serveChat = function(req, res) {
-	const { gameKey } = req.cookies;
-    const game = req.app.games.getGame(gameKey);
-	const chat = JSON.stringify(game.getChat());
-	res.send(chat);
-};
+const updateRunningColor = function(req, res) {
+  const { declaredColor } = req.body;
+  const { gameKey, id } = req.cookies;
+  const game = res.app.games.getGame(gameKey);
+  game.updateRunningColor(id, declaredColor);
 
-const addChat = function(req, res){
-	const { gameKey, id } = req.cookies;
-    const game = req.app.games.getGame(gameKey);
-
-	//Getting the objects
-	const array = game.getChat();
-	var message = req.body;
-
-	const players = game.getPlayers().getPlayers();
-	const playerPosition = players.findIndex(player => player.id == id);
-	const playerDetails = players.map(player => {
-      return {
-        name: player.name,
-        isCurrent: game.getPlayers().isCurrent(player),
-        cardsCount: player.getCardsCount()
-      };
-    });
-
-	array.push({from: playerDetails[playerPosition].name, msg: message.text, color: playerPosition});
-	game.setChat(array);
-	res.send(game.getChat());
+  res.end();
 };
 
 module.exports = {
@@ -358,13 +333,11 @@ module.exports = {
   serveGameStatus,
   renderGamePage,
   passTurn,
-  updateRunningColor,
   saveGame,
   catchPlayer,
   loadGame,
   leaveGame,
   servePlayersCount,
   restrictAccess,
-  serveChat,
-  addChat
+  updateRunningColor
 };

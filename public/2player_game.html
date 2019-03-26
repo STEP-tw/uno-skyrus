@@ -1,212 +1,195 @@
 <html>
-<head>
-    <link rel="stylesheet" href="/styles/main.css" />
-    <link rel="stylesheet" href="/styles/game.css" />
-    <link rel="stylesheet" href="/styles/chat_style.css" />
-    <link rel="stylesheet" href="/styles/w3.css">
-
+  <head>
+    <title>UNO</title>
+    <script src="/scripts/logger.js"></script>
     <script src="/scripts/game.js"></script>
     <script src="/scripts/viewUtils.js"></script>
+    <link rel="stylesheet" href="/styles/main.css" />
+    <link rel="stylesheet" href="/styles/game.css" />
+  </head>
 
-
-	<!-- Disable ENTER to send the form -->
-	<script type="text/javascript">
-		window.addEventListener('keydown',function(e){if(e.keyIdentifier=='U+000A'||e.keyIdentifier=='Enter'||e.keyCode==13){if(e.target.nodeName=='INPUT'&&e.target.type=='text'){e.preventDefault();return false;}}},true);
-		var fileref = document.createElement("link");
-        fileref.setAttribute("rel", "stylesheet");
-        fileref.setAttribute("type", "text/css");
-        fileref.setAttribute("href", '/styles/w3.css');
-	</script>
-
-</head>
-
-<body>
-<main>
-    <header class="header-game">
+  <body>
+    <main>
+      <header class="header-game">
         <div class="save-view">
-            <p class="save-details" id="saveDetails">
-                Your game is not yet saved
-            </p>
+          <p class="save-details" id="saveDetails">
+            Save your game using save option.
+          </p>
         </div>
         <div class="header-btns">
-            <button class="save-game" onclick="saveGame()">Save Game</button>
-            <button class="leave-game" onclick="leaveGame()">Leave Game</button>
+          <button class="save-game" onclick="saveGame()">Save Game</button>
+          <button class="leave-game" onclick="leaveGame()">Leave Game</button>
         </div>
-    </header>
+      </header>
 
-    <div id="wildCardOverlay" class="overlay hidden">
+      <div id="wildCardOverlay" class="overlay hidden">
         <div class=" color-container ">
-            <span class="color-header">Choose Running Color</span>
-            <div class="color-row">
-                <div class="red color-div" onclick="declareRunningColor()"></div>
-                <div class="blue color-div" onclick="declareRunningColor()"></div>
-            </div>
-            <div class="color-row">
-                <div class="green color-div" onclick="declareRunningColor()"></div>
-                <div class="yellow color-div" onclick="declareRunningColor()"></div>
-            </div>
+          <span class="color-header">Choose Running Color</span>
+          <div class="color-row">
+            <div
+              class="red color-div"
+              id="redColorDiv"
+              onclick="declareRunningColor()"
+            ></div>
+            <div
+              class="blue color-div"
+              id="blueColorDiv"
+              onclick="declareRunningColor()"
+            ></div>
+          </div>
+          <div class="color-row">
+            <div
+              class="green color-div"
+              id="greenColorDiv"
+              onclick="declareRunningColor()"
+            ></div>
+            <div
+              class="yellow color-div"
+              id="yellowColorDiv"
+              onclick="declareRunningColor()"
+            ></div>
+          </div>
         </div>
-    </div>
-    <div class="play-table">
+      </div>
+      <div class="play-table">
         <div class="top-table">
-            <div class="other-player">
-                <div class="player-name-div">
-                    <div class="name-cards">
-                        <div
-                                class="name-uno-card theme-uno-card name-card-border name-first-card"
-                        >
-                            <div class="theme-uno-card-inner black name-card-border">
-                                <div class="theme-uno-design-inner red"></div>
-                            </div>
-                        </div>
-                        <div
-                                class="name-uno-card theme-uno-card name-card-border name-second-card"
-                        >
-                            <div class="theme-uno-card-inner black name-card-border">
-                                <div class="theme-uno-design-inner red"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="player-name" id="player2">Player2</div>
+          <div class="other-player">
+            <div class="player-name-div">
+              <div class="name-cards" id="name-card2">
+                <div
+                  class="name-uno-card theme-uno-card name-card-border name-first-card"
+                >
+                  <div class="theme-uno-card-inner black name-card-border">
+                    <div class="theme-uno-design-inner red"></div>
+                  </div>
                 </div>
-
-                <div class="other-hand" id="player2Hand">
-                    <div class="uno-card theme-uno-card first-uno-card">
-                        <div class="theme-uno-card-inner black">
-                            <div class="theme-uno-design-inner red">
-                                <span class="theme-color">U</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="uno-card theme-uno-card others-uno-card">
-                        <div class="theme-uno-card-inner black">
-                            <div class="theme-uno-design-inner red">
-                                <span class="theme-color">U</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="uno-card theme-uno-card others-uno-card">
-                        <div class="theme-uno-card-inner black">
-                            <div class="theme-uno-design-inner red">
-                                <span class="theme-color">U</span>
-                            </div>
-                        </div>
-                    </div>
+                <div
+                  class="name-uno-card theme-uno-card name-card-border name-second-card"
+                >
+                  <div class="theme-uno-card-inner black name-card-border">
+                    <div class="theme-uno-design-inner red"></div>
+                  </div>
                 </div>
+              </div>
+              <div class="player-name" id="player2">Player2</div>
             </div>
+
+            <div class="other-hand" id="player2Hand">
+              <div class="uno-card theme-uno-card first-uno-card">
+                <div class="theme-uno-card-inner black">
+                  <div class="theme-uno-design-inner red">
+                    <span class="theme-color">U</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="uno-card theme-uno-card others-uno-card">
+                <div class="theme-uno-card-inner black">
+                  <div class="theme-uno-design-inner red">
+                    <span class="theme-color">U</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="uno-card theme-uno-card others-uno-card">
+                <div class="theme-uno-card-inner black">
+                  <div class="theme-uno-design-inner red">
+                    <span class="theme-color">U</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="middle-table">
-            <div class="center-table">
-                <div class="status-bar" id="statusBar"></div>
-                <div class="cards-on-table">
-                    <div class="pile-stack stack-of-cards">
-                        <div class="uno-card theme-uno-card first-uno-card">
-                            <div class="theme-uno-card-inner black">
-                                <div class="theme-uno-design-inner red">
-                                    <span class="theme-color">U</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="uno-card theme-uno-card pile-stack-card">
-                            <div class="theme-uno-card-inner black">
-                                <div class="theme-uno-design-inner red">
-                                    <span class="theme-color">U</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="uno-card theme-uno-card pile-stack-card" id="stack">
-                            <div class="theme-uno-card-inner black">
-                                <div class="theme-uno-design-inner red">
-                                    <span class="theme-color">U</span>
-                                </div>
-                            </div>
-                        </div>
+          <div class="center-table">
+            <div class="status-bar" id="statusBar"></div>
+            <div class="cards-on-table">
+              <div class="pile-stack stack-of-cards">
+                <div class="uno-card theme-uno-card first-uno-card">
+                  <div class="theme-uno-card-inner black">
+                    <div class="theme-uno-design-inner red">
+                      <span class="theme-color">U</span>
                     </div>
-
-                    <div class="theme-uno-design-inner" id="runningColorDiv"></div>
-
-                    <div class="pile-stack">
-                        <div class="uno-card theme-uno-card first-uno-card">
-                            <div class="theme-uno-card-inner blue">
-                                <div class="theme-uno-design-inner white">
-                                    <span class="theme-color">U</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="uno-card theme-uno-card pile-stack-card">
-                            <div class="theme-uno-card-inner yellow">
-                                <div class="theme-uno-design-inner white">
-                                    <span class="theme-color">U</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div
-                                class="uno-card theme-uno-card pile-stack-card"
-                                id="pile"
-                        ></div>
+                  </div>
+                </div>
+                <div class="uno-card theme-uno-card pile-stack-card">
+                  <div class="theme-uno-card-inner black">
+                    <div class="theme-uno-design-inner red">
+                      <span class="theme-color">U</span>
                     </div>
+                  </div>
                 </div>
-                <div class="action-btns" id="action-btns">
-                    <span class="pass" id="unoCall" onclick="setUno()">UNO</span>
-                    <span class="pass" id="passTurn" onclick="pass()">PASS</span>
-                    <span class="pass" id="catch" onclick="catchPlayer()">Catch</span>
+                <div class="uno-card theme-uno-card pile-stack-card" id="stack">
+                  <div class="theme-uno-card-inner black">
+                    <div class="theme-uno-design-inner red">
+                      <span class="theme-color">U</span>
+                    </div>
+                  </div>
                 </div>
+              </div>
+
+              <div class="theme-uno-design-inner" id="runningColorDiv"></div>
+
+              <div class="pile-stack">
+                <div class="uno-card theme-uno-card first-uno-card">
+                  <div class="theme-uno-card-inner blue">
+                    <div class="theme-uno-design-inner white">
+                      <span class="theme-color">U</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="uno-card theme-uno-card pile-stack-card">
+                  <div class="theme-uno-card-inner yellow">
+                    <div class="theme-uno-design-inner white">
+                      <span class="theme-color">U</span>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="uno-card theme-uno-card pile-stack-card"
+                  id="pile"
+                ></div>
+              </div>
             </div>
+            <div class="action-btns" id="action-btns">
+              <span class="pass uno-btn" id="unoCall" onclick="setUno()">UNO</span>
+              <span class="pass pass-btn" id="passTurn" onclick="pass()">PASS</span>
+              <span class="pass catch-btn" id="catch" onclick="catchPlayer()">Catch</span>
+            </div>
+          </div>
         </div>
         <div class="bottom-table">
-            <div class="player">
-                <div class="player-name-div">
-                    <div class="name-cards">
-                        <div
-                                class="name-uno-card theme-uno-card name-card-border name-first-card"
-                        >
-                            <div class="theme-uno-card-inner black name-card-border">
-                                <div class="theme-uno-design-inner red"></div>
-                            </div>
-                        </div>
-                        <div
-                                class="name-uno-card theme-uno-card name-card-border name-second-card"
-                        >
-                            <div class="theme-uno-card-inner black name-card-border">
-                                <div class="theme-uno-design-inner red"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="player-name" id="player1">Player1</div>
+          <div class="player">
+            <div class="player-name-div">
+              <div class="name-cards" id="name-card1">
+                <div
+                  class="name-uno-card theme-uno-card name-card-border name-first-card"
+                >
+                  <div class="theme-uno-card-inner black name-card-border">
+                    <div class="theme-uno-design-inner red"></div>
+                  </div>
                 </div>
-                <div class="hand" id="myHand"></div>
+                <div
+                  class="name-uno-card theme-uno-card name-card-border name-second-card"
+                >
+                  <div class="theme-uno-card-inner black name-card-border">
+                    <div class="theme-uno-design-inner red"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="player-name" id="player1">Player1</div>
             </div>
+            <div class="hand" id="myHand"></div>
+          </div>
         </div>
-    </div>
-
-    <div class="overlay hidden" id="gameEnd">
+      </div>
+      <div class="overlay hidden" id="gameEnd">
         <div class="win-message">
-            <span id="popupMessage" class="pop-up-message"></span>
+          <span id="popupMessage" class="pop-up-message"></span>
+          <div class="exit-btn" onclick="exitToStartGame()">EXIT</div>
         </div>
-    </div>
-
-    <div class="w3-round-xlarge">
-        <div class=" ChatContainer w3-container w3-left w3-animate-opacity  ">
-            <div class=" w3-round-xlarge w3-mobile" id="wrapper">
-                <div id="menu">
-                    <div style="clear:both"></div>
-                </div>
-                <div id="chatbox">
-                    <table id="ChatTable" width="100%">
-
-                    </table>
-                </div>
-                <form name="message" >
-                    <input  class="w3-threequarter w3-left-align" name="usermsg" type="text" id="usermsg" size="60" autocomplete="off" />
-                    <input class="w3-blue w3-button w3-hover-light-blue w3-quarter w3-right w3-tiny "
-                           type="button" onclick="handleChatAdd()" id="submitmsg" value="SEND" />
-                </form>
-            </div>
-        </div>
-    </div>
-
-</main>
-</body>
+      </div>
+    </main>
+  </body>
 </html>

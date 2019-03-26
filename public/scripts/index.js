@@ -1,9 +1,9 @@
 const openGuideBook = function(document) {
   document.getElementById('guideBook').className = 'overlay visible';
-  document.body.onkeydown = closeGuideBook.bind(null, document);
+  document.body.onkeydown = closeGuideBook.bind(null);
 };
 
-const closeGuideBook = function(document) {
+const closeGuideBook = function() {
   document.getElementById('guideBook').className = 'overlay hidden';
   document.body.onkeydown = null;
 };

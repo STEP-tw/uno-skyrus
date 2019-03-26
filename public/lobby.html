@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>SKYRUS-UNO</title>
+    <script src="/scripts/logger.js"></script>
     <script src="/scripts/lobby.js"></script>
     <script src="/scripts/viewUtils.js"></script>
     <link rel="stylesheet" href="/styles/main.css" />
@@ -9,18 +10,26 @@
   </head>
   <body>
     <main class="lobby">
-      <header>UNO
-        <button class="leave-game" onclick="leaveGame()">Leave Game</button>
+      <header>
+        <div class="header-inner-div">
+          <div class="uno-ellipse"><span>UNO</span></div>
+        </div>
+        <div class="header-inner-div">
+          <button class="leave-game-btn" onclick="leaveGame()">
+            Leave Game
+          </button>
+        </div>
       </header>
       <div class="gameKey-container">
         <div>
           Game key : <input id="gameKey" value="__gameKey__" class="gameKey" readonly/> 
-          <span class="copy-btn" id ="copyBtn">&#x2398</span>
-            <div class="status-bar" id="statusBar"></div>
+          <span class="copy-btn" id ="copyBtn">&#x2398</span>            
         </div>
         <div>
-          Waiting for all players to join
+          Waiting for all players to join...
         </div>
+        <div class="status-bar" id="statusBar"></div>
+
       </div>
 
       <div id="players" class="players-container"></div>

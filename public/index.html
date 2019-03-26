@@ -18,7 +18,7 @@
   </head>
   <body>
     <main>
-      <header>UNO</header>
+      <header><div class="uno-symbol-ellipse"><span>UNO</span></div></header>
       <div class="table">
         <div class="host-room">
           <a href="/start_game" class="link">
@@ -44,8 +44,9 @@
       </div>
       <div class="overlay hidden" id="guideBook">
         <div class="guide-book">
+            <span class="close-btn" onclick="closeGuideBook()">×</span>
           <div class="rules-data">
-            <p>
+            <p class="text"> 
               <span class="sub-heading">Card Details</span>
               <ul>
                 <li>19 Blue Cards - 0 to 9</li>
@@ -60,7 +61,7 @@
             </p>
             <div>
               <span class="sub-heading">How to play</span>
-              <p align="justify">Once the cards are shuffled each player is dealt 7 cards. The remainder of the deck is
+              <p align="justify" class="text">Once the cards are shuffled each player is dealt 7 cards. The remainder of the deck is
                 placed face down to form a DRAW pile. The top card of the DRAW pile is turned over to begin a DISCARD pile.
                 If an Action Card is the first one turned up from
                 the DRAW pile, certain rules apply (See FUNCTIONS OF ACTION CARDS). The person to the left of the dealer
@@ -78,31 +79,31 @@
             </div>
             <div>
               <span class="sub-heading">Functions Of The Action Cards</span>
-              <p>The functions of the Action Cards, and when they may be played, are set out below.</p>
-              <p><span class="third-heading">
+              <p class="text">The functions of the Action Cards, and when they may be played, are set out below.</p>
+              <p class="text"><span class="third-heading">
                   Draw Two Card</span> - When this card is played, the next person to play must draw 2 cards and miss his/her
                 turn. This card can only be played on matching colors and other Draw Two cards. If turned up at the beginning
                 of play, the same rule applies.
               </p>
-              <p><span class="third-heading">
+              <p class="text"><span class="third-heading">
                   Reverse Card</span> - This simply reverses direction of play. Play to changes direction to the right, and
                 vice versa. The card may only be played on a matching color or on another Reverse card. If this card is
                 turned up at the beginning of play, the dealer goes first, then play moves to the right instead of the left.
               </p>
-              <p><span class="third-heading">
+              <p class="text"><span class="third-heading">
                   Skip Card</span> - The next player to play after this card has been laid loses his/her turn and is
                 “skipped”. The card may only be played on a matching color or on another Skip card. If a Skip card is turned
                 up at the beginning of play, the player to the left of the dealer is “skipped”, hence the player to the left
                 of that player commences play.
       
               </p>
-              <p><span class="third-heading">
+              <p class="text"><span class="third-heading">
                   Wild Card</span> - The person playing this card calls for any color to continue the play, including the one
                 currently being played, if so desired. A Wild card can be played at any time - even if the player has another
                 playable card in the hand. If a Wild card is turned up at the beginning of play, the person to the left of
                 the dealer determines the color, which continues play.
               </p>
-              <p><span class="third-heading">
+              <p class="text"><span class="third-heading">
                   Wild Draw Four Card</span> - This is the best card to have. The person who plays it calls the color that
                 continues play. Also, the next player has to pick up 4 cards from the DRAW pile and miss his/her turn.
                 Unfortunately, the card can only be played when the player holding it does not have a card in his/her hand to
@@ -113,8 +114,8 @@
               </p>
             </div>
             <div>
-              <span class="sub-heading">Going Out<span>
-                  <p align = "justify">
+              <span class="sub-heading">Going Out</span>
+                  <p align = "justify" class="text">
                     When a player has only one card left, he/she must yell “UNO” (meaning “one”). Failure to do this results
                     in having to pick up 2 cards from the DRAW pile. This is only necessary, however, if he/she is caught by
                     one of the other players (See PENALTIES).
@@ -124,14 +125,14 @@
                   </p>
             </div>
             <div>
-              <span class="sub-heading">Winning The Game<span>
-                  <p align="justify">
+              <span class="sub-heading">Winning The Game</span>
+                  <p align="justify" class="text">
                    The player who finishes all the cards in his hand will be considered as the winner of the game
                   </p>
             </div>
             <div>
-              <span class="sub-heading">Penalities<span>
-                  <p align="justify">
+              <span class="sub-heading" >Penalities</span>
+                  <p align="justify" class="text">
                     A player who forgets to say “UNO” before his/her second-to-last card touches the DISCARD pile. Players may not be
                     caught for failure to say “UNO” until his/her second-to-last card touches the DISCARD pile. A player may also not be
                     caught for failure to say “UNO” after the next player begins his/her turn. “Beginning a turn” is defined as either

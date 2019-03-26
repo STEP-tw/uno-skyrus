@@ -1,5 +1,5 @@
 /* eslint no-unused-vars: "off" */
-const createCard = function(document, card, cardId) {
+const createCard = function (document, card, cardId) {
   let spanClass = card.color + ' symbol';
   let innerColor = card.color;
   let id = cardId;
@@ -13,40 +13,40 @@ const createCard = function(document, card, cardId) {
   return createUnoCard(document, card, id, innerColor, spanClass);
 };
 
-const createOuterLayout = function(document, cardId) {
+const createOuterLayout = function (document, cardId) {
   const unoCard = document.createElement('div');
   unoCard.id = cardId;
   unoCard.className = 'uno-card theme-uno-card';
   return unoCard;
 };
 
-const createInnerText = function(document, className, text, addContent) {
+const createInnerText = function (document, className, text, addContent) {
   let outerText = document.createElement('div');
   outerText.className = className;
   outerText = addContent(document, outerText, text);
   return outerText;
 };
 
-const createInnerLayout = function(document, color) {
+const createInnerLayout = function (document, color) {
   const cardInner = document.createElement('div');
-  cardInner.className = `theme-uno-card-inner ${color}`;
+  cardInner.className = `theme-uno-card-inner ${color} `;
   return cardInner;
 };
 
-const createInnerDesign = function(document, color = 'white') {
+const createInnerDesign = function (document, color = 'white') {
   const designInner = document.createElement('div');
-  designInner.className = `theme-uno-design-inner ${color}`;
+  designInner.className = `theme-uno-design-inner ${color} wild`;
   return designInner;
 };
 
-const createInnerSpan = function(document, className, text, addContent) {
+const createInnerSpan = function (document, className, text, addContent) {
   let numberSpan = document.createElement('div');
   numberSpan.className = className;
   numberSpan = addContent(document, numberSpan, text);
   return numberSpan;
 };
 
-const createReverseSymbol = function(document, parentDiv, symbol) {
+const createReverseSymbol = function (document, parentDiv, symbol) {
   const reverseDiv = parentDiv;
   reverseDiv.classList.add('reverse');
 
@@ -63,22 +63,63 @@ const createReverseSymbol = function(document, parentDiv, symbol) {
   return reverseDiv;
 };
 
-const addHtmlContent = function(document, parentDiv, content) {
+const createWildCard = function (document, parentDiv) {
+  parentDiv.classList.add('wild');
+  const wildUp = document.createElement('span');
+  wildUp.className = 'wild-up';
+
+  const wildDown = document.createElement('span');
+  wildDown.className = 'wild-down';
+  parentDiv.appendChild(wildUp);
+  parentDiv.appendChild(wildDown);
+
+  return parentDiv;
+
+};
+
+const addHtmlContent = function (document, parentDiv, content) {
   parentDiv.innerHTML = content;
   return parentDiv;
 };
 
-const appendHtmlContent = function(document, parentDiv, content) {
+const appendHtmlContent = function (document, parentDiv, content) {
   parentDiv = createReverseSymbol(document, parentDiv, content);
   return parentDiv;
 };
 
-const createUnoCard = function(document, card, cardId, innerColor, spanClass) {
+const appendWildCard = function (document, parentDiv, content) {
+  parentDiv = createWildCard(document, parentDiv);
+  return parentDiv;
+};
+
+const createInnerEllipse = function (document, card, spanClass, addContent) {
+
+  let designInner = createInnerDesign(document);
+  if (card.isWildCard) {
+    designInner.classList.add(spanClass);
+    designInner = appendWildCard(document, designInner);
+
+    return designInner;
+  }
+
+  const design = createInnerSpan(
+    document,
+    spanClass,
+    card.symbol,
+    addContent
+  );
+  designInner.appendChild(design);
+  return designInner;
+};
+
+
+const createUnoCard = function (document, card, cardId, innerColor, spanClass) {
   let addContent = addHtmlContent;
 
   if (card.isReverseCard) {
     addContent = appendHtmlContent;
   }
+
 
   const unoCard = createOuterLayout(document, cardId);
 
@@ -91,14 +132,7 @@ const createUnoCard = function(document, card, cardId, innerColor, spanClass) {
     addContent
   );
 
-  const designInner = createInnerDesign(document);
-
-  const numberSpan = createInnerSpan(
-    document,
-    spanClass,
-    card.symbol,
-    addContent
-  );
+  const numberSpan = createInnerEllipse(document, card, spanClass, addContent);
 
   const numberRight = createInnerText(
     document,
@@ -107,8 +141,7 @@ const createUnoCard = function(document, card, cardId, innerColor, spanClass) {
     addContent
   );
 
-  designInner.appendChild(numberSpan);
-  cardInner.appendChild(designInner);
+  cardInner.appendChild(numberSpan);
   unoCard.appendChild(numberLeft);
   unoCard.appendChild(cardInner);
   unoCard.appendChild(numberRight);
@@ -116,7 +149,7 @@ const createUnoCard = function(document, card, cardId, innerColor, spanClass) {
   return unoCard;
 };
 
-const createPlayerCard = function(document, playerName) {
+const createPlayerCard = function (document, playerName) {
   const unoCard = document.createElement('div');
   unoCard.className = 'lobby-uno-card theme-uno-card';
 

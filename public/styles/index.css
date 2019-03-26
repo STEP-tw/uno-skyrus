@@ -8,7 +8,7 @@
 
 .sub-heading {
   font-size: 20px;
-  font-weight: 100;
+  font-weight: bold;
 }
 
 .rules-data {
@@ -23,8 +23,14 @@
 .third-heading {
   font-weight: 500;
   font-size: 16px;
+  text-decoration: underline;
 }
 
 p {
   font-size: 16px;
+}
+
+
+.text{
+line-height: 1.5;
 }

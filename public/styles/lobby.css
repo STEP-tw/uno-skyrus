@@ -10,50 +10,33 @@
   justify-content: space-evenly;
 }
 
+.header-looby {
+  height: 10%;
+  position: relative;
+}
+
+.leave-game-btn {
+  position: absolute;
+}
+
 /* Game Key container styles*/
 .gameKey-container {
-  height: 20%;
+  height: 10%;
   width: 100%;
 
   font-size: 20px;
   font-family: sans-serif;
 
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: space-around;
-}
-
-.gameKey {
-  border: none;
-  font-size: 20px;
-  font-weight: bold;
-
-  width: 170px;
-
-  background: transparent;
-  color: black;
-
-  transform: rotate(0deg);
-}
-
-.gameKey:focus {
-  outline: none;
-}
-
-.copy-btn {
-  cursor: pointer;
-
-  font-size: 35px;
-  font-weight: bold;
-
-  color: rgb(0, 0, 0);
 }
 
 /* Joining players styles */
 
 .players-container {
-  height: 80%;
+  height: 70%;
   width: 60%;
 
   display: flex;
@@ -94,4 +77,28 @@
   height: 245px;
   width: 175px;
   transition: margin-bottom 2s;
+}
+
+.header-inner-div {
+  display: flex;
+  justify-content: flex-end;
+  width: 50%;
+  height: 100%;
+}
+
+.uno-ellipse {
+  background: #d33e32;
+  height: 100%;
+  width: 16%;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(-30deg);
+  font-family: serif;
+  font-size: 220%;
+  font-weight: 900;
+  color: #f6db18;
+  text-shadow: -0.5px 0.5px black, -1px 1px black, -1.5px 1.5px black,
+    -2px 2px black, -2.5px 2.5px black, -3px 3px black, -3.5px 3.5px black;
 }
