@@ -7,6 +7,17 @@
     <script src="/scripts/viewUtils.js"></script>
   </head>
 
+  <!---IMPORT STYLES AND RUN A SCRIPT------------------------------------------------------->
+
+	  <link rel="stylesheet" href="/styles/chat_style2.css" />
+	  <!-- Disable ENTER to send the form -->
+	  <script type="text/javascript">
+		  window.addEventListener('keydown',function(e){if(e.keyIdentifier=='U+000A'||e.keyIdentifier=='Enter'||e.keyCode==13){if(e.target.nodeName=='INPUT'&&e.target.type=='text'){e.preventDefault();return false;}}},true);
+	  </script>
+
+  <!---------------------------------------------------------->
+
+
   <body>
     <main>
       <header class="header-game">
@@ -20,7 +31,7 @@
           <button class="leave-game" onclick="leaveGame()">Leave Game</button>
         </div>
       </header>
-      
+
       <div id="wildCardOverlay" class="overlay hidden">
         <div class=" color-container ">
           <span class="color-header">Choose Running Color</span>
@@ -466,6 +477,31 @@
           <div class="exit-btn" onclick="exitToStartGame()">EXIT</div>
         </div>
       </div>
+
+	  <!---CHAT BOX-------------------------------------------------->
+
+	  	  <div class="rounding">
+	          <div class=" ChatContainer default-container float-left chat-animation ">
+	              <div class="rounding" id="wrapper">
+	                  <div id="menu">
+	                      <div style="clear:both"></div>
+	                  </div>
+	                  <div id="chatbox">
+	                      <table id="ChatTable" width="100%">
+
+	                      </table>
+	                  </div>
+	                  <form name="message">
+	                      <input class="align-usermsg align-left" name="usermsg" type="text" id="usermsg" size="60" autocomplete="off" />
+	                      <input class="submit-btn"
+	                             type="button" onclick="handleChatAdd()" id="submitmsg" value="SEND" />
+	                  </form>
+	              </div>
+	          </div>
+	      </div>
+
+	  <!---------------------------------------------------------------------->
+
     </main>
   </body>
 </html>

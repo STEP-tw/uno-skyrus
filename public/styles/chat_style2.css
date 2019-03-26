@@ -1,0 +1,140 @@
+
+#wrapper{
+    padding-top:15px;
+    margin:0 auto;
+    margin-bottom:2px;
+    padding-bottom:30px;
+    background:#EBF4FB;
+    width:500px;
+    border:1px solid #2196F3; }
+
+
+
+#chatbox {
+    font-size: 2px;
+    text-align:left;
+    margin:0 auto;
+    margin-bottom:5px;
+    background:#fff;
+    height:120px;
+    width:430px;
+    border:1px solid #ACD8F0;
+    overflow:auto;
+}
+
+#usermsg {
+
+    padding: 3px 10px 3px;
+    width:75%;
+    height:2em;
+    margin-left: 5%;
+    border:1px solid #ACD8F0;
+
+}
+
+
+#submitmsg {
+    padding: 3px 1px 3px;
+    text-align: center;
+    width:15%;
+    height: 3.2em;
+    margin-right: 5%;
+
+}
+#Chat {
+    text-align: center;
+    color: #2196F3;
+
+}
+
+#menu {
+
+}
+
+#ChatTable{
+    font-size: 10.5px;
+
+
+}
+
+
+
+input[type=text]{
+    background: white;
+    color:black;
+    font:inherit;
+
+}
+
+tr:nth-child(even) {
+
+    background-color: #EBF4FB ;
+}
+
+{}
+
+.ChatContainer{
+  width: 100%;
+}
+
+
+.chat-animation{
+    animation:opac 0.8
+}
+@keyframes opac{
+    from{opacity:0} to {opacity:1}
+}
+.float-left {
+    float:left!important
+}
+
+.default-container{
+    padding:0.01em 16px
+}
+
+.rounding{
+    border-radius:16px
+}
+
+.mobile-responsivity{
+    position:relative;
+    display:block;
+    width:100%!important;
+    text-align:center;
+
+}
+
+.align-usermsg{
+    float:left;
+    padding:0 8px ;
+    width:74.99999%;
+
+}
+
+.align-left{
+    text-align:left!important;
+}
+
+.submit-btn{
+    color:#fff!important;
+    background-color:#2196F3!important;
+    border:none;
+    display:inline-block;
+    padding:8px 16px;
+    vertical-align:middle;
+    overflow:hidden;
+    text-decoration:none;
+    text-align:center;
+    cursor:pointer;
+    white-space:nowrap;
+    width:24.99999%;
+    float:right!important;
+    font-size:10px!important;
+}
+
+.submit-btn:hover{
+    color:#000!important;
+    background-color:#87CEEB!important;
+}
+
+html{box-sizing:border-box}*,*:before,*:after{box-sizing:inherit}
