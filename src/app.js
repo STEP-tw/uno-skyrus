@@ -23,7 +23,13 @@ const {
   leaveGame,
   servePlayersCount,
   restrictAccess,
-  updateRunningColor
+  updateRunningColor,
+
+//CREATE OUR CONSTS -----------------------------
+  serveChat,
+  addChat
+//------------------------------------------------
+
 } = require('./handlers/handleRequests');
 
 const app = express();
@@ -49,6 +55,12 @@ app.get('/passTurn', passTurn);
 app.get('/catch', catchPlayer);
 app.get('/leaveGame', leaveGame);
 app.get('/playersCount', servePlayersCount);
+
+//ADD METHODS --------------------------------------
+app.get('/serveChat', serveChat);
+app.post('/addChat', addChat);
+//--------------------------------------------------
+
 
 app.use(restrictAccess);
 

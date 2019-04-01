@@ -40,7 +40,21 @@ class Game {
     this.cardsToDraw = 1;
     this.hasDrawnTwo = true;
     this.hasDrawnFour = true;
+
+	//STRING ARRAY FORM MESSAGES -----------------------------
+	this.chat = [];
+	//--------------------------------------------------------
   }
+
+  //CHAT METHODS ---------------------------------------------
+  getChat(){
+	return this.chat;
+  }
+
+  setChat(newchat){
+	this.chat = newchat;
+  }
+  //----------------------------------------------------------
 
   updateSaveStatus() {
     this.saveStatus.status = true;
