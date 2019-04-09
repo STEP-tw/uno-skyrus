@@ -31,6 +31,10 @@
   text-align: right;
 }
 
+.grade{
+	text-align: center;
+}
+
 .leaderboard{
   margin-bottom: 30px;
 }

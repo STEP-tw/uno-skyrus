@@ -333,13 +333,13 @@ const displayVictory = function(document, status) {
           for(var i = 0; i < players.playerDetails.length; i++){
 
 						if(i==0){
-							string += "<tr><td><img class='lead-img' src='../images/first.png'>  " + players.playerDetails[i].name + "</td> <td>" + players.playerDetails[i].score + "</td> </tr>";
+							string += "<tr><td class='grade'><img class='lead-img' src='../images/first.png'></td><td>  " + players.playerDetails[i].name + "</td> <td class='point'>" + "</td> </tr>";
 						}else if(i==1){
-							string += "<tr><td><img class='lead-img' src='../images/second.png'>  " + players.playerDetails[i].name + "</td> <td>" + players.playerDetails[i].score + "</td> </tr>";
+							string += "<tr><td class='grade'><img class='lead-img' src='../images/second.png'></td><td>  " + players.playerDetails[i].name + "</td> <td class='point'>" + players.playerDetails[i].score + " point</td> </tr>";
 						}else if(i==2){
-							string += "<tr><td><img class='lead-img' src='../images/third.png'>  " + players.playerDetails[i].name + "</td> <td>" + players.playerDetails[i].score + "</td> </tr>";
+							string += "<tr><td class='grade'><img class='lead-img' src='../images/third.png'></td><td>  " + players.playerDetails[i].name + "</td> <td class='point'>" + players.playerDetails[i].score + " point</td> </tr>";
 						}else{
-							string += "<tr><td><img class='lead-img' src='../images/person.png'>  " + players.playerDetails[i].name + "</td> <td>" + players.playerDetails[i].score + "</td> </tr>";
+							string += "<tr><td class='grade'><img class='lead-img' src='../images/person.png'></td><td>  " + players.playerDetails[i].name + "</td> <td class='point'>" + players.playerDetails[i].score + " point</td> </tr>";
 						}
          }
           document.getElementById('leaderboard').innerHTML = string;
