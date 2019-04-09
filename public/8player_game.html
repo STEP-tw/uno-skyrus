@@ -5,9 +5,14 @@
     <script src="/scripts/logger.js"></script>
     <script src="/scripts/game.js"></script>
     <script src="/scripts/viewUtils.js"></script>
+
+		<!-- IMPORT OUR SCORE STYLESHEET -->
+		<link rel="stylesheet" href="/styles/scores.css">
+		<!---------------------------------->
+
+		<link rel="stylesheet" href="/styles/chat_style.css" />
   </head>
 
-  <!---IMPORT STYLES AND RUN A SCRIPT------------------------------------------------------->
 
 	  <link rel="stylesheet" href="/styles/chat_style2.css" />
 	  <!-- Disable ENTER to send the form -->
@@ -15,7 +20,6 @@
 		  window.addEventListener('keydown',function(e){if(e.keyIdentifier=='U+000A'||e.keyIdentifier=='Enter'||e.keyCode==13){if(e.target.nodeName=='INPUT'&&e.target.type=='text'){e.preventDefault();return false;}}},true);
 	  </script>
 
-  <!---------------------------------------------------------->
 
 
   <body>
@@ -471,14 +475,43 @@
           </div>
         </div>
       </div>
-      <div class="overlay hidden" id="gameEnd">
-        <div class="win-message">
-          <span id="popupMessage" class="pop-up-message"></span>
-          <div class="exit-btn" onclick="exitToStartGame()">EXIT</div>
-        </div>
-      </div>
 
-	  <!---CHAT BOX-------------------------------------------------->
+			<!-- Statistic ----------------------------------------------------------->
+			<div class="overlay hidden" id="gameEnd">
+					<div class="win-message">
+						<img class="backgroundImg" src="/images/logo.png">
+							<span id="popupMessage" class="pop-up-message winMessage">Martin has won the game</span>
+							<table class="score-table">
+
+								<!-- Statistic -->
+								<tr>
+									<td>Score:  </td>
+									<td id="score" class="point"></td>
+								</tr>
+
+								<tr>
+									<td>Most cards in your hand:</td>
+									<td id="maxCard" class="point"></td>
+								</tr>
+
+								<tr>
+									<td>Cards you thrown:</td>
+									<td id="thrownCards" class="point"></td>
+								</tr>
+
+							</table>
+
+							<!-- Leaderboard -->
+							<table class="score-table leaderboard" id="leaderboard">
+
+
+
+							</table>
+					</div>
+			</div>
+
+		<!--------------------------------------------------------------------->
+
 
 	  	  <div class="rounding">
 	          <div class=" ChatContainer default-container float-left chat-animation ">
@@ -500,7 +533,6 @@
 	          </div>
 	      </div>
 
-	  <!---------------------------------------------------------------------->
 
     </main>
   </body>

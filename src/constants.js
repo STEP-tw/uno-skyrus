@@ -6,11 +6,16 @@ const URLS = [
   '/scripts/logger.js',
   '/statusIcons/card-draw.svg',
   '/statusIcons/card-discard.svg',
-
-  //ADDED OUR IMPORTS
   '/styles/chat_style.css',
   '/styles/chat_style2.css',
-  '/images/back.png'
+  '/images/back.png',
+
+	//leaderboard
+	'/images/first.png',
+	'/images/second.png',
+	'/images/third.png',
+	'/styles/scores.css'
+
 ];
 
 module.exports = { URLS };

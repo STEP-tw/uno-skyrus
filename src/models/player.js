@@ -15,7 +15,35 @@ class Player {
     this.playableCards = playableCards;
     this.canDrawCard = canDrawCard;
     this.unoCallStatus = unoCallStatus;
+
+		//SCORE ATTRIBUTES
+		this.thrownCards = 0;
+		this.maxCard = 0;
+		this.score = 0;
   }
+
+	//SCORE FUNCTIONS -----------
+	setScore(score) {
+    this.score = score;
+  }
+
+  getScore(score) {
+    return this.score;
+  }
+
+  getMaxCard(prev) {
+    if(prev>this.maxCard) {
+       this.maxCard = prev;
+    }
+    return this.maxCard;
+  }
+
+  getThrownCards() {
+    return this.thrownCards;
+  }
+	// --------------------------
+
+
   getCards() {
     return this.cards;
   }
