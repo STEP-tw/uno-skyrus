@@ -15,7 +15,8 @@ const URLS = [
 	'/images/second.png',
 	'/images/third.png',
 	'/styles/scores.css',
-	'/images/logo.png'
+	'/images/logo.png',
+	'/images/person.png'
 
 ];
 

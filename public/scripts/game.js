@@ -339,7 +339,7 @@ const displayVictory = function(document, status) {
 						}else if(i==2){
 							string += "<tr><td><img class='lead-img' src='../images/third.png'>  " + players.playerDetails[i].name + "</td> <td>" + players.playerDetails[i].score + "</td> </tr>";
 						}else{
-							string += "<tr><td>" + players.playerDetails[i].name + "</td> <td>" + players.playerDetails[i].score + "</td> </tr>";
+							string += "<tr><td><img class='lead-img' src='../images/person.png'>  " + players.playerDetails[i].name + "</td> <td>" + players.playerDetails[i].score + "</td> </tr>";
 						}
          }
           document.getElementById('leaderboard').innerHTML = string;
