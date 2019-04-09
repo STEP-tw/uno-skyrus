@@ -314,6 +314,7 @@ const displayVictory = function(document, status) {
 
 					//SHOW THE SCORES ---------------------
 					document.getElementById('score').innerHTML = cards.score;
+				}
 	    });
 
 			fetch('/getPlayerNames')
