@@ -22,21 +22,63 @@ class Player {
 		this.score = 0;
   }
 
-	//SCORE FUNCTIONS -----------
-	setScore(score) {
-    this.score = score;
-  }
+	//STATISTICS FUNCTIONS -----------
+	calculateScore(){
+		var score = 0;
+		for(var i =0; i<this.cards.length;i++) {
+      if(this.cards[i].isReverseCard || this.cards[i].isSkipCard || this.cards[i].isDrawTwo){
+        score+=20;
+      } else
+      if(this.cards[i].isWildCard && !this.cards[i].isDrawFour) {
+        score +=50;
+      } else
+      if(this.cards[i].isDrawFour) {
+        score +=70;
+      } else
+      switch (this.cards[i].symbol) {
+        case 1:
+          score+=1;
+          break;
+        case 2:
+          score+=2;
+          break;
+        case 3:
+          score+=3;
+          break;
+        case 4:
+          score+=4;
+          break;
+        case 5:
+          score+=5;
+          break;
+        case 6:
+          score+=6;
+          break;
+        case 7:
+          score+=7;
+          break;
+        case 8:
+          score+=8;
+          break;
+        case 9:
+          score+=9;
+          break;
+      }
+    }
+		this.score = score;
+		return this.score;
+	}
 
-  getScore(score) {
-    return this.score;
-  }
-
-  getMaxCard(prev) {
-    if(prev>this.maxCard) {
-       this.maxCard = prev;
+  getMaxCard(actual) {
+    if(actual>this.maxCard) {
+       this.maxCard = actual;
     }
     return this.maxCard;
   }
+
+	increaseThrownCard(){
+		this.thrownCards++;
+	}
 
   getThrownCards() {
     return this.thrownCards;

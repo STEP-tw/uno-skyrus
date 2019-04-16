@@ -158,6 +158,12 @@ describe('Game Class', () => {
         getName: () => {
           return 'player';
         },
+        thrownCards: 0,
+        increaseThrownCard: () => {
+          this.thrownCards++;
+        },
+        score: 0,
+        calculateScore: () => 2,
         calculatePlayableCards: () => {},
         addCards: function(cards) {
           player.cards = cards;
@@ -321,6 +327,8 @@ describe('Game Class', () => {
         getDrawCardStatus: () => true,
         getPlayableCards: () => [],
         id: 234
+
+
       };
       const players = {
         getCurrentPlayer: () => player,
@@ -367,7 +375,8 @@ describe('Game Class', () => {
         id: 234,
         resetHasCaught: () => {},
         resetUnoCall: () => {},
-        getPlayableCards: () => []
+        getPlayableCards: () => [],
+        calculateScore: () => {}
       };
       const players = {
         getCurrentPlayer: () => player,
@@ -414,7 +423,8 @@ describe('Game Class', () => {
         id: 234,
         resetHasCaught: () => {},
         resetUnoCall: () => {},
-        getPlayableCards: () => []
+        getPlayableCards: () => [],
+        calculateScore: () => {}
       };
       const players = {
         getCurrentPlayer: () => player,
@@ -455,7 +465,8 @@ describe('Game Class', () => {
         setPlayableCards: () => {},
         id: 234,
         resetHasCaught: () => {},
-        resetUnoCall: () => {}
+        resetUnoCall: () => {},
+        calculateScore: () => {}
       };
 
       const players = {
@@ -926,7 +937,7 @@ describe('Game Class', () => {
           {
             '12': {},
             getName: () => 'reshmi',
-            getCards : () =>[]  
+            getCards : () =>[]
           }
         ],
         removePlayer: function() {

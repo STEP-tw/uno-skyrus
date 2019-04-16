@@ -314,36 +314,36 @@ const displayVictory = function(document, status) {
 
 					//SHOW THE SCORES ---------------------
 					document.getElementById('score').innerHTML = cards.score;
+
+					fetch('/getPlayerNames')
+		      .then(response => response.json())
+		      .then(players => {
+		          //console.log(players);
+		          document.getElementById('thrownCards').innerHTML = players.playerDetails[players.playerPosition].thrownCards;
+		          document.getElementById('maxCard').innerHTML = players.playerDetails[players.playerPosition].maxCard;
+
+		          var string = "";
+
+							players.playerDetails.sort(function(a, b){
+								return a.score - b.score
+							});
+
+		          for(var i = 0; i < players.playerDetails.length; i++){
+
+								if(i==0){
+									string += "<tr><td class='grade'><img class='lead-img' src='../images/first.png'></td><td>  " + players.playerDetails[i].name + "</td> <td class='point'>" + "</td> </tr>";
+								}else if(i==1){
+									string += "<tr><td class='grade'><img class='lead-img' src='../images/second.png'></td><td>  " + players.playerDetails[i].name + "</td> <td class='point'>" + players.playerDetails[i].score + " pt</td> </tr>";
+								}else if(i==2){
+									string += "<tr><td class='grade'><img class='lead-img' src='../images/third.png'></td><td>  " + players.playerDetails[i].name + "</td> <td class='point'>" + players.playerDetails[i].score + " pt</td> </tr>";
+								}else{
+									string += "<tr><td class='grade'><img class='lead-img' src='../images/person.png'></td><td>  " + players.playerDetails[i].name + "</td> <td class='point'>" + players.playerDetails[i].score + " pt</td> </tr>";
+								}
+		         }
+		          document.getElementById('leaderboard').innerHTML = string;
+		      });
 				}
 	    });
-
-			fetch('/getPlayerNames')
-      .then(response => response.json())
-      .then(players => {
-          //console.log(players);
-          document.getElementById('thrownCards').innerHTML = players.playerDetails[players.playerPosition].thrownCards;
-          document.getElementById('maxCard').innerHTML = players.playerDetails[players.playerPosition].maxCard;
-
-          var string = "";
-
-					players.playerDetails.sort(function(a, b){
-						return a.score - b.score
-					});
-
-          for(var i = 0; i < players.playerDetails.length; i++){
-
-						if(i==0){
-							string += "<tr><td class='grade'><img class='lead-img' src='../images/first.png'></td><td>  " + players.playerDetails[i].name + "</td> <td class='point'>" + "</td> </tr>";
-						}else if(i==1){
-							string += "<tr><td class='grade'><img class='lead-img' src='../images/second.png'></td><td>  " + players.playerDetails[i].name + "</td> <td class='point'>" + players.playerDetails[i].score + " pt</td> </tr>";
-						}else if(i==2){
-							string += "<tr><td class='grade'><img class='lead-img' src='../images/third.png'></td><td>  " + players.playerDetails[i].name + "</td> <td class='point'>" + players.playerDetails[i].score + " pt</td> </tr>";
-						}else{
-							string += "<tr><td class='grade'><img class='lead-img' src='../images/person.png'></td><td>  " + players.playerDetails[i].name + "</td> <td class='point'>" + players.playerDetails[i].score + " pt</td> </tr>";
-						}
-         }
-          document.getElementById('leaderboard').innerHTML = string;
-      });
 };
 
 const changeGamePage = function(document, playersCount) {
