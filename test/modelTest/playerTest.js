@@ -208,7 +208,7 @@ describe('Player class', () => {
     });
   });
 
-
+// SCORE TESTS ---------------------------------------------------------------
 describe('calcualte score', function() {
     it('should return 0 of player score', function(){
       const player = new Player("Metthew", 123);
@@ -243,10 +243,6 @@ describe('get max card', function(){
       const actualOutput = player.getMaxCard(8);
       chai.assert.deepEqual(actualOutput, expectedOutput);
     });
-});
-
-
-
-
-
+	});
+// --------------------------------------------------------------
 });

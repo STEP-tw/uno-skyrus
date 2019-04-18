@@ -61,6 +61,7 @@ describe('playerCards', function() {
       id: 123,
       getId: sinon.stub().returns(123),
       getPlayableCards: () => [{ color: 'red', number: 2 }],
+			//ADDED CALCULATE SCORE
       calculateScore: () => {}
     };
     const game = {
