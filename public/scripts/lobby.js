@@ -57,7 +57,31 @@ const leaveGame = function() {
   });
 };
 
+//ADD ARTIFICIAL INTELLIGENCE AS A COMPUTER TO THE GAME
+const addAIEasy = function() {
+	fetch('/addAiEasy');
+	document.execCommand('addAIEasy');
+};
+
+const addAIHard = function() {
+	fetch('/addAiHard');
+	document.execCommand('addAIHard');
+};
+
+const removeAI = function() {
+	fetch('/removeAi');
+	document.execCommand('removeAI');
+};
+//-----------------------------------------------------
+
 window.onload = () => {
   document.getElementById('copyBtn').onclick = copy;
+
+	//ADDED BUTTONS LISTENER ------------------------
+  document.getElementById('addAiEasy').onclick = addAIEasy;
+	document.getElementById('addAiHard').onclick = addAIHard;
+	document.getElementById('removeAi').onclick = removeAI;
+  //----------------------------------------------
+
   getPlayersStatus(document);
 };

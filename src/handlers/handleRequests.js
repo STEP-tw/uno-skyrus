@@ -1,5 +1,10 @@
 const fs = require('fs');
 
+// ADD AI IMPORTS ------------------------
+const { EasyAi } = require('../models/EasyAi');
+const { HardAi } = require('../models/HardAi');
+// ---------------------------------------
+
 const { generateGameKey, writeData, loadData } = require('../utils/util.js');
 const { Player } = require('../models/player');
 const { Game } = require('../models/game');
@@ -56,6 +61,73 @@ const joinGame = function(req, res) {
   res.cookie('id', id);
   res.send({ hasGameStarted: game.hasStarted() });
 };
+
+//ADD ARTIFICIAL INTELLIGENCE ---------------------
+const addAiEasy = function(req, res) {
+	const {gameKey, id } = req.cookies;
+	const game = req.app.games.getGame(gameKey);
+
+	//Get player names for the ai-id
+  const players = game.getPlayers().getPlayers();
+	const playersNames = players.map(player => player.getName());
+
+	const aiID = generateGameKey();
+
+	const aiNames = ["Sarah-Computer", "Jack-Computer", "Paul-Computer", "Olivia-Computer", "Lily-Computer", "Daniel-Computer", "Martin-Computer", "Matthew-Computer", "Adam-Computer", "David-Computer"];
+	const ai = new EasyAi(aiNames[Math.floor(Math.random() * 10)], aiID, game);
+	game.addPlayer(ai);
+	res.send({hasGameStarted: game.hasStarted()});
+};
+
+const addAiHard = function(req, res) {
+	const {gameKey, id } = req.cookies;
+	const game = req.app.games.getGame(gameKey);
+
+	//Get player names for the ai-id
+	const extractPlayersNames = function(game) {
+    const players = game.getPlayers().getPlayers();
+    return players.map(player => player.getName());
+  };
+  const playersNames = extractPlayersNames(game);
+	const aiID = generateGameKey();
+
+	const aiNames = ["Sarah-Computer", "Jack-Computer", "Paul-Computer", "Olivia-Computer", "Lily-Computer", "Daniel-Computer", "Martin-Computer", "Matthew-Computer", "Adam-Computer", "David-Computer"];
+	const ai = new HardAi(aiNames[Math.floor(Math.random() * 10)], aiID, game);
+	game.addPlayer(ai);
+	res.send({hasGameStarted: game.hasStarted()});
+};
+
+const removeAi = function(req, res) {
+	const { gameKey, id } = req.cookies;
+  const game = res.app.games.getGame(gameKey);
+	const players = game.getPlayers().getPlayers();
+	var i;
+	for(i = players.length-1; i != 0; i--){
+		if(players[i].getName().length > 10){
+			game.leaveGame(players[i].getId());
+			break;
+		}
+	}
+	res.send(players[i].getName() + " named ai has removed");
+	res.end();
+};
+
+const aiListener = function(req, res){
+  const { gameKey, id } = req.cookies;
+  const game = req.app.games.getGame(gameKey);
+  const players = game.getPlayers().getPlayers();
+
+  for(var i = 0; i < players.length; i++){
+    if(players[i].getName().length > 10 && game.getPlayers().isCurrent(players[i])){
+			const ai = players[i];
+			ai.move();
+    }
+  }
+
+	res.end();
+};
+//------------------------------------------------
+
 
 const servePlayerCards = function(req, res) {
   const { gameKey, id } = req.cookies;
@@ -387,9 +459,12 @@ module.exports = {
   servePlayersCount,
   restrictAccess,
   updateRunningColor,
-
-	//EXPORT OUR REQUESTS
   addChat,
-  serveChat
-
+  serveChat,
+	//ARTIFICIAL INTELLIGENCE--------------------------
+	addAiEasy,
+	addAiHard,
+	removeAi,
+  aiListener
+//-------------------------------------------------
 };
