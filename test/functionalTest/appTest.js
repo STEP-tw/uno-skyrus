@@ -730,3 +730,91 @@ describe('/updateRunningColor', function() {
       .end(done);
   });
 });
+
+//AI SERVER TESTS ------------------------------------------
+describe('Adding Artificial Intelligence', function() {
+	it('should add a new easy ai that name caracters are greater than 10', function(done) {
+		const players = {
+      getPlayers: () => [
+        { name: 'Adam', id: '123', getName: () => this.name }
+      ]
+    };
+
+		const game = {
+			addPlayer: () => {},
+			getPlayers: () => players,
+			hasStarted: () => true,
+		};
+
+		const games = {};
+		games.getGame = sinon.stub().returns(game);
+		games.getGame.withArgs('1234').returns(game);
+
+		app.games = games;
+
+		request(app)
+			.get('/addAiEasy')
+			.set('Cookie', 'gameKey=1234')
+			.expect({hasGameStarted: true})
+			.end(done);
+	});
+
+	it('should add a new hard ai that name caracters are greater than 10', function(done) {
+		const players = {
+      getPlayers: () => [
+        { name: 'Adam', id: '123', getName: () => this.name }
+      ]
+    };
+
+		const game = {
+			addPlayer: () => {},
+			getPlayers: () => players,
+			hasStarted: () => true,
+		};
+
+		const games = {};
+		games.getGame = sinon.stub().returns(game);
+		games.getGame.withArgs('1234').returns(game);
+
+		app.games = games;
+
+		request(app)
+			.get('/addAiHard')
+			.set('Cookie', 'gameKey=1234')
+			.expect({hasGameStarted: true})
+			.end(done);
+	});
+});
+
+describe('Remove Artificial Intelligence', function() {
+	it('should remove the ai and return with 200 status code and text with the name of the removed ai', function(done) {
+		const game_players = {
+			getPlayers: () => {
+				return [
+					{name: "Adam", id: "123", getName: () => "Adam", getId: () => this.id},
+					{name: "Daniel-Computer", id: "321", getName: () => "Daniel-Computer", getId: () => this.id}
+				];
+			}
+		};
+
+		const game = {
+			getPlayers: () => game_players,
+			leaveGame: () => {}
+		};
+
+		const games = {};
+		games.getGame = sinon.stub().returns(game);
+		games.getGame.withArgs('1234').returns(game);
+
+		app.games = games;
+
+		request(app)
+			.get('/removeAI')
+			.set('Cookie', 'gameKey=1234')
+			.expect('Daniel-Computer named ai has removed')
+			.expect(200)
+			.end(done);
+
+	});
+});
+//----------------------------------------------------------
