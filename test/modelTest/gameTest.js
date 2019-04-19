@@ -2,6 +2,17 @@ const { Game } = require('../../src/models/game.js');
 const chai = require('chai');
 const sinon = require('sinon');
 
+//IMPORT CARDS -----------------------
+const {
+  SkipCard,
+  WildCard,
+  NumberedCard,
+  DrawTwo,
+  ReverseCard,
+  WildDrawFour
+} = require('./../../src/models/card');
+// -----------------------------------
+
 const {
   twoCards,
   dummyShuffler,
