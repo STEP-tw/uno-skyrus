@@ -1249,3 +1249,35 @@ describe('ai draw card', () => {
 
 });
 // -----------------------------------------------
+
+
+//GAME CHAT FUNCTIONS ---------------------------------
+describe('getChat', function(){
+
+	it('should return an empty array', function() {
+		const game = new Game(twoCards, 0, 1234, {});
+		const actual = game.getChat();
+		const expected = [];
+		chai.assert.deepEqual(actual, expected);
+	});
+
+	it('should return a not empty array', function() {
+		const game = new Game(twoCards, 0, 1234, {});
+		game.chat = [{name: "Adam", msg: "Helo", color: 0}, {name: "Ron", msg: "Hi", color: 1}];
+		const expected = [{name: "Adam", msg: "Helo", color: 0}, {name: "Ron", msg: "Hi", color: 1}];
+		const actual = game.getChat();
+		chai.assert.deepEqual(actual, expected);
+	});
+});
+
+describe('setChat', function(){
+	it('should set the chat array in parameter for the game', function() {
+		const game = new Game(twoCards, 0, 1234, {});
+		const toSet = [{name: "Adam", msg: "Helo", color: 0}, {name: "Ron", msg: "Hi", color: 1}];
+		game.setChat(toSet);
+		const expected = [{name: "Adam", msg: "Helo", color: 0}, {name: "Ron", msg: "Hi", color: 1}];
+		const actual = game.getChat();
+		chai.assert.deepEqual(actual, expected);
+	});
+});
+//-----------------------------------------------------
