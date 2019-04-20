@@ -25,7 +25,16 @@ const {
   restrictAccess,
   updateRunningColor,
   serveChat,
-  addChat
+  addChat,
+
+	//CREATE AI CONSTS -------------------------------
+	addAiEasy,
+	addAiHard,
+	removeAi,
+  aiListener
+	//------------------------------------------------
+
+
 } = require('./handlers/handleRequests');
 
 const app = express();
@@ -53,6 +62,14 @@ app.get('/leaveGame', leaveGame);
 app.get('/playersCount', servePlayersCount);
 app.get('/serveChat', serveChat);
 app.post('/addChat', addChat);
+
+//ARTIFICIAL INTELLIGENCE METHODS -------------------------
+app.get('/addAiEasy', addAiEasy);
+app.get('/addAiHard', addAiHard);
+app.get('/aiListener', aiListener);
+app.get('/removeAI', removeAi);
+//---------------------------------------------------------
+
 
 app.use(restrictAccess);
 

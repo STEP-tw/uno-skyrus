@@ -2,6 +2,17 @@ const { Game } = require('../../src/models/game.js');
 const chai = require('chai');
 const sinon = require('sinon');
 
+//IMPORT CARDS -----------------------
+const {
+  SkipCard,
+  WildCard,
+  NumberedCard,
+  DrawTwo,
+  ReverseCard,
+  WildDrawFour
+} = require('./../../src/models/card');
+// -----------------------------------
+
 const {
   twoCards,
   dummyShuffler,
@@ -1047,3 +1058,237 @@ describe('getSaveStatus', () => {
     chai.assert.deepEqual(actual, expected);
   });
 });
+
+//ARTIFICIAL INTELLIGENCE TESTS ------------------
+describe('ai throw card', () => {
+  let game;
+  const logMessage = () => {};
+  const canPlayOnTopOf = () => true;
+  let deck;
+
+  beforeEach(() => {
+    numberDeck[5] = {
+      number: 6,
+      color: 'green',
+      canPlayOnTopOf: () => true
+    };
+    const identity = deck => deck;
+    const player = {
+      id: 1234,
+      name: 'player',
+      cards: [],
+      getName: () => {
+        return 'player';
+      },
+      getCardsCount: () => {
+        return player.cards.length;
+      },
+      calculatePlayableCards: () => {},
+      addCards: function(cards) {
+        player.cards = cards;
+      },
+      getPlayableCards: () => {
+        return [];
+      },
+      getId() {
+        return player.id;
+      },
+      removeCard(cardId) {
+        player.cards.splice(cardId, 1);
+      },
+      getCards() {
+        return player.cards;
+      },
+      setUnoCall: () => {},
+      getUnoCallStatus: () => {
+        return true;
+      },
+      resetHasCaught: () => {}
+    };
+    const players = {
+      getPlayers: () => {
+        return [player];
+      },
+      getCurrentPlayer: () => {
+        return player;
+      },
+      getPlayer() {
+        return player;
+      },
+      setFirstTurn: () => {},
+      setCurrentPlayer: () => {},
+      updateCurrentPlayer: () => {}
+    };
+
+    deck = [
+      {
+        number: 1,
+        color: 'yellow',
+        logMessage,
+        canPlayOnTopOf,
+        getColor: () => 'yellow'
+      },
+      {
+        number: 2,
+        color: 'green',
+        logMessage,
+        canPlayOnTopOf,
+        getColor: () => 'green'
+      },
+      {
+        number: 3,
+        color: 'blue',
+        logMessage,
+        canPlayOnTopOf,
+        getColor: () => 'blue'
+      },
+      {
+        number: 4,
+        color: 'yellow',
+        logMessage,
+        canPlayOnTopOf,
+        getColor: () => 'yellow'
+      },
+      {
+        number: 5,
+        color: 'red',
+        logMessage,
+        canPlayOnTopOf,
+        getColor: () => 'red'
+      },
+      {
+        number: 6,
+        color: 'red',
+        logMessage,
+        canPlayOnTopOf,
+        getColor: () => 'red'
+      },
+      {
+        number: 7,
+        color: 'blue',
+        logMessage,
+        canPlayOnTopOf,
+        getColor: () => 'blue'
+      },
+      {
+        number: 8,
+        color: 'blue',
+        logMessage,
+        canPlayOnTopOf,
+        getColor: () => 'blue'
+      },
+      {
+        number: 9,
+        color: 'green',
+        logMessage,
+        canPlayOnTopOf,
+        getColor: () => 'green'
+      },
+      {
+        symbol: '+2',
+        color: 'green',
+        isDrawTwo: true,
+        logMessage,
+        canPlayOnTopOf,
+        getColor: () => 'green'
+      }
+    ];
+
+    game = new Game(deck, 1, 1234, players, {
+      logThrowCard: () => {},
+      logCallUno: () => {}
+    });
+    game.startGame(identity);
+  });
+  it('should remove card from player hand and put it on top of pile', () => {
+    const card = new NumberedCard(6,'red');
+    game.aiThrowCard(1234, card, false);
+    const actual = game.players.getPlayer(1234).getCardsCount();
+    const expected = 6;
+    chai.assert.deepEqual(actual, expected);
+  });
+});
+
+describe('ai draw card', () => {
+  it('should remove a card from stack', function() {
+    const player = {
+      addCard: () => {},
+      calculatePlayableCards: () => {},
+      addCards: () => {},
+      getId: () => 234,
+      getName: () => 'player',
+      getDrawCardStatus: () => true,
+      setDrawCardStatus: () => {},
+      setPlayableCards: () => {},
+      id: 234,
+      resetHasCaught: () => {},
+      resetUnoCall: () => {},
+      getPlayableCards: () => []
+    };
+    const players = {
+      getCurrentPlayer: () => player,
+      getPlayers: () => [player],
+      getPlayer: () => player,
+      setCurrentPlayer: () => player,
+      changeTurn: () => {}
+    };
+    const card = {
+      number: 4,
+      color: 'red',
+      canPlayOnTopOf: () => true,
+      getColor: () => 'red'
+    };
+    const activityLog = {
+      logDrawCards: () => {}
+    };
+    let nineCards = sevenCards.slice();
+    nineCards.unshift(card);
+    nineCards.unshift(card);
+    nineCards.unshift(card);
+    nineCards = nineCards.map(card => {
+      card.getColor = () => card.color;
+      return card;
+    });
+
+    const game = new Game(nineCards, 0, 1234, players, activityLog);
+    game.startGame(dummyShuffler);
+    game.aiDrawCards(234);
+    const actual = game.stack;
+    const expected = [card];
+    chai.assert.deepEqual(actual, expected);
+  });
+
+});
+// -----------------------------------------------
+
+
+//GAME CHAT FUNCTIONS ---------------------------------
+describe('getChat', function(){
+
+	it('should return an empty array', function() {
+		const game = new Game(twoCards, 0, 1234, {});
+		const actual = game.getChat();
+		const expected = [];
+		chai.assert.deepEqual(actual, expected);
+	});
+
+	it('should return a not empty array', function() {
+		const game = new Game(twoCards, 0, 1234, {});
+		game.chat = [{name: "Adam", msg: "Helo", color: 0}, {name: "Ron", msg: "Hi", color: 1}];
+		const expected = [{name: "Adam", msg: "Helo", color: 0}, {name: "Ron", msg: "Hi", color: 1}];
+		const actual = game.getChat();
+		chai.assert.deepEqual(actual, expected);
+	});
+});
+
+describe('setChat', function(){
+	it('should set the chat array in parameter for the game', function() {
+		const game = new Game(twoCards, 0, 1234, {});
+		const toSet = [{name: "Adam", msg: "Helo", color: 0}, {name: "Ron", msg: "Hi", color: 1}];
+		game.setChat(toSet);
+		const expected = [{name: "Adam", msg: "Helo", color: 0}, {name: "Ron", msg: "Hi", color: 1}];
+		const actual = game.getChat();
+		chai.assert.deepEqual(actual, expected);
+	});
+});
+//-----------------------------------------------------

@@ -730,3 +730,186 @@ describe('/updateRunningColor', function() {
       .end(done);
   });
 });
+
+//AI SERVER TESTS ------------------------------------------
+describe('Adding Artificial Intelligence', function() {
+	it('should add a new easy ai that name caracters are greater than 10', function(done) {
+		const players = {
+      getPlayers: () => [
+        { name: 'Adam', id: '123', getName: () => this.name }
+      ]
+    };
+
+		const game = {
+			addPlayer: () => {},
+			getPlayers: () => players,
+			hasStarted: () => true,
+		};
+
+		const games = {};
+		games.getGame = sinon.stub().returns(game);
+		games.getGame.withArgs('1234').returns(game);
+
+		app.games = games;
+
+		request(app)
+			.get('/addAiEasy')
+			.set('Cookie', 'gameKey=1234')
+			.expect({hasGameStarted: true})
+			.end(done);
+	});
+
+	it('should add a new hard ai that name caracters are greater than 10', function(done) {
+		const players = {
+      getPlayers: () => [
+        { name: 'Adam', id: '123', getName: () => this.name }
+      ]
+    };
+
+		const game = {
+			addPlayer: () => {},
+			getPlayers: () => players,
+			hasStarted: () => true,
+		};
+
+		const games = {};
+		games.getGame = sinon.stub().returns(game);
+		games.getGame.withArgs('1234').returns(game);
+
+		app.games = games;
+
+		request(app)
+			.get('/addAiHard')
+			.set('Cookie', 'gameKey=1234')
+			.expect({hasGameStarted: true})
+			.end(done);
+	});
+});
+
+describe('Remove Artificial Intelligence', function() {
+	it('should remove the ai and return with 200 status code and text with the name of the removed ai', function(done) {
+		const game_players = {
+			getPlayers: () => {
+				return [
+					{name: "Adam", id: "123", getName: () => "Adam", getId: () => this.id},
+					{name: "Daniel-Computer", id: "321", getName: () => "Daniel-Computer", getId: () => this.id}
+				];
+			}
+		};
+
+		const game = {
+			getPlayers: () => game_players,
+			leaveGame: () => {}
+		};
+
+		const games = {};
+		games.getGame = sinon.stub().returns(game);
+		games.getGame.withArgs('1234').returns(game);
+
+		app.games = games;
+
+		request(app)
+			.get('/removeAI')
+			.set('Cookie', 'gameKey=1234')
+			.expect('Daniel-Computer named ai has removed')
+			.expect(200)
+			.end(done);
+
+	});
+});
+//----------------------------------------------------------
+
+//CHAT TESTS ---------------------------------------------------
+describe('serveChat', function() {
+	beforeEach(() => {
+		const games = {
+			1234: {
+				getChat: () => {
+					this.chat = [];
+					return this.chat;
+				}
+			},
+			getGame: () => {
+				return games['1234'];
+			}
+		};
+		app.games = games;
+	});
+
+	it('should return with 200 status code and an empty array in json content-type',function(done) {
+		request(app)
+			.get('/serveChat')
+			.set('Cookie', 'gameKey=1234')
+			.expect(200)
+			.expect(JSON.stringify([]))
+			.end(done)
+	});
+
+	it('should return with 200 status code and a not empty array in json content-type',function(done) {
+		const games = {
+			1234: {
+				getChat: () => {
+					this.chat = [{"from": "Adam", "msg": "Helo", "color": 0}];
+					return this.chat;
+				}
+			},
+			getGame: () => {
+				return games['1234'];
+			}
+		};
+		app.games = games;
+
+		request(app)
+			.get('/serveChat')
+			.set('Cookie', 'gameKey=1234')
+			.expect(200)
+			.expect(JSON.stringify([{"from": "Adam", "msg": "Helo", "color": 0}]))
+			.end(done)
+	});
+
+	it('should return with 200 status code and the chat that contains the message of the user', function(done) {
+		const players = [{
+			name: "Adam",
+			id: 321,
+			playerPosition: 0,
+			cardsCount: 8,
+			getCardsCount: () => 8
+		},{
+			name: "Ron",
+			id: 123,
+			playerPosition: 1,
+			cardsCount: 7,
+			getCardsCount: () => 7
+		}];
+		const game_players = {
+			players: players,
+			getPlayers: () => {
+				return players;
+			},
+			isCurrent: (player) => false
+		};
+		const game = {
+			getPlayers: () => game_players,
+			chat: [],
+			getChat: () => {
+				return this.chat;
+			},
+			setChat: (array) => {
+				this.chat = array;
+			}
+		};
+		const games = {
+			1234: game,
+			getGame: () => game,
+		};
+		app.games = games;
+		request(app)
+			.post('/addChat')
+			.set('Cookie', 'gameKey=1234; id=123')
+			.send({text: "Hello Adam"})
+			.expect(200)
+			.expect(JSON.stringify([{"from": "Adam", "msg": "Helo", "color": 0},{"from": "Ron", "msg": "Hello Adam", "color": 1}]))
+			.end(done);
+	});
+});
+//-----------------------------------------------------------------
