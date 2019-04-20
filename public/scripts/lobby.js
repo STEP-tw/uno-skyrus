@@ -59,12 +59,34 @@ const leaveGame = function() {
 
 //ADD ARTIFICIAL INTELLIGENCE AS A COMPUTER TO THE GAME
 const addAIEasy = function() {
-	fetch('/addAiEasy');
+	fetch('/addAiEasy')
+		.then(response => response.json())
+		.then( count => {
+			const joined = count.playersJoined;
+			const reqCount = count.playersCount;
+
+			if(joined == reqCount){
+				document.getElementById('addAiEasy').disabled = true;
+				document.getElementById('addAiHard').disabled = true;
+			}
+
+		});
 	document.execCommand('addAIEasy');
 };
 
 const addAIHard = function() {
-	fetch('/addAiHard');
+	fetch('/addAiHard')
+		.then(response => response.json())
+		.then( count => {
+			const joined = count.playersJoined;
+			const reqCount = count.playersCount;
+
+			if(joined == reqCount){
+				document.getElementById('addAiEasy').disabled = true;
+				document.getElementById('addAiHard').disabled = true;
+			}
+
+		});
 	document.execCommand('addAIHard');
 };
 

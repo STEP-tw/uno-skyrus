@@ -76,7 +76,7 @@ const addAiEasy = function(req, res) {
 	const aiNames = ["Sarah-Computer", "Jack-Computer", "Paul-Computer", "Olivia-Computer", "Lily-Computer", "Daniel-Computer", "Martin-Computer", "Matthew-Computer", "Adam-Computer", "David-Computer"];
 	const ai = new EasyAi(aiNames[Math.floor(Math.random() * 10)], aiID, game);
 	game.addPlayer(ai);
-	res.send({hasGameStarted: game.hasStarted()});
+	res.send({playersCount: game.getPlayersCount(), playersJoined: game.getPlayers().getPlayersCount()});
 };
 
 const addAiHard = function(req, res) {
@@ -94,7 +94,7 @@ const addAiHard = function(req, res) {
 	const aiNames = ["Sarah-Computer", "Jack-Computer", "Paul-Computer", "Olivia-Computer", "Lily-Computer", "Daniel-Computer", "Martin-Computer", "Matthew-Computer", "Adam-Computer", "David-Computer"];
 	const ai = new HardAi(aiNames[Math.floor(Math.random() * 10)], aiID, game);
 	game.addPlayer(ai);
-	res.send({hasGameStarted: game.hasStarted()});
+	res.send({playersCount: game.getPlayersCount(), playersJoined: game.getPlayers().getPlayersCount()});
 };
 
 const removeAi = function(req, res) {
