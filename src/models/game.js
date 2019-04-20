@@ -122,6 +122,11 @@ class Game {
     }
 
     this.updatePlayer(thrownCard);
+
+		//LEADER BOARD STATISTICS --------------------
+		player.increaseThrownCard();
+		player.calculateScore();
+		// -------------------------------------------
   }
 
   updatePlayer(thrownCard) {
@@ -224,6 +229,11 @@ class Game {
 
     this.getPlayers().changeTurn();
     this.updatePlayableCards();
+
+		//CALCULATE THE SCORE ------------------
+		currentPlayer.calculateScore();
+		// -------------------------------------
+
     return [];
   }
 

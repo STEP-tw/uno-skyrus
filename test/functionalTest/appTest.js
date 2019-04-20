@@ -60,7 +60,9 @@ describe('playerCards', function() {
       name: 'player',
       id: 123,
       getId: sinon.stub().returns(123),
-      getPlayableCards: () => [{ color: 'red', number: 2 }]
+      getPlayableCards: () => [{ color: 'red', number: 2 }],
+			//ADDED CALCULATE SCORE
+      calculateScore: () => {}
     };
     const game = {
       addPlayer: () => {},
@@ -409,8 +411,8 @@ describe('get players', () => {
   beforeEach(() => {
     const players = {
       getPlayers: () => [
-        { name: 'Aftab', id: '5678', getCardsCount: () => {} },
-        { name: 'Rahul', id: '2678', getCardsCount: () => {} }
+        { name: 'Aftab', id: '5678', getCardsCount: () => {}, calculateScore: () => {}, getMaxCard: () => {}, getThrownCards: () => {} },
+        { name: 'Rahul', id: '2678', getCardsCount: () => {}, calculateScore: () => {}, getMaxCard: () => {}, getThrownCards: () => {} }
       ],
       isCurrent: () => {}
     };

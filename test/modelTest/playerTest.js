@@ -1,4 +1,12 @@
 const { Player } = require('../../src/models/player');
+const {
+  SkipCard,
+  WildCard,
+  NumberedCard,
+  DrawTwo,
+  ReverseCard,
+  WildDrawFour
+} = require('./../../src/models/card');
 const chai = require('chai');
 describe('Player class', () => {
   describe('addCards', function() {
@@ -199,4 +207,42 @@ describe('Player class', () => {
       chai.assert.deepEqual(actualOutput, expectedOutput);
     });
   });
+
+// SCORE TESTS ---------------------------------------------------------------
+describe('calcualte score', function() {
+    it('should return 0 of player score', function(){
+      const player = new Player("Metthew", 123);
+      const expectedOutput = 0;
+      const actualOutput = player.calculateScore();
+      chai.assert.deepEqual(actualOutput, expectedOutput);
+    });
+    it('should return 141 of player score', function() {
+      const player = new Player("Matthew", 123);
+      player.addCard(new WildCard());
+      player.addCard(new WildDrawFour());
+      player.addCard(new ReverseCard('REVERSE', 'red'));
+      player.addCard(new NumberedCard(1, 'red'));
+      const expectedOutput = 141;
+      const actualOutput = player.calculateScore();
+      chai.assert.deepEqual(actualOutput, expectedOutput);
+    });
+});
+
+describe('get max card', function(){
+    it('it should return the maximum number of cards in your hand', function(){
+      const player = new Player("Matthew", 123);
+      player.maxCard = 7;
+      const expectedOutput = 7;
+      const actualOutput = player.getMaxCard();
+      chai.assert.deepEqual(actualOutput, expectedOutput);
+    });
+    it('it should modify the maximum number of cards in your hand and return with it', function() {
+      const player = new Player('Matthew', 123);
+      player.maxCard = 4;
+      const expectedOutput = 8;
+      const actualOutput = player.getMaxCard(8);
+      chai.assert.deepEqual(actualOutput, expectedOutput);
+    });
+	});
+// --------------------------------------------------------------
 });

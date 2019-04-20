@@ -64,6 +64,10 @@ const servePlayerCards = function(req, res) {
   const player = game.getPlayers().getPlayer(id);
   let playableCards = [];
 
+	//GETTING SCORE -------
+	const score = player.calculateScore();
+	// --------------------
+
   if (
     game
       .getPlayers()
@@ -74,7 +78,9 @@ const servePlayerCards = function(req, res) {
   }
   res.send({
     cards,
-    playableCards
+    playableCards,
+		//ADDED PLAYER SCORE ---------
+		score
   });
 };
 
@@ -159,7 +165,12 @@ const getPlayerNames = (req, res) => {
     return {
       name: player.name,
       isCurrent: game.getPlayers().isCurrent(player),
-      cardsCount: player.getCardsCount()
+      cardsCount: player.getCardsCount(),
+			//ADDED and STATISTICS--------
+			score: player.calculateScore(),
+			maxCard: player.getMaxCard(player.getCardsCount()),
+			thrownCards: player.getThrownCards()
+			//----------------------------------
     };
   });
 
