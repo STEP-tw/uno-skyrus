@@ -31,7 +31,7 @@ describe('Hard Ai class', () => {
       hardAi.addCard({ number: 2, color: "blue" });
       hardAi.addCard({ number: 3, color: "red" });
       const actualOutput = hardAi.getBestColor();
-      const expectedOutput = 2; //colors: red->0, green->1, blue->2, yellow->3
+      const expectedOutput = "blue";
       chai.assert.deepEqual(actualOutput, expectedOutput);
     });
   });

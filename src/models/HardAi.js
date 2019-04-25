@@ -119,7 +119,16 @@ class HardAi {
         index = i;
       }
     }
-    return colors[index];
+    if(colors[index]==0){
+      return "red";
+    }else if(colors[index]==1){
+      return "green";
+    }else if(colors[index]==2){
+      return "blue";
+    }else if(colors[index]==3){
+      return "yellow";
+    }
+
   }
 
   calculateScore(){

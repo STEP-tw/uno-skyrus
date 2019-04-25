@@ -737,13 +737,15 @@ describe('Adding Artificial Intelligence', function() {
 		const players = {
       getPlayers: () => [
         { name: 'Adam', id: '123', getName: () => this.name }
-      ]
+      ],
+			getPlayersCount: () => 2
     };
 
 		const game = {
 			addPlayer: () => {},
 			getPlayers: () => players,
 			hasStarted: () => true,
+			getPlayersCount: () => 2
 		};
 
 		const games = {};
@@ -755,7 +757,7 @@ describe('Adding Artificial Intelligence', function() {
 		request(app)
 			.get('/addAiEasy')
 			.set('Cookie', 'gameKey=1234')
-			.expect({hasGameStarted: true})
+			.expect({playersCount: 2, playersJoined: 2})
 			.end(done);
 	});
 
@@ -763,13 +765,15 @@ describe('Adding Artificial Intelligence', function() {
 		const players = {
       getPlayers: () => [
         { name: 'Adam', id: '123', getName: () => this.name }
-      ]
+      ],
+			getPlayersCount: () => 2
     };
 
 		const game = {
 			addPlayer: () => {},
 			getPlayers: () => players,
 			hasStarted: () => true,
+			getPlayersCount: () => 2
 		};
 
 		const games = {};
@@ -781,7 +785,7 @@ describe('Adding Artificial Intelligence', function() {
 		request(app)
 			.get('/addAiHard')
 			.set('Cookie', 'gameKey=1234')
-			.expect({hasGameStarted: true})
+			.expect({playersCount: 2, playersJoined: 2})
 			.end(done);
 	});
 });
