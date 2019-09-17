@@ -45,8 +45,8 @@ header {
   font-size: 220%;
   font-weight: 900;
   color: #f6db18;
-  text-shadow: -0.5px 0.5px black, -1px 1px black, -1.5px 1.5px black,
-    -2px 2px black, -2.5px 2.5px black, -3px 3px black, -3.5px 3.5px black;
+  text-shadow: -0.5px 0.5px black, -1px 1px black, -1.5px 1.5px black, -2px 2px black, -2.5px 2.5px black,
+    -3px 3px black, -3.5px 3.5px black;
 }
 
 a {
@@ -386,4 +386,13 @@ input {
 
 .gameKey:focus {
   outline: none;
+}
+
+.uno-header {
+  font-family: serif;
+  font-size: 50px;
+  font-weight: 900;
+  color: #f6db18;
+  text-shadow: 0.5px 1.5px black, 0px 2px black, -0.5px 2.5px black, -1px 3px black, -1.5px 3.5px black, -2px 4px black,
+    -2.5px 4.5px black;
 }
