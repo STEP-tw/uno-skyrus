@@ -154,6 +154,7 @@ describe('Game Class', () => {
     const logMessage = () => {};
     const canPlayOnTopOf = () => true;
     let deck;
+    let players;
 
     beforeEach(() => {
       numberDeck[5] = {
@@ -197,7 +198,7 @@ describe('Game Class', () => {
         },
         resetHasCaught: () => {}
       };
-      const players = {
+      players = {
         getPlayers: () => {
           return [player];
         },
@@ -209,7 +210,8 @@ describe('Game Class', () => {
         },
         setFirstTurn: () => {},
         setCurrentPlayer: () => {},
-        updateCurrentPlayer: () => {}
+        updateCurrentPlayer: () => {},
+        resetLastPlayerUnoCall: sinon.spy()
       };
 
       deck = [
@@ -324,6 +326,11 @@ describe('Game Class', () => {
       const expected = false;
       const actual = game.hasDrawnTwo;
       chai.assert.deepEqual(actual, expected);
+    });
+
+    it('should call resetLastPlayerUnoCall', function() {
+      game.throwCard(1234, '6');
+      sinon.assert.calledOnce(players.resetLastPlayerUnoCall);
     });
   });
 

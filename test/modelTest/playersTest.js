@@ -1,5 +1,6 @@
 const { Players } = require('./../../src/models/players.js');
 const chai = require('chai');
+const sinon = require('sinon');
 
 describe('addPlayer', function() {
   it('should add a player to the Players class', function() {
@@ -265,5 +266,19 @@ describe('removePlayer', function() {
     const actualOutput = players.getPlayers();
     const expectedOutput = [];
     chai.assert.deepEqual(actualOutput, expectedOutput);
+  });
+});
+
+describe('resetLastPlayerUnoCall', function() {
+  it('should reset last player\s uno call', function() {
+    const players = new Players({
+      name: 'hostName',
+      id: 12,
+      cards: [],
+      unoCallStatus: true,
+      resetUnoCall: sinon.spy()
+    });
+    players.resetLastPlayerUnoCall();
+    sinon.assert.calledOnce(players.getLastPlayer().resetUnoCall);
   });
 });

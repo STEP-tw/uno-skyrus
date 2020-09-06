@@ -87,6 +87,10 @@ class Players {
       return player.getId() != playerId;
     });
   }
+
+  resetLastPlayerUnoCall(){
+    this.lastPlayer.resetUnoCall();
+  }
 }
 
 module.exports = { Players };

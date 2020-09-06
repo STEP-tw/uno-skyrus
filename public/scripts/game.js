@@ -136,6 +136,10 @@ const setUno = function() {
   calledUno = true;
 };
 
+const resetUno = function() {
+  calledUno = false;
+};
+
 const allowDrop = function(event) {
   event.preventDefault();
 };
@@ -158,6 +162,7 @@ const throwCard = function(document, cardId, declaredColor) {
   }).then(() => {
     hidePopUp();
     fetchCards(document);
+    resetUno();
   });
 };
 

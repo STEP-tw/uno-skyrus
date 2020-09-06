@@ -195,6 +195,7 @@ class Game {
     player.removeCard(cardId);
     this.pile.push(thrownCard);
     player.setUnoCall(unoCallStatus);
+    this.players.resetLastPlayerUnoCall();
     this.activityLog.logThrowCard(playerName, thrownCard);
     if (player.getUnoCallStatus()) {
       this.activityLog.logCallUno(playerName);
